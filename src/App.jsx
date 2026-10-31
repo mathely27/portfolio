@@ -7,7 +7,6 @@ import OrbitingCircles from './components/OrbitingCircles';
 import ProjectShowcase from './components/ProjectShowcase';
 import ScrollVelocity from './components/ScrollVelocity';
 import SmoothCursor from './components/SmoothCursor';
-import { LiquidButton } from './components/ui/LiquidButton';
 import { GithubIcon, LinkedinIcon } from './components/Icons';
 import { ArrowRight } from 'lucide-react';
 
@@ -29,28 +28,7 @@ function SplashScreen({ onEnter, fading }) {
         animation: fading ? 'portalZoomOut 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards' : 'none',
       }}
     >
-      <FluidGlass word="WELCOME" onSkip={onEnter} />
-
-      {/* Interactive Liquid Glass Button on Landing Page */}
-      <div
-        style={{
-          position: 'fixed',
-          bottom: '90px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 60,
-        }}
-      >
-        <LiquidButton
-          onClick={(e) => {
-            e.stopPropagation();
-            onEnter();
-          }}
-        >
-          <span>Enter Portfolio</span>
-          <ArrowRight size={13} />
-        </LiquidButton>
-      </div>
+      <FluidGlass text="Mathely Mittal" />
 
       {fading && (
         <div
@@ -91,11 +69,16 @@ export default function App() {
     setTimeout(() => setShowSplash(false), 800);
   };
 
+  // Enter on scroll (wheel / touch) while the landing screen is visible
   useEffect(() => {
-    const timer = setTimeout(() => {
-      triggerEnter();
-    }, 4500);
-    return () => clearTimeout(timer);
+    if (!showSplash) return;
+    const handleScrollIntent = () => triggerEnter();
+    window.addEventListener('wheel', handleScrollIntent, { passive: true });
+    window.addEventListener('touchmove', handleScrollIntent, { passive: true });
+    return () => {
+      window.removeEventListener('wheel', handleScrollIntent);
+      window.removeEventListener('touchmove', handleScrollIntent);
+    };
   }, [showSplash, splashFading]);
 
   return (
