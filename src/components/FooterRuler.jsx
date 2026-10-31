@@ -2,16 +2,13 @@ import React from 'react';
 
 export default function FooterRuler() {
   return (
-    <footer className="footer-ruler-wrap">
-      {/* Ruler Ticks Pattern */}
+    <div className="footer-ruler-wrap">
       <div className="ruler-ticks" />
-
-      {/* Monospaced metadata row */}
       <div className="footer-meta-row">
-        <div>MATHELY / CSE '28</div>
-        <div className="hidden sm:block">STUDENT BY DAY — BUILDER BY NIGHT</div>
-        <div>PORTFOLIO / V1.0</div>
+        <span>MATHELY / CSE '28</span>
+        <span>STUDENT BY DAY · BUILDER BY NIGHT</span>
+        <span>PORTFOLIO / V2.0</span>
       </div>
-    </footer>
+    </div>
   );
 }
