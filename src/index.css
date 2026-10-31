@@ -73,19 +73,13 @@ body::before {
 /* ============================================================
    CINEMATIC TRANSITION KEYFRAMES
    ============================================================ */
-@keyframes portalZoomOut {
+/* Landing page slides up & out — like scrolling down a page */
+@keyframes portalSlideUp {
   0% {
-    transform: scale(1);
-    filter: blur(0px) brightness(1);
-    opacity: 1;
-  }
-  40% {
-    filter: blur(8px) brightness(1.2);
+    transform: translateY(0);
   }
   100% {
-    transform: scale(1.4);
-    filter: blur(30px) brightness(1.5);
-    opacity: 0;
+    transform: translateY(-100%);
   }
 }
 
@@ -130,14 +124,13 @@ body::before {
   }
 }
 
+/* Main page rises from below in sync with the landing slide — one scroll motion */
 @keyframes mainStageEnter {
   0% {
-    opacity: 0;
-    transform: scale(0.96);
+    transform: translateY(100vh);
   }
   100% {
-    opacity: 1;
-    transform: scale(1);
+    transform: translateY(0);
   }
 }
 

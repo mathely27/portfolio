@@ -25,24 +25,10 @@ function SplashScreen({ onEnter, fading }) {
         background: '#000000',
         overflow: 'hidden',
         cursor: 'pointer',
-        animation: fading ? 'portalZoomOut 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards' : 'none',
+        animation: fading ? 'portalSlideUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards' : 'none',
       }}
     >
       <FluidGlass text="Mathely Mittal" />
-
-      {fading && (
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background:
-              'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 40%, transparent 70%)',
-            pointerEvents: 'none',
-            zIndex: 70,
-            animation: 'lightFlash 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-          }}
-        />
-      )}
     </div>
   );
 }
@@ -62,6 +48,14 @@ export default function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [splashFading, setSplashFading] = useState(false);
   const [activeTab, setActiveTab] = useState('about'); // 'about' | 'projects'
+
+  const handleScroll = (e) => {
+    const el = e.currentTarget;
+    const projectsEl = document.getElementById('projects');
+    if (!projectsEl) return;
+    const mid = el.scrollTop + el.clientHeight * 0.5;
+    setActiveTab(mid >= projectsEl.offsetTop ? 'projects' : 'about');
+  };
 
   const triggerEnter = () => {
     if (splashFading || !showSplash) return;
@@ -96,6 +90,7 @@ export default function App() {
         flexDirection: 'column',
         alignItems: 'center',
       }}
+      onScroll={handleScroll}
     >
       {/* 1. Cinematic Landing Screen */}
       {showSplash && <SplashScreen fading={splashFading} onEnter={triggerEnter} />}
@@ -120,7 +115,14 @@ export default function App() {
             { label: 'Projects', href: '#projects' },
           ]}
           activeHref={activeTab === 'about' ? '#about' : '#projects'}
-          onItemClick={(item) => setActiveTab(item.href === '#about' ? 'about' : 'projects')}
+          onItemClick={(item, index, event) => {
+            event?.preventDefault?.();
+            const id = (item.href || '').replace('#', '');
+            document
+              .getElementById(id)
+              ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            setActiveTab(id === 'projects' ? 'projects' : 'about');
+          }}
           theme="dark"
           layout="joined"
           itemStyle="pill"
@@ -141,29 +143,29 @@ export default function App() {
           zIndex: 10,
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
           alignItems: 'center',
-          animation: !showSplash
-            ? 'mainStageEnter 0.75s cubic-bezier(0.16, 1, 0.3, 1) both'
-            : 'none',
+          animation:
+            showSplash && !splashFading
+              ? 'none'
+              : 'mainStageEnter 0.85s cubic-bezier(0.16, 1, 0.3, 1) both',
         }}
       >
         {/* ====================================================
             VIEW 1: PARALLEL ABOUT (LEFT) + FAST TECH STACK (RIGHT)
         ==================================================== */}
-        {activeTab === 'about' && (
-          <div
-            key="about"
-            style={{
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '40px',
-              flexWrap: 'wrap',
-              margin: 'auto 0',
-            }}
-          >
+        <section
+          id="about"
+          style={{
+            width: '100%',
+            minHeight: 'calc(100vh - 130px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '40px',
+            flexWrap: 'wrap',
+            padding: '24px 0',
+          }}
+        >
             {/* LEFT COLUMN: Mathely Mittal with TextPressure */}
             <div
               style={{
@@ -262,7 +264,12 @@ export default function App() {
                 }}
               >
                 <button
-                  onClick={() => setActiveTab('projects')}
+                  onClick={() => {
+                    setActiveTab('projects');
+                    document
+                      .getElementById('projects')
+                      ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }}
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -345,24 +352,23 @@ export default function App() {
             >
               <OrbitingCircles />
             </div>
-          </div>
-        )}
+        </section>
 
         {/* ====================================================
             VIEW 2: PROJECTS WITH REACT BITS <OrbitImages />
         ==================================================== */}
-        {activeTab === 'projects' && (
-          <div
-            key="projects"
-            style={{
-              width: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              animation: 'fadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both',
-              margin: 'auto 0',
-            }}
-          >
+        <section
+          id="projects"
+          style={{
+            width: '100%',
+            minHeight: 'calc(100vh - 130px)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '24px 0',
+          }}
+        >
             <div
               style={{
                 fontFamily: "'Space Mono', monospace",
@@ -378,8 +384,7 @@ export default function App() {
             </div>
 
             <ProjectShowcase />
-          </div>
-        )}
+        </section>
       </main>
 
       {/* 5. ScrollVelocity Marquee Strip */}
@@ -393,21 +398,6 @@ export default function App() {
           skewWithVelocity={6}
         />
       </div>
-
-      {/* 6. Minimal Monochrome Footer */}
-      <footer
-        style={{
-          padding: '10px 0 16px',
-          fontFamily: "'Space Mono', monospace",
-          fontSize: '10px',
-          color: '#52525b',
-          letterSpacing: '0.1em',
-          textTransform: 'uppercase',
-          pointerEvents: 'none',
-        }}
-      >
-        Mathely Mittal · CSE '28 · Built for substance
-      </footer>
     </div>
   );
 }
