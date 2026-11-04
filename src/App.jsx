@@ -12,7 +12,7 @@ import { ArrowRight } from 'lucide-react';
 /* ============================================================
    LANDING SCREEN WITH FLUID GLASS & LIQUID BUTTON
    ============================================================ */
-function SplashScreen({ onEnter, fading }) {
+function SplashScreen({ onEnter, fading, size }) {
   return (
     <div
       onClick={onEnter}
@@ -27,7 +27,7 @@ function SplashScreen({ onEnter, fading }) {
         animation: fading ? 'portalSlideUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards' : 'none',
       }}
     >
-      <FluidGlass text="Mathely Mittal" />
+      <FluidGlass text="Mathely Mittal" size={size} />
     </div>
   );
 }
@@ -61,6 +61,20 @@ export default function App() {
     setTimeout(() => setShowSplash(false), 800);
   };
 
+  // Determine FluidGlass size based on viewport width
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+  const glassSize = isMobile ? 180 : 260;
+
+  // Re-evaluate size on resize (orientation change)
+  useEffect(() => {
+    if (!showSplash) return;
+    const handleResize = () => {
+      // Size is read inline during render; no state needed
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [showSplash]);
+
   // Enter on scroll (wheel / touch) while the landing screen is visible
   useEffect(() => {
     if (!showSplash) return;
@@ -92,7 +106,13 @@ export default function App() {
       onScroll={handleScroll}
     >
       {/* 1. Cinematic Landing Screen */}
-      {showSplash && <SplashScreen fading={splashFading} onEnter={triggerEnter} />}
+      {showSplash && (
+        <SplashScreen
+          fading={splashFading}
+          onEnter={triggerEnter}
+          size={glassSize}
+        />
+      )}
 
       {/* 2. Ultra-thin smooth cursor with 3-second inactivity fade */}
       {!showSplash && <LabelOrbit />}
@@ -330,6 +350,7 @@ export default function App() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 animation: 'scaleInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) both',
+                overflow: 'hidden',
               }}
             >
               <TechStackGrid />

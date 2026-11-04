@@ -123,6 +123,31 @@ export default function TechStackGrid() {
           overflow: hidden;
           text-overflow: ellipsis;
         }
+        @media (max-width: 640px) {
+          .stack-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 6px;
+          }
+          .stack-sym {
+            font-size: clamp(14px, 5vw, 22px);
+          }
+          .stack-ico {
+            width: clamp(15px, 5.5vw, 24px);
+            height: clamp(15px, 5.5vw, 24px);
+          }
+          .stack-name {
+            font-size: clamp(7px, 2vw, 10px);
+          }
+          .stack-num {
+            font-size: clamp(6.5px, 1.6vw, 9px);
+            top: 4px;
+            left: 6px;
+          }
+          .stack-face {
+            top: 10px;
+            bottom: 14px;
+          }
+        }
       `}</style>
 
       <div
