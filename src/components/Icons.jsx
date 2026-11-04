@@ -39,27 +39,6 @@ export function LinkedinIcon({ size = 16, className = '' }) {
   );
 }
 
-export function LeetCodeIcon({ size = 16, className = '' }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="m16 8-8 8" />
-      <path d="M8.5 7.5A4.5 4.5 0 0 1 15 5a4.5 4.5 0 0 1 3 3" />
-      <path d="m5 16 3-3" />
-      <path d="M18 13.5A4.5 4.5 0 0 1 15 19a4.5 4.5 0 0 1-6.5-2.5" />
-    </svg>
-  );
-}
-
 export function EmailIcon({ size = 16, className = '' }) {
   return (
     <svg
@@ -92,10 +71,16 @@ export function LeetcodeIcon({ size = 16, className = '' }) {
       strokeLinejoin="round"
       className={className}
     >
-      <circle cx="11" cy="11" r="5" />
-      <path d="M11 16v4" />
-      <path d="M11 20h3" />
+      <path d="m16 8-8 8" />
+      <path d="M8.5 7.5A4.5 4.5 0 0 1 15 5a4.5 4.5 0 0 1 3 3" />
+      <path d="m5 16 3-3" />
+      <path d="M18 13.5A4.5 4.5 0 0 1 15 19a4.5 4.5 0 0 1-6.5-2.5" />
     </svg>
   );
 }
 
+export { GithubIcon as GithubCircleIcon, LinkedinIcon as LinkedinCircleIcon, EmailIcon as EmailCircleIcon, LeetcodeIcon as LeetcodeCircleIcon };
+
+export { LinkedinIcon as LinkedInIcon, GithubIcon as GitHubIcon };
+
+export { EmailIcon as EmailIcon_, LeetcodeIcon as LeetcodeIcon_ };

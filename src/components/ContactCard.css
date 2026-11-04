@@ -1,23 +1,19 @@
-.contact-card-atom {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.contact-card-atom canvas,
-.contact-card-atom img {
-  width: 92px;
-  height: 92px;
-}
-
+.contact-card-atom,
 .contact-card-grid {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
 }
 
+.contact-card-atom canvas,
+.contact-card-atom img,
 .contact-card-grid canvas,
 .contact-card-grid img {
   width: 92px;
   height: 92px;
+}
+
+/* Remove the "this content is not available" GIF overlay */
+.contact-card-gif-overlay {
+  display: none !important;
 }

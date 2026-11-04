@@ -151,7 +151,7 @@ export default function App() {
         items={[
           { label: 'About & Stack', href: '#about' },
           { label: 'Projects', href: '#projects' },
-          { label: 'Connect', href: '#connect' },
+          { label: 'Connect', href: '#connect', style: { cursor: 'pointer' } },
         ]}
         activeHref={activeTab === 'about' ? '#about' : activeTab === 'projects' ? '#projects' : '#connect'}
         onNavigate={(item, index, event) => {
