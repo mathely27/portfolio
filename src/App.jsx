@@ -5,7 +5,7 @@ import TextPressure from './components/TextPressure';
 import BlurText from './components/BlurText';
 import TechStackGrid from './components/TechStackGrid';
 import ProjectGrid from './components/ProjectGrid';
-import SmoothCursor from './components/SmoothCursor';
+import LabelOrbit from './components/LabelOrbit';
 import { GithubIcon, LinkedinIcon } from './components/Icons';
 import { ArrowRight } from 'lucide-react';
 
@@ -39,7 +39,7 @@ function SplashScreen({ onEnter, fading }) {
    - ChromaGrid (React Bits) for Projects
    - TechStackGrid for Tech Stack (same format as GitHub README @mathely27)
    - LiquidButton for Landing Page
-   - Ultra-thin 3s fading cursor
+   - LabelOrbit cursor (tiny pastel word label with a 3D trail)
    - 100% Monochrome Black, White & Grey
    ============================================================ */
 export default function App() {
@@ -94,7 +94,7 @@ export default function App() {
       {showSplash && <SplashScreen fading={splashFading} onEnter={triggerEnter} />}
 
       {/* 2. Ultra-thin smooth cursor with 3-second inactivity fade */}
-      {!showSplash && <SmoothCursor />}
+      {!showSplash && <LabelOrbit />}
 
       {/* 3. Single-line horizontal navbar with widely spaced links */}
       <LineNav
