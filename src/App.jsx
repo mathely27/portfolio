@@ -114,7 +114,7 @@ export default function App() {
         />
       )}
 
-      {/* 2. Ultra-thin smooth cursor with 3-second inactivity fade */}
+      {/* 2. LabelOrbit cursor (tiny pastel word label with a 3D trail) */}
       {!showSplash && <LabelOrbit />}
 
       {/* 3. Single-line horizontal navbar with widely spaced links */}
@@ -317,7 +317,7 @@ export default function App() {
                 </a>
 
                 <a
-                  href="https://linkedin.com/in/mathely27"
+                  href="https://www.linkedin.com/in/mathely-mittal-b284143b9/"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={{
@@ -377,15 +377,16 @@ export default function App() {
                 width: '100%',
                 maxWidth: '1040px',
                 fontFamily: "'Space Mono', monospace",
-                fontSize: '11px',
-                color: '#71717a',
-                letterSpacing: '0.12em',
+                fontSize: 'clamp(18px, 4vw, 28px)',
+                color: '#ffffff',
+                letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                marginBottom: '10px',
+                marginBottom: '16px',
                 textAlign: 'left',
+                fontWeight: 700,
               }}
             >
-              Selected Builds · GitHub / @mathely27
+              Projects
             </div>
 
             <ProjectGrid />

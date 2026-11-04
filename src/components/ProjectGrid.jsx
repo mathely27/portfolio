@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ChromaGrid from './ChromaGrid';
+import { GithubIcon, LinkedinIcon } from './Icons';
 
 /**
  * ProjectGrid - selected builds shown with <ChromaGrid /> from React Bits.
@@ -291,13 +292,6 @@ const PROJECTS = [
 
 
 export default function ProjectGrid() {
-  const [touch, setTouch] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia?.('(hover: none)');
-    setTouch(query ? query.matches : false);
-  }, []);
-
   return (
     <div style={{ width: '100%', maxWidth: '1040px', margin: '0 auto' }}>
       <ChromaGrid
@@ -316,26 +310,8 @@ export default function ProjectGrid() {
         aspectRatio="16 / 10"
         cardRadius={18}
         theme="dark"
+        showInfo={true}
       />
-
-      <div
-        style={{
-          marginTop: '14px',
-          fontFamily: "'Space Mono', monospace",
-          fontSize: '10.5px',
-          color: '#71717a',
-          letterSpacing: '0.08em',
-          textTransform: 'uppercase',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px',
-          flexWrap: 'wrap',
-        }}
-      >
-        <span>{touch ? 'Tap a card to open the repo' : 'Move cursor to reveal colour'}</span>
-        {!touch && <span>·</span>}
-        {!touch && <span>Click a card to open the repo</span>}
-      </div>
     </div>
   );
 }
