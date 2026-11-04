@@ -3,7 +3,7 @@ import FluidGlass from './components/FluidGlass';
 import LineNav from './components/LineNav';
 import TextPressure from './components/TextPressure';
 import BlurText from './components/BlurText';
-import OrbitingCircles from './components/OrbitingCircles';
+import TechStackGrid from './components/TechStackGrid';
 import ProjectShowcase from './components/ProjectShowcase';
 import SmoothCursor from './components/SmoothCursor';
 import { GithubIcon, LinkedinIcon } from './components/Icons';
@@ -37,7 +37,7 @@ function SplashScreen({ onEnter, fading }) {
    - TextPressure for MATHELY MITTAL (interactive variable font)
    - LineNav (single horizontal line, spread-out links)
    - OrbitImages for Projects (Official React Bits)
-   - OrbitingCircles for Tech Stack (GitHub README @mathely27)
+   - TechStackGrid for Tech Stack (same format as GitHub README @mathely27)
    - LiquidButton for Landing Page
    - Ultra-thin 3s fading cursor
    - 100% Monochrome Black, White & Grey
@@ -132,7 +132,7 @@ export default function App() {
         }}
       >
         {/* ====================================================
-            VIEW 1: PARALLEL ABOUT (LEFT) + FAST TECH STACK (RIGHT)
+            VIEW 1: PARALLEL ABOUT (LEFT) + TECH STACK GRID (RIGHT)
         ==================================================== */}
         <section
           id="about"
@@ -321,7 +321,7 @@ export default function App() {
               </div>
             </div>
 
-            {/* RIGHT COLUMN: Fast Tech Stack Orbit */}
+            {/* RIGHT COLUMN: Tech Stack grid (GitHub README format) */}
             <div
               style={{
                 flex: '1 1 440px',
@@ -331,7 +331,7 @@ export default function App() {
                 animation: 'scaleInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) both',
               }}
             >
-              <OrbitingCircles />
+              <TechStackGrid />
             </div>
         </section>
 
