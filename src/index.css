@@ -22,6 +22,14 @@
   --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono:    'Space Mono', ui-monospace, Menlo, monospace;
   --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  /* viewport height that adapts to mobile browser chrome */
+  --app-h:        100vh;
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --app-h: 100dvh;
+  }
 }
 
 html, body {

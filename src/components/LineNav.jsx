@@ -15,6 +15,7 @@ export default function LineNav({ items = [], activeHref, onNavigate }) {
         left: 0,
         right: 0,
         zIndex: 60,
+        paddingTop: 'env(safe-area-inset-top, 0px)',
         background: 'rgba(5, 5, 5, 0.72)',
         backdropFilter: 'blur(18px) saturate(1.4)',
         WebkitBackdropFilter: 'blur(18px) saturate(1.4)',
@@ -27,11 +28,11 @@ export default function LineNav({ items = [], activeHref, onNavigate }) {
           width: '92%',
           maxWidth: '1160px',
           margin: '0 auto',
-          height: '62px',
+          height: 'clamp(54px, 13vw, 62px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '24px',
+          gap: '16px',
           whiteSpace: 'nowrap',
         }}
       >
@@ -42,10 +43,11 @@ export default function LineNav({ items = [], activeHref, onNavigate }) {
           onClick={(event) => onNavigate?.({ label: 'Mathely Mittal', href: '#about' }, 0, event)}
           style={{
             fontFamily: mono,
-            fontSize: '13px',
+            fontSize: 'clamp(11.5px, 3.2vw, 13px)',
             fontWeight: 700,
             letterSpacing: '0.18em',
             color: '#ffffff',
+            flexShrink: 0,
           }}
         >
           M/
@@ -56,7 +58,8 @@ export default function LineNav({ items = [], activeHref, onNavigate }) {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 'clamp(32px, 9vw, 120px)',
+            gap: 'clamp(20px, 8vw, 120px)',
+            minWidth: 0,
           }}
         >
           {items.map((item, index) => {
@@ -76,8 +79,8 @@ export default function LineNav({ items = [], activeHref, onNavigate }) {
                 style={{
                   position: 'relative',
                   fontFamily: mono,
-                  fontSize: '11.5px',
-                  letterSpacing: '0.14em',
+                  fontSize: 'clamp(9.5px, 2.8vw, 11.5px)',
+                  letterSpacing: '0.1em',
                   textTransform: 'uppercase',
                   color: isActive ? '#ffffff' : '#8a8a93',
                   transition: 'color 0.2s ease',

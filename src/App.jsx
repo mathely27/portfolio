@@ -76,10 +76,11 @@ export default function App() {
   return (
     <div
       style={{
-        width: '100vw',
-        height: '100vh',
+        width: '100%',
+        height: 'var(--app-h)',
         overflowX: 'hidden',
         overflowY: 'auto',
+        WebkitOverflowScrolling: 'touch',
         background: '#050505',
         color: '#ffffff',
         fontFamily: "'Inter', sans-serif",
@@ -118,8 +119,8 @@ export default function App() {
         style={{
           width: '92%',
           maxWidth: '1160px',
-          minHeight: 'calc(100vh - 120px)',
-          paddingTop: '86px',
+          minHeight: 'calc(var(--app-h) - 120px)',
+          paddingTop: 'calc(78px + env(safe-area-inset-top, 0px))',
           paddingBottom: '20px',
           zIndex: 10,
           display: 'flex',
@@ -138,13 +139,13 @@ export default function App() {
           id="about"
           style={{
             width: '100%',
-            minHeight: 'calc(100vh - 130px)',
+            minHeight: 'calc(var(--app-h) - 130px)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            gap: '40px',
+            gap: 'clamp(26px, 4vw, 40px)',
             flexWrap: 'wrap',
-            padding: '24px 0',
+            padding: 'clamp(14px, 3vw, 24px) 0',
           }}
         >
             {/* LEFT COLUMN: Mathely Mittal with TextPressure */}
@@ -194,7 +195,7 @@ export default function App() {
                   position: 'relative',
                   width: '100%',
                   maxWidth: '500px',
-                  height: '75px',
+                  height: 'clamp(52px, 13vw, 75px)',
                   display: 'flex',
                   alignItems: 'center',
                 }}
@@ -213,14 +214,14 @@ export default function App() {
                   idleSpeed={0.8}
                   clickRipple={true}
                   textColor="#ffffff"
-                  minFontSize={34}
+                  minFontSize={22}
                 />
               </div>
 
               {/* Concise Intro with BlurText */}
               <div
                 style={{
-                  fontSize: 'clamp(14.5px, 1.6vw, 17.5px)',
+                  fontSize: 'clamp(14px, 3.6vw, 17.5px)',
                   fontWeight: 400,
                   color: '#a1a1aa',
                   lineHeight: 1.65,
@@ -342,12 +343,12 @@ export default function App() {
           id="projects"
           style={{
             width: '100%',
-            minHeight: 'calc(100vh - 130px)',
+            minHeight: 'calc(var(--app-h) - 130px)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '24px 0',
+            padding: 'clamp(18px, 4vw, 24px) 0 clamp(28px, 6vw, 40px)',
           }}
         >
             <div

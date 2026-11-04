@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ChromaGrid from './ChromaGrid';
 
 /**
@@ -291,6 +291,13 @@ const PROJECTS = [
 
 
 export default function ProjectGrid() {
+  const [touch, setTouch] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia?.('(hover: none)');
+    setTouch(query ? query.matches : false);
+  }, []);
+
   return (
     <div style={{ width: '100%', maxWidth: '1040px', margin: '0 auto' }}>
       <ChromaGrid
@@ -325,9 +332,9 @@ export default function ProjectGrid() {
           flexWrap: 'wrap',
         }}
       >
-        <span>Move cursor to reveal colour</span>
-        <span>·</span>
-        <span>Click a card to open the repo</span>
+        <span>{touch ? 'Tap a card to open the repo' : 'Move cursor to reveal colour'}</span>
+        {!touch && <span>·</span>}
+        {!touch && <span>Click a card to open the repo</span>}
       </div>
     </div>
   );

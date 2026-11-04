@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 /**
- * LabelOrbit - a tiny label that becomes the cursor and trails a 3D stack
- * of the words before it. Pastel colour cycles every few seconds.
+ * LabelOrbit - one label becomes the cursor. The label itself is a 3D stack
+ * (copies extruded in Z), tilted by movement so the stack reads as depth.
+ * A single pastel tone rotates every few seconds.
  */
 
 const WORDS = ['builder', 'cs student', 'macos apps', 'local ai', 'react dev', 'ships daily'];
@@ -15,9 +16,12 @@ const PASTELS = [
   { bg: '#c4e1f7', ink: '#12202a' },
 ];
 
-const LAYERS = 3;
-const TAU = [0.035, 0.09, 0.16];
+const COPIES = 7;
+const DEPTH = 3.4; // px between stacked copies
 const IDLE_MS = 1400;
+const BASE_TILT = { x: 12, y: -20 };
+
+const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
 export default function LabelOrbit({
   words = WORDS,
@@ -26,11 +30,12 @@ export default function LabelOrbit({
   offset = 14,
 }) {
   const rootRef = useRef(null);
-  const layerRefs = useRef([]);
+  const tiltRef = useRef(null);
   const [tick, setTick] = useState(0);
   const [active, setActive] = useState(false);
 
   const tone = palette[tick % palette.length];
+  const word = words[tick % words.length];
 
   // only run on devices with a real pointing device
   useEffect(() => {
@@ -38,7 +43,7 @@ export default function LabelOrbit({
     setActive(query ? query.matches : true);
   }, []);
 
-  // rotate the word + pastel colour on a slow loop
+  // rotate word + pastel tone on a slow loop
   useEffect(() => {
     if (!active) return undefined;
     const id = window.setInterval(() => setTick((t) => t + 1), interval);
@@ -48,53 +53,62 @@ export default function LabelOrbit({
   useEffect(() => {
     if (!active) return undefined;
     const root = rootRef.current;
-    const nodes = layerRefs.current.filter(Boolean);
-    if (!root || !nodes.length) return undefined;
+    const tilt = tiltRef.current;
+    if (!root || !tilt) return undefined;
 
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
-    const positions = nodes.map(() => ({ x: -200, y: -200 }));
+    const pos = { x: -200, y: -200 };
     const target = { x: -200, y: -200 };
-    let last = 0;
-    let raf = 0;
-    let idle = 0;
+    const rot = { x: BASE_TILT.x, y: BASE_TILT.y };
     let primed = false;
+    let raf = 0;
+    let last = 0;
+    let idle = 0;
 
-    const draw = (now) => {
+    const frame = (now) => {
       raf = 0;
       const dt = last ? Math.min(0.05, (now - last) / 1000) : 1 / 60;
       last = now;
-      let settled = true;
 
-      nodes.forEach((node, i) => {
-        const pos = positions[i];
-        const ease = reduce ? 1 : 1 - Math.exp(-dt / TAU[i]);
-        pos.x += (target.x - pos.x) * ease;
-        pos.y += (target.y - pos.y) * ease;
-        if (Math.abs(target.x - pos.x) > 0.15 || Math.abs(target.y - pos.y) > 0.15) settled = false;
-        node.style.transform = `translate3d(${pos.x + offset}px, ${pos.y + offset}px, -${i * 26}px) scale(${
-          1 - i * 0.04
-        })`;
-      });
+      const prevX = pos.x;
+      const prevY = pos.y;
+      const follow = reduce ? 1 : 1 - Math.exp(-dt / 0.045);
+      pos.x += (target.x - pos.x) * follow;
+      pos.y += (target.y - pos.y) * follow;
 
-      if (settled) {
-        last = 0;
+      const vx = reduce ? 0 : (pos.x - prevX) / Math.max(dt, 0.001);
+      const vy = reduce ? 0 : (pos.y - prevY) / Math.max(dt, 0.001);
+
+      // lean away from the direction of travel, then settle back to the base tilt
+      const wantX = clamp(BASE_TILT.x - vy * 0.055, -34, 40);
+      const wantY = clamp(BASE_TILT.y + vx * 0.055, -46, 34);
+      const easeRot = reduce ? 1 : 1 - Math.exp(-dt / 0.12);
+      rot.x += (wantX - rot.x) * easeRot;
+      rot.y += (wantY - rot.y) * easeRot;
+
+      root.style.transform = `translate3d(${pos.x + offset}px, ${pos.y + offset}px, 0)`;
+      tilt.style.transform = `rotateX(${rot.x.toFixed(2)}deg) rotateY(${rot.y.toFixed(2)}deg)`;
+
+      const moving = Math.abs(target.x - pos.x) > 0.1 || Math.abs(target.y - pos.y) > 0.1;
+      const turning = Math.abs(wantX - rot.x) > 0.02 || Math.abs(wantY - rot.y) > 0.02;
+
+      if (moving || turning) {
+        raf = requestAnimationFrame(frame);
       } else {
-        raf = requestAnimationFrame(draw);
+        last = 0;
       }
     };
 
     const wake = () => {
-      if (!raf) raf = requestAnimationFrame(draw);
+      if (!raf) raf = requestAnimationFrame(frame);
     };
 
     const onMove = (event) => {
       target.x = event.clientX;
       target.y = event.clientY;
       if (!primed) {
-        positions.forEach((p) => {
-          p.x = target.x;
-          p.y = target.y;
-        });
+        pos.x = target.x;
+        pos.y = target.y;
         primed = true;
       }
       root.style.opacity = '1';
@@ -102,21 +116,28 @@ export default function LabelOrbit({
       wake();
     };
 
-    const tickIdle = () => {
+    const onLeave = () => {
+      root.style.opacity = '0';
+    };
+
+    const fadeWhenIdle = () => {
+      if (!idle) return;
       const wait = performance.now() - idle;
-      if (idle && wait > IDLE_MS) {
+      if (wait > IDLE_MS) {
         root.style.opacity = String(Math.max(0, 1 - (wait - IDLE_MS) / 1200));
       }
     };
 
     window.addEventListener('pointermove', onMove, { passive: true });
-    const idleId = window.setInterval(tickIdle, 240);
+    document.addEventListener('pointerleave', onLeave);
+    const idleId = window.setInterval(fadeWhenIdle, 240);
     wake();
 
     return () => {
       cancelAnimationFrame(raf);
       window.clearInterval(idleId);
       window.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerleave', onLeave);
     };
   }, [active, offset]);
 
@@ -135,21 +156,25 @@ export default function LabelOrbit({
         height: 0,
         pointerEvents: 'none',
         opacity: 0,
-        perspective: '620px',
+        perspective: '340px',
+        perspectiveOrigin: '50% 50%',
         transition: 'opacity 0.25s ease',
-        willChange: 'opacity',
+        willChange: 'transform, opacity',
       }}
     >
-      {Array.from({ length: LAYERS }).map((_, i) => {
-        const word = words[(tick - i + words.length * 4) % words.length];
-        return (
+      <div
+        ref={tiltRef}
+        style={{
+          transformStyle: 'preserve-3d',
+          transform: `rotateX(${BASE_TILT.x}deg) rotateY(${BASE_TILT.y}deg)`,
+          willChange: 'transform',
+        }}
+      >
+        {Array.from({ length: COPIES }).map((_, i) => (
           <span
             key={i}
-            ref={(node) => {
-              layerRefs.current[i] = node;
-            }}
             style={{
-              position: 'absolute',
+              position: i === 0 ? 'relative' : 'absolute',
               top: 0,
               left: 0,
               display: 'inline-block',
@@ -157,25 +182,24 @@ export default function LabelOrbit({
               borderRadius: '4px',
               background: tone.bg,
               color: tone.ink,
-              border: '1px solid rgba(0, 0, 0, 0.08)',
-              boxShadow: '0 2px 10px rgba(0, 0, 0, 0.35)',
+              border: '1px solid rgba(0, 0, 0, 0.10)',
+              boxShadow: i === 0 ? '0 3px 12px rgba(0, 0, 0, 0.4)' : 'none',
               fontFamily: "'Space Mono', ui-monospace, monospace",
               fontSize: '9px',
               lineHeight: 1.2,
               letterSpacing: '0.14em',
               textTransform: 'uppercase',
               whiteSpace: 'nowrap',
-              opacity: i === 0 ? 0.95 : i === 1 ? 0.4 : 0.18,
+              transform: `translateZ(-${i * DEPTH}px)`,
               transformStyle: 'preserve-3d',
-              transition:
-                'background 0.7s ease, color 0.7s ease, opacity 0.4s ease, box-shadow 0.3s ease',
-              willChange: 'transform',
+              transition: 'background 0.7s ease, color 0.7s ease',
+              backfaceVisibility: 'hidden',
             }}
           >
             {word}
           </span>
-        );
-      })}
+        ))}
+      </div>
     </div>
   );
 }
