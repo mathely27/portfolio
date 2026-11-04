@@ -116,13 +116,14 @@ export default function App() {
 
       {!showSplash && (
         <GlowCursor
-          color="#ffffff"
-          intensity={1.4}
-          trailWidth={2.5}
-          linger={1.6}
-          glow={1.3}
-          hotspot={0.9}
-          followSpeed={0.7}
+          color="#d4d4d8"
+          intensity={0.8}
+          trailWidth={2}
+          linger={1.2}
+          glow={0.6}
+          hotspot={0.5}
+          followSpeed={0.8}
+          grain={0.1}
           clickBurst
           theme="dark"
           style={{ position: 'fixed', inset: 0, zIndex: 9999, pointerEvents: 'none' }}
