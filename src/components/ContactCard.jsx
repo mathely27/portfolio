@@ -20,7 +20,7 @@ export default function ContactCard({ linkedinUrl, emailAddress }) {
         style={{
           width: '100%',
           fontFamily: "'Space Mono', monospace",
-          fontSize: 'clamp(20px, 4vw, 30px)',
+          fontSize: 'clamp(18px, 4vw, 28px)',
           color: '#ffffff',
           letterSpacing: '0.08em',
           textTransform: 'uppercase',
