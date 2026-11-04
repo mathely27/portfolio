@@ -341,18 +341,13 @@ export default function App() {
         <section
           id="projects"
           style={{
-            width: '100vw',
-            marginLeft: 'calc(50% - 50vw)',
-            background: '#ffffff',
-            color: '#18181b',
+            width: '100%',
             minHeight: 'calc(100vh - 130px)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: 'clamp(40px, 6vw, 80px) clamp(18px, 4vw, 56px)',
-            marginBottom: '-20px',
-            boxSizing: 'border-box',
+            padding: '24px 0',
           }}
         >
             <div
@@ -361,10 +356,10 @@ export default function App() {
                 maxWidth: '1040px',
                 fontFamily: "'Space Mono', monospace",
                 fontSize: '11px',
-                color: '#52525b',
+                color: '#71717a',
                 letterSpacing: '0.12em',
                 textTransform: 'uppercase',
-                marginBottom: '14px',
+                marginBottom: '10px',
                 textAlign: 'left',
               }}
             >
