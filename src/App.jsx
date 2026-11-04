@@ -4,7 +4,7 @@ import LineNav from './components/LineNav';
 import TextPressure from './components/TextPressure';
 import BlurText from './components/BlurText';
 import TechStackGrid from './components/TechStackGrid';
-import ProjectShowcase from './components/ProjectShowcase';
+import ProjectGrid from './components/ProjectGrid';
 import SmoothCursor from './components/SmoothCursor';
 import { GithubIcon, LinkedinIcon } from './components/Icons';
 import { ArrowRight } from 'lucide-react';
@@ -36,7 +36,7 @@ function SplashScreen({ onEnter, fading }) {
    MAIN PORTFOLIO
    - TextPressure for MATHELY MITTAL (interactive variable font)
    - LineNav (single horizontal line, spread-out links)
-   - OrbitImages for Projects (Official React Bits)
+   - ChromaGrid (React Bits) for Projects
    - TechStackGrid for Tech Stack (same format as GitHub README @mathely27)
    - LiquidButton for Landing Page
    - Ultra-thin 3s fading cursor
@@ -267,7 +267,7 @@ export default function App() {
                   onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-1px)')}
                   onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
                 >
-                  <span>View Orbit Projects</span>
+                  <span>View Projects</span>
                   <ArrowRight size={14} />
                 </button>
 
@@ -336,7 +336,7 @@ export default function App() {
         </section>
 
         {/* ====================================================
-            VIEW 2: PROJECTS WITH REACT BITS <OrbitImages />
+            VIEW 2: PROJECTS WITH REACT BITS <ChromaGrid />
         ==================================================== */}
         <section
           id="projects"
@@ -361,10 +361,10 @@ export default function App() {
                 textAlign: 'center',
               }}
             >
-              Selected Builds · GitHub / @mathely27 · 3D Orbit
+              Selected Builds · GitHub / @mathely27
             </div>
 
-            <ProjectShowcase />
+            <ProjectGrid />
         </section>
       </main>
     </div>
