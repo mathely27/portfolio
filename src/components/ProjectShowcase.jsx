@@ -85,12 +85,14 @@ export default function ProjectShowcase() {
         userSelect: 'none',
       }}
     >
-      {/* 3D OrbitImages Canvas */}
-      <div
-        style={{
-          width: '100%',
-          maxWidth: '920px',
-          position: 'relative',
+      {/* 3D OrbitImages Canvas with responsive sizing */}      <div
+         style={{
+           width: '100%',
+           maxWidth: '920px',
+           position: 'relative',
+
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
         <OrbitImages
