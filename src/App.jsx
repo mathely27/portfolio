@@ -341,24 +341,31 @@ export default function App() {
         <section
           id="projects"
           style={{
-            width: '100%',
+            width: '100vw',
+            marginLeft: 'calc(50% - 50vw)',
+            background: '#ffffff',
+            color: '#18181b',
             minHeight: 'calc(100vh - 130px)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '24px 0',
+            padding: 'clamp(40px, 6vw, 80px) clamp(18px, 4vw, 56px)',
+            marginBottom: '-20px',
+            boxSizing: 'border-box',
           }}
         >
             <div
               style={{
+                width: '100%',
+                maxWidth: '1040px',
                 fontFamily: "'Space Mono', monospace",
                 fontSize: '11px',
-                color: '#71717a',
+                color: '#52525b',
                 letterSpacing: '0.12em',
                 textTransform: 'uppercase',
-                marginBottom: '10px',
-                textAlign: 'center',
+                marginBottom: '14px',
+                textAlign: 'left',
               }}
             >
               Selected Builds · GitHub / @mathely27
