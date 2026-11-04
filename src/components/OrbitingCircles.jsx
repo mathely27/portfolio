@@ -1,33 +1,38 @@
 import React from 'react';
+import { TECH_STACK } from './techStack';
 
 /**
- * OrbitingCircles - Fast, High-Energy Tech Stack Orbit
- * Verified directly from GitHub @mathely27:
- * - Swift, SwiftUI, Touch ID (macapplock)
- * - Python, Ollama, PySide6, Qwen3 (Berry)
- * - Pydantic-AI, Tool Calling (ai-agent-)
- * - React, Node.js, MongoDB (project-x)
- * - Git, macOS APIs, Linux
+ * OrbitingCircles - Tech Stack, exactly as listed in the GitHub README
+ * (github.com/mathely27 · STACK list in generate.py, icons from icons.py)
+ *
+ * Python · HTML · CSS · Java · JavaScript · C · Git · GitHub · Linux ·
+ * VS Code · Ollama · Supabase · SQL · React · Vercel
  */
+
+const byKey = Object.fromEntries(TECH_STACK.map((item) => [item.key, item]));
+
+const INNER_KEYS = ['Py', 'Js', 'Re', 'Sq', 'Ol', 'Gi'];
+const OUTER_KEYS = ['Ht', 'Cs', 'Jv', 'C', 'Gh', 'Li', 'Vs', 'Su', 'Ve'];
+
+const innerOrbit = INNER_KEYS.map((key) => byKey[key]);
+const outerOrbit = OUTER_KEYS.map((key) => byKey[key]);
+
+function TechIcon({ item, size }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      fill="currentColor"
+      role="img"
+      aria-label={item.name}
+    >
+      <path d={item.path} />
+    </svg>
+  );
+}
+
 export default function OrbitingCircles() {
-  const innerOrbit = [
-    { name: 'Swift', icon: '', desc: 'macOS Native / AppLocker' },
-    { name: 'Python', icon: 'Py', desc: 'Core Backend & AI' },
-    { name: 'React', icon: '⚛', desc: 'Full-Stack UI / Clutch' },
-    { name: 'Ollama', icon: '🦙', desc: 'Local LLM Engine / Berry' },
-  ];
-
-  const outerOrbit = [
-    { name: 'SwiftUI', icon: 'UI', desc: 'Declarative macOS Interface' },
-    { name: 'Pydantic-AI', icon: 'AI', desc: 'Autonomous Agent Framework' },
-    { name: 'PySide6', icon: 'Qt', desc: 'Local Desktop Client' },
-    { name: 'Touch ID', icon: 'ID', desc: 'LocalAuthentication API' },
-    { name: 'Node.js', icon: 'Node', desc: 'REST API & Services' },
-    { name: 'MongoDB', icon: 'DB', desc: 'NoSQL Document Store' },
-    { name: 'macOS', icon: 'Mac', desc: 'Darwin / System Daemons' },
-    { name: 'Git', icon: 'Git', desc: 'Distributed Version Control' },
-  ];
-
   return (
     <div
       style={{
@@ -85,7 +90,7 @@ export default function OrbitingCircles() {
 
           return (
             <div
-              key={item.name}
+              key={item.key}
               style={{
                 position: 'absolute',
                 left: `calc(50% + ${x}px)`,
@@ -95,7 +100,7 @@ export default function OrbitingCircles() {
             >
               <div style={{ animation: 'counterRotateFastCW 18s linear infinite' }}>
                 <div
-                  title={`${item.name} — ${item.desc}`}
+                  title={item.name}
                   style={{
                     width: '38px',
                     height: '38px',
@@ -106,9 +111,6 @@ export default function OrbitingCircles() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontFamily: "'Space Mono', monospace",
-                    fontSize: '11px',
-                    fontWeight: 700,
                     color: '#e4e4e7',
                     transition: 'all 0.2s ease',
                     cursor: 'default',
@@ -117,14 +119,16 @@ export default function OrbitingCircles() {
                     e.currentTarget.style.borderColor = '#ffffff';
                     e.currentTarget.style.transform = 'scale(1.22)';
                     e.currentTarget.style.background = '#222226';
+                    e.currentTarget.style.color = '#ffffff';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.22)';
                     e.currentTarget.style.transform = 'scale(1)';
                     e.currentTarget.style.background = '#141416';
+                    e.currentTarget.style.color = '#e4e4e7';
                   }}
                 >
-                  {item.icon}
+                  <TechIcon item={item} size={16} />
                 </div>
               </div>
             </div>
@@ -154,7 +158,7 @@ export default function OrbitingCircles() {
 
           return (
             <div
-              key={item.name}
+              key={item.key}
               style={{
                 position: 'absolute',
                 left: `calc(50% + ${x}px)`,
@@ -164,7 +168,7 @@ export default function OrbitingCircles() {
             >
               <div style={{ animation: 'counterRotateFastCCW 12s linear infinite' }}>
                 <div
-                  title={`${item.name} — ${item.desc}`}
+                  title={item.name}
                   style={{
                     width: '44px',
                     height: '44px',
@@ -175,9 +179,6 @@ export default function OrbitingCircles() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: '14px',
-                    fontWeight: 700,
                     color: '#ffffff',
                     transition: 'all 0.2s ease',
                     cursor: 'default',
@@ -193,7 +194,7 @@ export default function OrbitingCircles() {
                     e.currentTarget.style.background = '#1a1a1e';
                   }}
                 >
-                  {item.icon}
+                  <TechIcon item={item} size={20} />
                 </div>
               </div>
             </div>
@@ -236,7 +237,7 @@ export default function OrbitingCircles() {
           textTransform: 'uppercase',
         }}
       >
-        Live Orbit · Verified from GitHub @mathely27
+        Stack · Same as GitHub README @mathely27
       </div>
     </div>
   );

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import FluidGlass from './components/FluidGlass';
-import PillNav from './components/PillNav';
+import LineNav from './components/LineNav';
 import TextPressure from './components/TextPressure';
 import BlurText from './components/BlurText';
 import OrbitingCircles from './components/OrbitingCircles';
 import ProjectShowcase from './components/ProjectShowcase';
-import ScrollVelocity from './components/ScrollVelocity';
 import SmoothCursor from './components/SmoothCursor';
 import { GithubIcon, LinkedinIcon } from './components/Icons';
 import { ArrowRight } from 'lucide-react';
@@ -36,10 +35,9 @@ function SplashScreen({ onEnter, fading }) {
 /* ============================================================
    MAIN PORTFOLIO
    - TextPressure for MATHELY MITTAL (interactive variable font)
-   - PillNav (Official React Bits)
+   - LineNav (single horizontal line, spread-out links)
    - OrbitImages for Projects (Official React Bits)
-   - OrbitingCircles for Tech Stack (Fast + GitHub @mathely27)
-   - ScrollVelocity marquee
+   - OrbitingCircles for Tech Stack (GitHub README @mathely27)
    - LiquidButton for Landing Page
    - Ultra-thin 3s fading cursor
    - 100% Monochrome Black, White & Grey
@@ -98,39 +96,22 @@ export default function App() {
       {/* 2. Ultra-thin smooth cursor with 3-second inactivity fade */}
       {!showSplash && <SmoothCursor />}
 
-      {/* 3. Official React Bits <PillNav /> at top-center */}
-      <div
-        style={{
-          position: 'fixed',
-          top: '20px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 60,
-          animation: 'fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both',
+      {/* 3. Single-line horizontal navbar with widely spaced links */}
+      <LineNav
+        items={[
+          { label: 'About & Stack', href: '#about' },
+          { label: 'Projects', href: '#projects' },
+        ]}
+        activeHref={activeTab === 'about' ? '#about' : '#projects'}
+        onNavigate={(item, index, event) => {
+          event?.preventDefault?.();
+          const id = (item.href || '').replace('#', '');
+          document
+            .getElementById(id)
+            ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setActiveTab(id === 'projects' ? 'projects' : 'about');
         }}
-      >
-        <PillNav
-          items={[
-            { label: 'About & Stack', href: '#about' },
-            { label: 'Projects', href: '#projects' },
-          ]}
-          activeHref={activeTab === 'about' ? '#about' : '#projects'}
-          onItemClick={(item, index, event) => {
-            event?.preventDefault?.();
-            const id = (item.href || '').replace('#', '');
-            document
-              .getElementById(id)
-              ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            setActiveTab(id === 'projects' ? 'projects' : 'about');
-          }}
-          theme="dark"
-          layout="joined"
-          itemStyle="pill"
-          hoverEffect="fill"
-          indicator="dot"
-          size="md"
-        />
-      </div>
+      />
 
       {/* 4. Main Stage Content */}
       <main
@@ -386,18 +367,6 @@ export default function App() {
             <ProjectShowcase />
         </section>
       </main>
-
-      {/* 5. ScrollVelocity Marquee Strip */}
-      <div style={{ width: '100%', borderTop: '1px solid rgba(255, 255, 255, 0.06)' }}>
-        <ScrollVelocity
-          texts={['MATHELY MITTAL', 'SYSTEMS BUILDER · LOCAL AI · NATIVE MACOS · 2026']}
-          velocity={40}
-          fontSize={20}
-          fontWeight={800}
-          color="rgba(255, 255, 255, 0.22)"
-          skewWithVelocity={6}
-        />
-      </div>
     </div>
   );
 }
