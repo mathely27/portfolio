@@ -1,0 +1,23 @@
+.contact-card-atom {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-card-atom canvas,
+.contact-card-atom img {
+  width: 92px;
+  height: 92px;
+}
+
+.contact-card-grid {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-card-grid canvas,
+.contact-card-grid img {
+  width: 92px;
+  height: 92px;
+}

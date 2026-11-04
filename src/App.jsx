@@ -5,8 +5,9 @@ import TextPressure from './components/TextPressure';
 import BlurText from './components/BlurText';
 import TechStackGrid from './components/TechStackGrid';
 import ProjectGrid from './components/ProjectGrid';
+import ContactCard from './components/ContactCard';
 import GlowCursor from './components/GlowCursor';
-import { GithubIcon, LinkedinIcon } from './components/Icons';
+import { GithubIcon, LinkedinIcon, EmailIcon, LeetcodeIcon } from './components/Icons';
 import { ArrowRight } from 'lucide-react';
 
 /* ============================================================
@@ -53,6 +54,22 @@ export default function App() {
     if (!projectsEl) return;
     const mid = el.scrollTop + el.clientHeight * 0.5;
     setActiveTab(mid >= projectsEl.offsetTop ? 'projects' : 'about');
+  };
+
+  const handleScrollIntented = (e) => {
+    const el = e.currentTarget;
+    const aboutEl = document.getElementById('about');
+    const projectsEl = document.getElementById('projects');
+    const connectEl = document.getElementById('connect');
+    if (!aboutEl || !projectsEl || !connectEl) return;
+    const mid = el.scrollTop + el.clientHeight * 0.5;
+    if (mid >= connectEl.offsetTop) {
+      setActiveTab('projects');
+    } else if (mid >= projectsEl.offsetTop) {
+      setActiveTab('projects');
+    } else {
+      setActiveTab('about');
+    }
   };
 
   const triggerEnter = () => {
@@ -127,16 +144,16 @@ export default function App() {
           clickBurst
           theme="dark"
           style={{ position: 'fixed', inset: 0, zIndex: 9999, pointerEvents: 'none' }}
-        />
-      )}
+        />        )}
 
       {/* 3. Single-line horizontal navbar with widely spaced links */}
       <LineNav
         items={[
           { label: 'About & Stack', href: '#about' },
           { label: 'Projects', href: '#projects' },
+          { label: 'Connect', href: '#connect' },
         ]}
-        activeHref={activeTab === 'about' ? '#about' : '#projects'}
+        activeHref={activeTab === 'about' ? '#about' : activeTab === 'projects' ? '#projects' : '#connect'}
         onNavigate={(item, index, event) => {
           event?.preventDefault?.();
           const id = (item.href || '').replace('#', '');
@@ -394,7 +411,7 @@ export default function App() {
                 color: '#ffffff',
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                marginBottom: '16px',
+                marginBottom: '22px',
                 textAlign: 'left',
                 fontWeight: 700,
               }}
@@ -403,6 +420,12 @@ export default function App() {
             </div>
 
             <ProjectGrid />
+
+            <ContactCard
+              linkedinUrl="https://www.linkedin.com/in/mathely-mittal-b284143b9/"
+              emailAddress="mathely27@gmail.com"
+              githubUrl="https://github.com/mathely27"
+            />
         </section>
       </main>
     </div>
