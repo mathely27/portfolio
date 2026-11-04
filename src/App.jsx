@@ -5,7 +5,7 @@ import TextPressure from './components/TextPressure';
 import BlurText from './components/BlurText';
 import TechStackGrid from './components/TechStackGrid';
 import ProjectGrid from './components/ProjectGrid';
-import LabelOrbit from './components/LabelOrbit';
+import GlowCursor from './components/GlowCursor';
 import { GithubIcon, LinkedinIcon } from './components/Icons';
 import { ArrowRight } from 'lucide-react';
 
@@ -114,8 +114,17 @@ export default function App() {
         />
       )}
 
-      {/* 2. LabelOrbit cursor (tiny pastel word label with a 3D trail) */}
-      {!showSplash && <LabelOrbit />}
+      {!showSplash && (
+        <GlowCursor
+          color="#94a3b8"
+          intensity={1.3}
+          trailWidth={3}
+          linger={1.4}
+          glow={1.2}
+          clickBurst
+          theme="dark"
+        />
+      )}
 
       {/* 3. Single-line horizontal navbar with widely spaced links */}
       <LineNav
