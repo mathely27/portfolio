@@ -1,4 +1,5 @@
-// Auto-generated contribution data with distinct month groupings
+export const REAL_GITHUB_COUNT = "258";
+export const REAL_LEETCODE_COUNT = "154";
 export const GITHUB_MONTHS = [
   {
     "month": "Nov",

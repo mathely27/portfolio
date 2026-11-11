@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { GITHUB_MONTHS, LEETCODE_MONTHS } from './contributionData';
+import { GITHUB_MONTHS, LEETCODE_MONTHS, REAL_GITHUB_COUNT, REAL_LEETCODE_COUNT } from './contributionData';
 
 const GREEN_SHADES = {
   0: 'transparent',
@@ -9,11 +9,52 @@ const GREEN_SHADES = {
   4: '#216e39',
 };
 
+// Interactive animated number counter on scroll
+function AnimatedCounter({ endVal, isVisible, suffix = '' }) {
+  const [val, setVal] = useState(0);
+  const target = parseInt(String(endVal).replace(/[^0-9]/g, ''), 10) || 0;
+
+  useEffect(() => {
+    if (!isVisible) {
+      setVal(0);
+      return;
+    }
+
+    let start = 0;
+    const duration = 1200;
+    const startTime = performance.now();
+
+    const frame = (now) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(eased * target);
+      setVal(current);
+      if (progress < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        setVal(target);
+      }
+    };
+
+    requestAnimationFrame(frame);
+  }, [isVisible, target]);
+
+  return (
+    <span>
+      {val.toLocaleString()}
+      {suffix}
+    </span>
+  );
+}
+
 function ContributionHeatmap({
-  title,
+  countNumber,
+  subjectLabel,
   monthsData,
-  isAnimated,
-  legendTitle = 'Less',
+  isVisible,
+  accentColor = '#39d353',
 }) {
   const [hoveredDay, setHoveredDay] = useState(null);
 
@@ -26,15 +67,35 @@ function ContributionHeatmap({
         border: '1px solid rgba(255, 255, 255, 0.08)',
         borderRadius: '16px',
         padding: '24px 28px',
-        boxShadow: '0 12px 40px rgba(0, 0, 0, 0.5)',
+        boxShadow: '0 14px 44px rgba(0, 0, 0, 0.55)',
         display: 'flex',
         flexDirection: 'column',
         gap: '18px',
         position: 'relative',
         userSelect: 'none',
+        transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.16)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
       }}
     >
-      {/* Top Header Row */}
+      <style>{`
+        @keyframes subtleTilePulse {
+          0%, 100% { filter: brightness(1); }
+          50% { filter: brightness(1.22); }
+        }
+        .active-contrib-tile:hover {
+          transform: scale(1.48) !important;
+          z-index: 20;
+          box-shadow: 0 0 10px rgba(155, 233, 168, 0.95) !important;
+          transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+        }
+      `}</style>
+
+      {/* Top Header Row with Real Animated Count */}
       <div
         style={{
           display: 'flex',
@@ -45,16 +106,22 @@ function ContributionHeatmap({
           fontFamily: "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
         }}
       >
-        <span
+        <div
           style={{
             fontSize: '13.5px',
             color: '#7d8590',
             fontWeight: 500,
             letterSpacing: '0.01em',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
           }}
         >
-          {title}
-        </span>
+          <span style={{ color: '#ffffff', fontWeight: 700, fontSize: '15px' }}>
+            <AnimatedCounter endVal={countNumber} isVisible={isVisible} />
+          </span>
+          <span>{subjectLabel}</span>
+        </div>
 
         {/* Legend */}
         <div
@@ -66,7 +133,7 @@ function ContributionHeatmap({
             color: '#7d8590',
           }}
         >
-          <span>{legendTitle}</span>
+          <span>Less</span>
           {[1, 2, 3, 4].map((lvl) => (
             <span
               key={lvl}
@@ -83,13 +150,13 @@ function ContributionHeatmap({
         </div>
       </div>
 
-      {/* Heatmap Matrix with Month Gaps */}
+      {/* Heatmap Matrix with Clean Month Separation & Wave Animation */}
       <div
         style={{
           width: '100%',
           overflowX: 'auto',
           WebkitOverflowScrolling: 'touch',
-          paddingBottom: '4px',
+          paddingBottom: '6px',
           display: 'flex',
           alignItems: 'flex-start',
           gap: '12px',
@@ -115,12 +182,12 @@ function ContributionHeatmap({
           <span>Fri</span>
         </div>
 
-        {/* Months Container with Distinct Spacing Between Each Month */}
+        {/* Months Container */}
         <div
           style={{
             display: 'flex',
             alignItems: 'flex-start',
-            gap: '12px', // Clear visual gap between months!
+            gap: '13px', // Distinct readable gap between months
             flex: 1,
           }}
         >
@@ -134,7 +201,7 @@ function ContributionHeatmap({
                 alignItems: 'flex-start',
               }}
             >
-              {/* Month Header directly aligned with its week columns */}
+              {/* Month Header positioned directly on its week group */}
               <span
                 style={{
                   fontFamily: "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
@@ -142,6 +209,7 @@ function ContributionHeatmap({
                   color: '#7d8590',
                   height: '14px',
                   lineHeight: '14px',
+                  fontWeight: 500,
                 }}
               >
                 {mGroup.month}
@@ -165,13 +233,14 @@ function ContributionHeatmap({
                   >
                     {week.map((day, dIdx) => {
                       const isActive = day.level > 0;
-                      const delay = isAnimated
-                        ? `${mIdx * 45 + wIdx * 12 + dIdx * 8}ms`
-                        : '0ms';
+                      // Dynamic Wave Calculation: diagonal wave sweeps across columns & rows
+                      const waveIndex = mIdx * 4 + wIdx + dIdx * 0.4;
+                      const delayMs = Math.round(waveIndex * 22);
 
                       return (
                         <div
                           key={day.date}
+                          className={isActive ? 'active-contrib-tile' : ''}
                           onMouseEnter={() => setHoveredDay(day)}
                           onMouseLeave={() => setHoveredDay(null)}
                           style={{
@@ -183,17 +252,15 @@ function ContributionHeatmap({
                               : 'transparent',
                             outline: isActive
                               ? 'none'
-                              : '1px solid rgba(255, 255, 255, 0.03)',
-                            transform: isAnimated
-                              ? 'scale(1) translateY(0)'
-                              : 'scale(0.3) translateY(12px)',
-                            opacity: isAnimated ? (isActive ? 1 : 0.3) : 0,
-                            transition: `transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) ${delay}, opacity 0.35s ease ${delay}, filter 0.15s ease`,
+                              : '1px solid rgba(255, 255, 255, 0.035)',
+                            // Animation on scroll: Wave-in with scale & spring
+                            transform: isVisible
+                              ? 'scale(1) translateY(0) rotate(0deg)'
+                              : 'scale(0.1) translateY(18px) rotate(-12deg)',
+                            opacity: isVisible ? (isActive ? 1 : 0.25) : 0,
+                            transition: `transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) ${delayMs}ms, opacity 0.3s ease ${delayMs}ms, filter 0.2s ease`,
                             cursor: isActive ? 'pointer' : 'default',
-                            boxShadow:
-                              isActive && hoveredDay?.date === day.date
-                                ? '0 0 8px rgba(155, 233, 168, 0.9)'
-                                : 'none',
+                            position: 'relative',
                           }}
                         />
                       );
@@ -206,28 +273,43 @@ function ContributionHeatmap({
         </div>
       </div>
 
-      {/* Floating Hover Tooltip */}
+      {/* Interactive Tooltip */}
       {hoveredDay && (
         <div
           style={{
             position: 'absolute',
-            bottom: '10px',
+            bottom: '12px',
             right: '24px',
             padding: '5px 12px',
             background: '#161b22',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
+            border: '1px solid rgba(255, 255, 255, 0.16)',
             borderRadius: '6px',
             fontFamily: "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
             fontSize: '11px',
             color: '#e6edf3',
             pointerEvents: 'none',
-            boxShadow: '0 4px 14px rgba(0,0,0,0.4)',
+            boxShadow: '0 4px 16px rgba(0,0,0,0.5)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            zIndex: 30,
+            animation: 'fadeIn 0.15s ease both',
           }}
         >
-          <span style={{ color: '#39d353', fontWeight: 600 }}>
-            {hoveredDay.count > 0 ? `${hoveredDay.count} activities` : 'No activity'}
+          <span
+            style={{
+              width: '7px',
+              height: '7px',
+              borderRadius: '50%',
+              background: hoveredDay.count > 0 ? accentColor : '#6e7681',
+            }}
+          />
+          <span style={{ color: '#ffffff', fontWeight: 600 }}>
+            {hoveredDay.count > 0
+              ? `${hoveredDay.count} ${hoveredDay.count === 1 ? 'activity' : 'activities'}`
+              : 'No activity'}
           </span>
-          <span style={{ color: '#8b949e', marginLeft: '6px' }}>on {hoveredDay.date}</span>
+          <span style={{ color: '#8b949e' }}>on {hoveredDay.date}</span>
         </div>
       )}
     </div>
@@ -273,20 +355,22 @@ export default function ContributionGraphs() {
         gap: 'clamp(24px, 3.5vw, 36px)',
       }}
     >
-      {/* 1. GITHUB HEATMAP */}
+      {/* 1. GITHUB HEATMAP - Real Contributions */}
       <ContributionHeatmap
-        title="1,981 contributions in the last year"
+        countNumber={REAL_GITHUB_COUNT}
+        subjectLabel="contributions in the last year"
         monthsData={GITHUB_MONTHS}
-        isAnimated={isVisible}
-        legendTitle="Less"
+        isVisible={isVisible}
+        accentColor="#39d353"
       />
 
-      {/* 2. LEETCODE HEATMAP (Same Clean Spaced Format) */}
+      {/* 2. LEETCODE HEATMAP - Real Problems Solved */}
       <ContributionHeatmap
-        title="154 problems solved in the last year"
+        countNumber={REAL_LEETCODE_COUNT}
+        subjectLabel="problems solved in the last year"
         monthsData={LEETCODE_MONTHS}
-        isAnimated={isVisible}
-        legendTitle="Less"
+        isVisible={isVisible}
+        accentColor="#ffa116"
       />
     </section>
   );
