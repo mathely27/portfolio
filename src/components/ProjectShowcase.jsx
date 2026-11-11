@@ -5,6 +5,7 @@ import { ExternalLink } from 'lucide-react';
 /**
  * ProjectShowcase - Featuring <OrbitImages /> from React Bits
  * Verified public projects from GitHub @mathely27.
+ * All cards now use real screenshots instead of SVG placeholders.
  */
 export default function ProjectShowcase() {
   const projectList = [
@@ -15,7 +16,7 @@ export default function ProjectShowcase() {
       desc: 'Native macOS utility that locks protected applications behind Apple Touch ID biometric authentication or Mac admin password. Runs silently with zero battery overhead.',
       stack: ['Swift', 'SwiftUI', 'Touch ID', 'LocalAuth'],
       repo: 'https://github.com/mathely27/macapplock',
-      svgCard: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><rect width="300" height="300" rx="28" fill="%23121215" stroke="%232a2a30" stroke-width="2"/><text x="24" y="48" fill="%2371717a" font-family="monospace" font-size="11" letter-spacing="1">01 / MACOS UTILITY</text><text x="24" y="104" fill="%23ffffff" font-family="sans-serif" font-weight="900" font-size="28">AppLocker</text><text x="24" y="142" fill="%23a1a1aa" font-family="sans-serif" font-size="13">Touch ID Biometric Lock</text><rect x="24" y="220" width="75" height="26" rx="6" fill="%23222226"/><text x="36" y="237" fill="%23ffffff" font-family="monospace" font-size="11">SWIFT</text><rect x="109" y="220" width="85" height="26" rx="6" fill="%23222226"/><text x="121" y="237" fill="%23ffffff" font-family="monospace" font-size="11">SWIFTUI</text></svg>`,
+      svgCard: '/assets/applocker-preview-new.png',
     },
     {
       id: 1,
@@ -24,7 +25,7 @@ export default function ProjectShowcase() {
       desc: 'Offline personal AI assistant running locally on Mac via Ollama (Qwen3). Executes system tasks, inspects workspaces, and runs without sending data to third parties.',
       stack: ['Python', 'Ollama', 'Qwen3', 'PySide6'],
       repo: 'https://github.com/mathely27/Berry',
-      svgCard: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><rect width="300" height="300" rx="28" fill="%23121215" stroke="%232a2a30" stroke-width="2"/><text x="24" y="48" fill="%2371717a" font-family="monospace" font-size="11" letter-spacing="1">02 / LOCAL AI</text><text x="24" y="104" fill="%23ffffff" font-family="sans-serif" font-weight="900" font-size="28">Berry AI</text><text x="24" y="142" fill="%23a1a1aa" font-family="sans-serif" font-size="13">Offline Assistant / Qwen3</text><rect x="24" y="220" width="85" height="26" rx="6" fill="%23222226"/><text x="36" y="237" fill="%23ffffff" font-family="monospace" font-size="11">PYTHON</text><rect x="119" y="220" width="80" height="26" rx="6" fill="%23222226"/><text x="131" y="237" fill="%23ffffff" font-family="monospace" font-size="11">OLLAMA</text></svg>`,
+      svgCard: '/assets/berry-preview.png',
     },
     {
       id: 2,
@@ -33,7 +34,7 @@ export default function ProjectShowcase() {
       desc: 'Autonomous agent system built with Pydantic-AI and local models. Features multi-step tool calling, file system inspection, and zero-latency local execution.',
       stack: ['Python', 'Pydantic-AI', 'Qwen3'],
       repo: 'https://github.com/mathely27/ai-agent-',
-      svgCard: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><rect width="300" height="300" rx="28" fill="%23121215" stroke="%232a2a30" stroke-width="2"/><text x="24" y="48" fill="%2371717a" font-family="monospace" font-size="11" letter-spacing="1">03 / TOOL AGENTS</text><text x="24" y="104" fill="%23ffffff" font-family="sans-serif" font-weight="900" font-size="28">Autonomous</text><text x="24" y="142" fill="%23a1a1aa" font-family="sans-serif" font-size="13">Pydantic-AI Tool Runner</text><rect x="24" y="220" width="115" height="26" rx="6" fill="%23222226"/><text x="36" y="237" fill="%23ffffff" font-family="monospace" font-size="11">PYDANTIC-AI</text></svg>`,
+      svgCard: '/assets/autonomous-preview.png',
     },
     {
       id: 3,
@@ -42,25 +43,25 @@ export default function ProjectShowcase() {
       desc: 'Fast, responsive web platform designed with React on the frontend and Node.js on the backend. Modular component architecture, calm dark mode, and RESTful API.',
       stack: ['React', 'Node.js', 'Express', 'MongoDB'],
       repo: 'https://github.com/mathely27/project-x',
-      svgCard: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><rect width="300" height="300" rx="28" fill="%23121215" stroke="%232a2a30" stroke-width="2"/><text x="24" y="48" fill="%2371717a" font-family="monospace" font-size="11" letter-spacing="1">04 / FULL-STACK</text><text x="24" y="104" fill="%23ffffff" font-family="sans-serif" font-weight="900" font-size="28">Clutch</text><text x="24" y="142" fill="%23a1a1aa" font-family="sans-serif" font-size="13">React + Node.js Platform</text><rect x="24" y="220" width="75" height="26" rx="6" fill="%23222226"/><text x="36" y="237" fill="%23ffffff" font-family="monospace" font-size="11">REACT</text><rect x="109" y="220" width="85" height="26" rx="6" fill="%23222226"/><text x="121" y="237" fill="%23ffffff" font-family="monospace" font-size="11">NODE.JS</text></svg>`,
+      svgCard: '/assets/clutch-preview.png',
     },
     {
       id: 4,
-      title: 'Native Biometrics',
-      category: 'Security Architecture',
-      desc: 'Swift LocalAuthentication integration for daemon security and macOS app sandboxing.',
-      stack: ['Swift', 'Security', 'macOS'],
-      repo: 'https://github.com/mathely27/macapplock',
-      svgCard: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><rect width="300" height="300" rx="28" fill="%23121215" stroke="%232a2a30" stroke-width="2"/><text x="24" y="48" fill="%2371717a" font-family="monospace" font-size="11" letter-spacing="1">SYSTEM / API</text><text x="24" y="104" fill="%23ffffff" font-family="sans-serif" font-weight="900" font-size="26">Biometrics</text><text x="24" y="142" fill="%23a1a1aa" font-family="sans-serif" font-size="13">Apple Touch ID & Pam</text><rect x="24" y="220" width="95" height="26" rx="6" fill="%23222226"/><text x="36" y="237" fill="%23ffffff" font-family="monospace" font-size="11">MACOS API</text></svg>`,
+      title: 'GitStatCard',
+      category: 'GitHub Stats Generator',
+      desc: 'Live GitHub stat card generator with contribution graph, streak counter, and language breakdown.',
+      stack: ['CSS', 'JavaScript', 'GitHub API'],
+      repo: 'https://github.com/mathely27/gitstatcard',
+      svgCard: '/assets/gitstatcard-preview.png',
     },
     {
       id: 5,
-      title: 'Local Reasoning',
-      category: 'AI Pipeline',
-      desc: 'Zero-cloud local inference running Qwen3 with low-memory footprint and high-speed token generation.',
-      stack: ['Python', 'Ollama', 'Qwen3'],
-      repo: 'https://github.com/mathely27/Berry',
-      svgCard: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><rect width="300" height="300" rx="28" fill="%23121215" stroke="%232a2a30" stroke-width="2"/><text x="24" y="48" fill="%2371717a" font-family="monospace" font-size="11" letter-spacing="1">PIPELINE</text><text x="24" y="104" fill="%23ffffff" font-family="sans-serif" font-weight="900" font-size="26">Inference</text><text x="24" y="142" fill="%23a1a1aa" font-family="sans-serif" font-size="13">Zero-Cloud Local LLM</text><rect x="24" y="220" width="85" height="26" rx="6" fill="%23222226"/><text x="36" y="237" fill="%23ffffff" font-family="monospace" font-size="11">OLLAMA</text></svg>`,
+      title: 'Portfolio',
+      category: 'Personal Site',
+      desc: 'This monochrome portfolio site built with React and Vite, featuring 3D orbits, chroma grids, and smooth animations.',
+      stack: ['React', 'Vite', 'Framer Motion'],
+      repo: 'https://github.com/mathely27/portfolio',
+      svgCard: '/assets/portfolio-preview.png',
     },
   ];
 
