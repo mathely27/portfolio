@@ -415,7 +415,9 @@ export default function App() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: 'clamp(18px, 4vw, 24px) 0 clamp(28px, 6vw, 40px)',
+            marginTop: 'clamp(60px, 8vw, 110px)',
+            paddingTop: 'clamp(20px, 4vw, 40px)',
+            paddingBottom: 'clamp(32px, 7vw, 60px)',
           }}
         >
             <div
@@ -427,7 +429,7 @@ export default function App() {
                 color: '#ffffff',
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                marginBottom: '22px',
+                marginBottom: '28px',
                 textAlign: 'left',
                 fontWeight: 700,
               }}
