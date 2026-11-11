@@ -2,8 +2,8 @@ import React from 'react';
 
 /**
  * ContributionGraphs
- * Renders GitHub and LeetCode transparent SVG cards in the exact same format
- * as Mathely's GitHub README profile card (card-dark.svg).
+ * Renders GitHub and LeetCode contribution heatmap cards
+ * matching the user's exact specification.
  */
 export default function ContributionGraphs() {
   return (
@@ -17,10 +17,10 @@ export default function ContributionGraphs() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 'clamp(28px, 4vw, 44px)',
+        gap: 'clamp(20px, 3vw, 32px)',
       }}
     >
-      {/* 1. GITHUB ACTIVITY SVG CARD (Exact same format as README card) */}
+      {/* 1. GITHUB CONTRIBUTIONS HEATMAP CARD */}
       <div
         style={{
           width: '100%',
@@ -31,19 +31,21 @@ export default function ContributionGraphs() {
         }}
       >
         <img
-          src="/assets/github-card-dark.svg"
-          alt="GitHub Activity & Contributions @mathely27"
+          src="/assets/github-contributions-exact.svg"
+          alt="GitHub Contributions: 1,981 contributions in the last year"
           style={{
             width: '100%',
             maxWidth: '1000px',
             height: 'auto',
             display: 'block',
+            borderRadius: '16px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
           }}
           loading="lazy"
         />
       </div>
 
-      {/* 2. LEETCODE STATS SVG CARD (Exact same boxes & format as README card) */}
+      {/* 2. LEETCODE PROBLEMS HEATMAP CARD (SAME FORMAT) */}
       <div
         style={{
           width: '100%',
@@ -54,13 +56,15 @@ export default function ContributionGraphs() {
         }}
       >
         <img
-          src="/assets/leetcode-card-dark.svg"
-          alt="LeetCode Problem Solving Stats @mathely_27"
+          src="/assets/leetcode-contributions-exact.svg"
+          alt="LeetCode: 154 problems solved in the last year"
           style={{
             width: '100%',
             maxWidth: '1000px',
             height: 'auto',
             display: 'block',
+            borderRadius: '16px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
           }}
           loading="lazy"
         />

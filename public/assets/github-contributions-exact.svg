@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="195" viewBox="0 0 1000 195" role="img">
+  <rect width="1000" height="195" rx="16" fill="#0d1117" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1"/>
+  
+  <!-- Header Left -->
+  <text x="24" y="34" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="14" fill="#7d8590" font-weight="500">1,981 contributions in the last year</text>
+
+  <!-- Header Right (Legend) -->
+  <text x="815" y="34" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="12" fill="#7d8590">Less</text>
+  <rect x="852" y="24" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="867" y="24" width="10.5" height="10.5" rx="2.5" fill="#40c463"/>
+  <rect x="882" y="24" width="10.5" height="10.5" rx="2.5" fill="#30a14e"/>
+  <rect x="897" y="24" width="10.5" height="10.5" rx="2.5" fill="#216e39"/>
+  <text x="916" y="34" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="12" fill="#7d8590">More</text>
+
+  <!-- Months Header -->
+  <text x="70" y="56" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">Nov</text>
+  <text x="145" y="56" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">Dec</text>
+  <text x="225" y="56" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">Jan</text>
+  <text x="300" y="56" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">Feb</text>
+  <text x="380" y="56" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">Mar</text>
+  <text x="460" y="56" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">Apr</text>
+  <text x="535" y="56" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">May</text>
+  <text x="615" y="56" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">Jun</text>
+  <text x="690" y="56" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">Jul</text>
+  <text x="770" y="56" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">Aug</text>
+  <text x="845" y="56" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">Sep</text>
+  <text x="925" y="56" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">Oct</text>
+
+  <!-- Days Labels -->
+  <text x="24" y="102" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">Mon</text>
+  <text x="24" y="131" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">Wed</text>
+  <text x="24" y="160" font-family="ui-monospace, SF Mono, Menlo, Consolas, monospace" font-size="11" fill="#7d8590">Fri</text>
+
+  <!-- Grid of floating active squares -->
+  <rect x="93.0" y="146.5" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="107.5" y="88.5" width="10.5" height="10.5" rx="2.5" fill="#40c463"/>
+  <rect x="107.5" y="103.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="107.5" y="117.5" width="10.5" height="10.5" rx="2.5" fill="#216e39"/>
+  <rect x="107.5" y="161.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="136.5" y="74.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="136.5" y="88.5" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="136.5" y="103.0" width="10.5" height="10.5" rx="2.5" fill="#40c463"/>
+  <rect x="136.5" y="117.5" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="136.5" y="132.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="136.5" y="161.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="151.0" y="103.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="165.5" y="74.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="165.5" y="88.5" width="10.5" height="10.5" rx="2.5" fill="#40c463"/>
+  <rect x="209.0" y="103.0" width="10.5" height="10.5" rx="2.5" fill="#30a14e"/>
+  <rect x="209.0" y="117.5" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="238.0" y="146.5" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="238.0" y="161.0" width="10.5" height="10.5" rx="2.5" fill="#40c463"/>
+  <rect x="252.5" y="146.5" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="252.5" y="161.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="267.0" y="103.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="267.0" y="132.0" width="10.5" height="10.5" rx="2.5" fill="#216e39"/>
+  <rect x="267.0" y="161.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="354.0" y="117.5" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="354.0" y="161.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="368.5" y="103.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="368.5" y="161.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="383.0" y="74.0" width="10.5" height="10.5" rx="2.5" fill="#30a14e"/>
+  <rect x="470.0" y="74.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="484.5" y="103.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="484.5" y="117.5" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="499.0" y="74.0" width="10.5" height="10.5" rx="2.5" fill="#40c463"/>
+  <rect x="499.0" y="88.5" width="10.5" height="10.5" rx="2.5" fill="#40c463"/>
+  <rect x="586.0" y="117.5" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="586.0" y="161.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="600.5" y="74.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="615.0" y="103.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="658.5" y="117.5" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="687.5" y="74.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="687.5" y="88.5" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="702.0" y="161.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="745.5" y="161.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="760.0" y="88.5" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="760.0" y="103.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="760.0" y="161.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="789.0" y="74.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="789.0" y="88.5" width="10.5" height="10.5" rx="2.5" fill="#30a14e"/>
+  <rect x="789.0" y="132.0" width="10.5" height="10.5" rx="2.5" fill="#40c463"/>
+  <rect x="789.0" y="161.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+  <rect x="818.0" y="103.0" width="10.5" height="10.5" rx="2.5" fill="#9be9a8"/>
+</svg>
