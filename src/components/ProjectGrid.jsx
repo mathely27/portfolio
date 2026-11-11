@@ -4,38 +4,16 @@ import { GithubIcon, LinkedinIcon } from './Icons';
 
 /**
  * ProjectGrid - selected builds shown with <ChromaGrid /> from React Bits.
- * All cards feature real screenshots from live deployed apps and projects.
+ * Sequence:
+ * 1. AppLocker (Mac App Lock) - Top
+ * 2. Berry AI - PySide6 local LLM
+ * 3. Autonomous Agents - Pydantic-AI
+ * 4. Clutch - Full-Stack React + Node.js (Dashboard view)
+ * 5. GitStatCard - Live GitHub stat card generator
+ * 6. Portfolio - Vite monochrome portfolio
  */
 
 const PROJECTS = [
-  {
-    title: 'DailyForge',
-    subtitle: 'MERN · fullstack productivity routine planner',
-    accent: '#F97316',
-    image: '/assets/dailyforge-preview.png',
-    url: 'https://dailyforge-frontend-lhjq.onrender.com',
-  },
-  {
-    title: 'Clutch',
-    subtitle: 'React / Node.js · full-stack platform',
-    accent: '#61DAFB',
-    image: '/assets/clutch-preview.png',
-    url: 'https://project-x-navy-eight.vercel.app',
-  },
-  {
-    title: 'Feargon',
-    subtitle: 'Next.js / React · modern deployed web app',
-    accent: '#8B5CF6',
-    image: '/assets/feargon-preview.png',
-    url: 'https://feargon.vercel.app',
-  },
-  {
-    title: 'Text Encryptor',
-    subtitle: 'JavaScript / Crypto · text encryption utility',
-    accent: '#10B981',
-    image: '/assets/text-encryptor-preview.png',
-    url: 'https://text-encryptor-one.vercel.app',
-  },
   {
     title: 'AppLocker',
     subtitle: 'Swift / SwiftUI · Touch ID app lock for macOS',
@@ -44,11 +22,39 @@ const PROJECTS = [
     url: 'https://github.com/mathely27/macapplock',
   },
   {
-    title: 'Neumorphic Timer',
-    subtitle: 'CSS / JS · Neumorphic design stopwatch',
-    accent: '#EC4899',
-    image: '/assets/stopwatch-preview.png',
-    url: 'https://mathely27.github.io/neumorphic-stopwatch/',
+    title: 'Berry',
+    subtitle: 'Python / Ollama · offline AI assistant',
+    accent: '#34D399',
+    image: '/assets/berry-ui-preview.png',
+    url: 'https://github.com/mathely27/Berry',
+  },
+  {
+    title: 'Autonomous Agents',
+    subtitle: 'Pydantic-AI · multi-step tool calling',
+    accent: '#E92063',
+    image: '/assets/autonomous-preview.png',
+    url: 'https://github.com/mathely27/ai-agent-',
+  },
+  {
+    title: 'Clutch',
+    subtitle: 'React / Node.js · full-stack platform (Dashboard)',
+    accent: '#61DAFB',
+    image: '/assets/clutch-dashboard-preview.png',
+    url: 'https://project-x-navy-eight.vercel.app',
+  },
+  {
+    title: 'GitStatCard',
+    subtitle: 'CSS · live GitHub stat card generator',
+    accent: '#8957E5',
+    image: '/assets/gitstatcard-preview.png',
+    url: 'https://github.com/mathely27/gitstatcard',
+  },
+  {
+    title: 'Portfolio',
+    subtitle: 'React / Vite · this monochrome site',
+    accent: '#A1A1AA',
+    image: '/assets/portfolio-live-preview.png',
+    url: 'https://mathelymittal.vercel.app',
   },
 ];
 
