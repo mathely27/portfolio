@@ -7,10 +7,10 @@ import { GithubIcon, LinkedinIcon } from './Icons';
  * Sequence:
  * 1. AppLocker (Mac App Lock) - Top
  * 2. Berry AI - PySide6 local LLM
- * 3. Autonomous Agents - Pydantic-AI
+ * 3. Autonomous - Live deployed AI persona on Vercel
  * 4. Clutch - Full-Stack React + Node.js (Dashboard view)
- * 5. GitStatCard - Live GitHub stat card generator
- * 6. Portfolio - Vite monochrome portfolio
+ * 5. GitStatCard - Live deployed stat card generator on Vercel
+ * 6. Text Encryptor - Live deployed cryptography tool on Vercel
  */
 
 const PROJECTS = [
@@ -29,11 +29,11 @@ const PROJECTS = [
     url: 'https://github.com/mathely27/Berry',
   },
   {
-    title: 'Autonomous Agents',
-    subtitle: 'Pydantic-AI · multi-step tool calling',
+    title: 'Autonomous',
+    subtitle: 'Next.js 14 / Groq · live autonomous AI persona',
     accent: '#E92063',
-    image: '/assets/autonomous-preview.png',
-    url: 'https://github.com/mathely27/ai-agent-',
+    image: '/assets/autonomous-live-preview.png',
+    url: 'https://autonomous-ai-persona.vercel.app',
   },
   {
     title: 'Clutch',
@@ -44,17 +44,17 @@ const PROJECTS = [
   },
   {
     title: 'GitStatCard',
-    subtitle: 'CSS · live GitHub stat card generator',
+    subtitle: 'CSS / Python · live deployed card generator',
     accent: '#8957E5',
-    image: '/assets/gitstatcard-preview.png',
-    url: 'https://github.com/mathely27/gitstatcard',
+    image: '/assets/gitstatcard-live-preview.png',
+    url: 'https://gitstatcard.vercel.app',
   },
   {
-    title: 'Portfolio',
-    subtitle: 'React / Vite · this monochrome site',
-    accent: '#A1A1AA',
-    image: '/assets/portfolio-live-preview.png',
-    url: 'https://mathelymittal.vercel.app',
+    title: 'Text Encryptor',
+    subtitle: 'JavaScript / Crypto · live deployed text encryption',
+    accent: '#10B981',
+    image: '/assets/text-encryptor-preview.png',
+    url: 'https://text-encryptor-one.vercel.app',
   },
 ];
 

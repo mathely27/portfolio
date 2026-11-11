@@ -4,6 +4,7 @@ import LineNav from './components/LineNav';
 import TextPressure from './components/TextPressure';
 import BlurText from './components/BlurText';
 import TechStackGrid from './components/TechStackGrid';
+import ContributionGraphs from './components/ContributionGraphs';
 import ProjectGrid from './components/ProjectGrid';
 import ContactCard from './components/ContactCard';
 import GlowCursor from './components/GlowCursor';
@@ -50,10 +51,19 @@ export default function App() {
 
   const handleScroll = (e) => {
     const el = e.currentTarget;
+    const activityEl = document.getElementById('activity');
     const projectsEl = document.getElementById('projects');
-    if (!projectsEl) return;
+    const connectEl = document.getElementById('connect');
     const mid = el.scrollTop + el.clientHeight * 0.5;
-    setActiveTab(mid >= projectsEl.offsetTop ? 'projects' : 'about');
+    if (connectEl && mid >= connectEl.offsetTop) {
+      setActiveTab('connect');
+    } else if (projectsEl && mid >= projectsEl.offsetTop) {
+      setActiveTab('projects');
+    } else if (activityEl && mid >= activityEl.offsetTop) {
+      setActiveTab('activity');
+    } else {
+      setActiveTab('about');
+    }
   };
 
   const handleScrollIntented = (e) => {
@@ -150,17 +160,18 @@ export default function App() {
       <LineNav
         items={[
           { label: 'About & Stack', href: '#about' },
+          { label: 'Activity', href: '#activity' },
           { label: 'Projects', href: '#projects' },
           { label: 'Connect', href: '#connect', style: { cursor: 'pointer' } },
         ]}
-        activeHref={activeTab === 'about' ? '#about' : activeTab === 'projects' ? '#projects' : '#connect'}
+        activeHref={activeTab === 'about' ? '#about' : activeTab === 'activity' ? '#activity' : activeTab === 'projects' ? '#projects' : '#connect'}
         onNavigate={(item, index, event) => {
           event?.preventDefault?.();
           const id = (item.href || '').replace('#', '');
           document
             .getElementById(id)
             ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          setActiveTab(id === 'projects' ? 'projects' : 'about');
+          setActiveTab(id);
         }}
       />
 
@@ -386,6 +397,11 @@ export default function App() {
               <TechStackGrid />
             </div>
         </section>
+
+        {/* ====================================================
+            VIEW 1.5: GITHUB & LEETCODE ACTIVITY GRAPHS (SVG)
+        ==================================================== */}
+        <ContributionGraphs />
 
         {/* ====================================================
             VIEW 2: PROJECTS WITH REACT BITS <ChromaGrid />

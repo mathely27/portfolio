@@ -7,10 +7,10 @@ import { ExternalLink } from 'lucide-react';
  * Sequence:
  * 1. AppLocker (Mac App Lock) - Top
  * 2. Berry AI - PySide6 local LLM
- * 3. Autonomous Agents - Pydantic-AI
+ * 3. Autonomous - Live deployed AI persona on Vercel
  * 4. Clutch - Full-Stack React + Node.js (Dashboard view)
- * 5. GitStatCard - Live GitHub stat card generator
- * 6. Portfolio - Vite monochrome portfolio
+ * 5. GitStatCard - Live deployed stat card generator on Vercel
+ * 6. Text Encryptor - Live deployed cryptography tool on Vercel
  */
 export default function ProjectShowcase() {
   const projectList = [
@@ -35,11 +35,11 @@ export default function ProjectShowcase() {
     {
       id: 2,
       title: 'Autonomous',
-      category: 'Agent Framework',
-      desc: 'Autonomous agent system built with Pydantic-AI and local models. Features multi-step tool calling, file system inspection, and zero-latency local execution.',
-      stack: ['Python', 'Pydantic-AI', 'Qwen3'],
-      repo: 'https://github.com/mathely27/ai-agent-',
-      svgCard: '/assets/autonomous-preview.png',
+      category: 'AI Persona & Agent',
+      desc: 'Autonomous AI persona that aggregates real-time news, scores relevance, and publishes analysis independently 24/7 on Vercel Cron.',
+      stack: ['Next.js 14', 'Groq', 'Supabase', 'Tailwind'],
+      repo: 'https://autonomous-ai-persona.vercel.app',
+      svgCard: '/assets/autonomous-live-preview.png',
     },
     {
       id: 3,
@@ -54,19 +54,19 @@ export default function ProjectShowcase() {
       id: 4,
       title: 'GitStatCard',
       category: 'GitHub Stats Generator',
-      desc: 'Live GitHub stat card generator with contribution graph, streak counter, and language breakdown.',
-      stack: ['CSS', 'JavaScript', 'GitHub API'],
-      repo: 'https://github.com/mathely27/gitstatcard',
-      svgCard: '/assets/gitstatcard-preview.png',
+      desc: 'Live deployed GitHub stat card generator with contribution graph, streak counter, and language breakdown.',
+      stack: ['CSS', 'Python', 'Vercel API'],
+      repo: 'https://gitstatcard.vercel.app',
+      svgCard: '/assets/gitstatcard-live-preview.png',
     },
     {
       id: 5,
-      title: 'Portfolio',
-      category: 'Personal Site',
-      desc: 'This monochrome portfolio site built with React and Vite, featuring 3D orbits, chroma grids, and smooth animations.',
-      stack: ['React', 'Vite', 'Framer Motion'],
-      repo: 'https://github.com/mathely27/portfolio',
-      svgCard: '/assets/portfolio-live-preview.png',
+      title: 'Text Encryptor',
+      category: 'Security / Crypto Tool',
+      desc: 'Interactive live client-side text encryption and decryption utility for secure message encoding.',
+      stack: ['JavaScript', 'HTML5', 'CSS3', 'Web Crypto'],
+      repo: 'https://text-encryptor-one.vercel.app',
+      svgCard: '/assets/text-encryptor-preview.png',
     },
   ];
 
@@ -219,7 +219,7 @@ export default function ProjectShowcase() {
                 onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-1px)')}
                 onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
               >
-                <span>Inspect Project</span>
+                <span>Live Project</span>
                 <ExternalLink size={12} />
               </a>
             </div>
