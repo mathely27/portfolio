@@ -21,7 +21,7 @@ export default function ContactCard({ linkedinUrl, emailAddress }) {
           width: '100%',
           fontFamily: "'Space Mono', monospace",
           fontSize: 'clamp(18px, 4vw, 28px)',
-          color: '#ffffff',
+          color: 'var(--text, #ffffff)',
           letterSpacing: '0.08em',
           textTransform: 'uppercase',
           marginBottom: '32px',
@@ -72,22 +72,22 @@ export default function ContactCard({ linkedinUrl, emailAddress }) {
               alignItems: 'center',
               textDecoration: 'none',
               padding: '22px 18px',
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(255,255,255,0.08)',
+              background: 'var(--card-bg, rgba(255,255,255,0.04))',
+              border: '1px solid var(--border, rgba(255,255,255,0.08))',
               borderRadius: '16px',
               transition: 'transform 0.2s ease, background 0.2s ease, border-color 0.2s ease',
-              boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
               cursor: 'pointer',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-4px)';
-              e.currentTarget.style.background = 'rgba(255,255,255,0.08)';
-              e.currentTarget.style.borderColor = `rgba(255,255,255,0.18)`;
+              e.currentTarget.style.background = 'var(--surface2, rgba(255,255,255,0.08))';
+              e.currentTarget.style.borderColor = `var(--border2, rgba(255,255,255,0.18))`;
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.background = 'rgba(255,255,255,0.04)';
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+              e.currentTarget.style.background = 'var(--card-bg, rgba(255,255,255,0.04))';
+              e.currentTarget.style.borderColor = 'var(--border, rgba(255,255,255,0.08))';
             }}
           >
             <div

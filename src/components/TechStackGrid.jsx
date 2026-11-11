@@ -48,12 +48,12 @@ export default function TechStackGrid() {
           position: relative;
           aspect-ratio: 1 / 1;
           border-radius: 14px;
-          background: rgba(255, 255, 255, 0.035);
-          border: 1.5px solid rgba(255, 255, 255, 0.16);
-          transition: border-color 0.2s ease, transform 0.2s ease;
+          background: var(--card-bg, rgba(255, 255, 255, 0.035));
+          border: 1.5px solid var(--border, rgba(255, 255, 255, 0.16));
+          transition: border-color 0.2s ease, transform 0.2s ease, background 0.3s ease;
         }
         .stack-tile:hover {
-          border-color: rgba(255, 255, 255, 0.42);
+          border-color: var(--border2, rgba(255, 255, 255, 0.42));
           transform: translateY(-2px);
         }
         .stack-glow {
@@ -101,7 +101,7 @@ export default function TechStackGrid() {
           font-weight: 700;
           font-size: clamp(17px, 6vw, 30px);
           line-height: 1;
-          color: #ffffff;
+          color: var(--text, #ffffff);
         }
         .stack-ico {
           grid-area: 1 / 1;
@@ -117,7 +117,7 @@ export default function TechStackGrid() {
           font-family: 'Inter', sans-serif;
           font-size: clamp(8px, 2.1vw, 11.5px);
           line-height: 1;
-          color: #8b949e;
+          color: var(--text-3, #8b949e);
           padding: 0 2px;
           white-space: nowrap;
           overflow: hidden;

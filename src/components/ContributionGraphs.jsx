@@ -55,31 +55,33 @@ function ContributionHeatmap({
   monthsData,
   isVisible,
   accentColor = '#39d353',
+  theme = 'dark',
 }) {
   const [hoveredDay, setHoveredDay] = useState(null);
+  const isLight = theme === 'light';
 
   return (
     <div
       style={{
         width: '100%',
         maxWidth: '1000px',
-        background: '#0d1117',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
+        background: isLight ? '#ffffff' : '#11141c',
+        border: isLight ? '1px solid rgba(15, 23, 42, 0.08)' : '1px solid rgba(255, 255, 255, 0.08)',
         borderRadius: '16px',
         padding: '24px 28px',
-        boxShadow: '0 14px 44px rgba(0, 0, 0, 0.55)',
+        boxShadow: isLight ? '0 10px 30px rgba(0, 0, 0, 0.05)' : '0 14px 44px rgba(0, 0, 0, 0.45)',
         display: 'flex',
         flexDirection: 'column',
         gap: '18px',
         position: 'relative',
         userSelect: 'none',
-        transition: 'border-color 0.3s ease, box-shadow 0.3s ease',
+        transition: 'background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease',
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.16)';
+        e.currentTarget.style.borderColor = isLight ? 'rgba(15, 23, 42, 0.16)' : 'rgba(255, 255, 255, 0.16)';
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+        e.currentTarget.style.borderColor = isLight ? 'rgba(15, 23, 42, 0.08)' : 'rgba(255, 255, 255, 0.08)';
       }}
     >
       <style>{`
@@ -109,7 +111,7 @@ function ContributionHeatmap({
         <div
           style={{
             fontSize: '13.5px',
-            color: '#7d8590',
+            color: isLight ? '#64748b' : '#7d8590',
             fontWeight: 500,
             letterSpacing: '0.01em',
             display: 'flex',
@@ -117,7 +119,7 @@ function ContributionHeatmap({
             gap: '6px',
           }}
         >
-          <span style={{ color: '#ffffff', fontWeight: 700, fontSize: '15px' }}>
+          <span style={{ color: isLight ? '#0f172a' : '#ffffff', fontWeight: 700, fontSize: '15px' }}>
             <AnimatedCounter endVal={countNumber} isVisible={isVisible} />
           </span>
           <span>{subjectLabel}</span>
@@ -316,7 +318,7 @@ function ContributionHeatmap({
   );
 }
 
-export default function ContributionGraphs() {
+export default function ContributionGraphs({ theme = 'dark' }) {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
 
@@ -362,6 +364,7 @@ export default function ContributionGraphs() {
         monthsData={GITHUB_MONTHS}
         isVisible={isVisible}
         accentColor="#39d353"
+        theme={theme}
       />
 
       {/* 2. LEETCODE HEATMAP - Real Problems Solved */}
@@ -371,6 +374,7 @@ export default function ContributionGraphs() {
         monthsData={LEETCODE_MONTHS}
         isVisible={isVisible}
         accentColor="#ffa116"
+        theme={theme}
       />
     </section>
   );

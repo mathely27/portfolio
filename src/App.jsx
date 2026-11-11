@@ -48,6 +48,28 @@ export default function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [splashFading, setSplashFading] = useState(false);
   const [activeTab, setActiveTab] = useState('about'); // 'about' | 'projects'
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('portfolio-theme') || 'dark';
+    }
+    return 'dark';
+  });
+
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      const next = prev === 'dark' ? 'light' : 'dark';
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('portfolio-theme', next);
+      }
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+  }, [theme]);
 
   const handleScroll = (e) => {
     const el = e.currentTarget;
@@ -122,13 +144,14 @@ export default function App() {
         overflowX: 'hidden',
         overflowY: 'auto',
         WebkitOverflowScrolling: 'touch',
-        background: '#050505',
-        color: '#ffffff',
+        background: 'var(--bg-gradient, var(--bg))',
+        color: 'var(--text)',
         fontFamily: "'Inter', sans-serif",
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        transition: 'background 0.35s ease, color 0.35s ease',
       }}
       onScroll={handleScroll}
     >
@@ -143,7 +166,7 @@ export default function App() {
 
       {!showSplash && (
         <GlowCursor
-          color="#d4d4d8"
+          color={theme === 'light' ? '#4f6ef7' : '#d4d4d8'}
           intensity={0.8}
           trailWidth={2}
           linger={1.2}
@@ -152,11 +175,12 @@ export default function App() {
           followSpeed={0.8}
           grain={0.1}
           clickBurst
-          theme="dark"
+          theme={theme}
           style={{ position: 'fixed', inset: 0, zIndex: 9999, pointerEvents: 'none' }}
-        />        )}
+        />
+      )}
 
-      {/* 3. Single-line horizontal navbar with widely spaced links */}
+      {/* 3. Single-line horizontal navbar with widely spaced links & theme toggle */}
       <LineNav
         items={[
           { label: 'About & Stack', href: '#about' },
@@ -165,6 +189,8 @@ export default function App() {
           { label: 'Connect', href: '#connect', style: { cursor: 'pointer' } },
         ]}
         activeHref={activeTab === 'about' ? '#about' : activeTab === 'activity' ? '#activity' : activeTab === 'projects' ? '#projects' : '#connect'}
+        theme={theme}
+        onToggleTheme={toggleTheme}
         onNavigate={(item, index, event) => {
           event?.preventDefault?.();
           const id = (item.href || '').replace('#', '');
@@ -228,13 +254,14 @@ export default function App() {
                     gap: '8px',
                     padding: '6px 14px',
                     borderRadius: '9999px',
-                    background: '#121215',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    background: 'var(--badge-bg)',
+                    border: '1px solid var(--border)',
                     fontFamily: "'Space Mono', monospace",
                     fontSize: '11px',
-                    color: '#a1a1aa',
+                    color: 'var(--text-2)',
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
+                    transition: 'all 0.3s ease',
                   }}
                 >
                   <span
@@ -242,8 +269,8 @@ export default function App() {
                       width: '6px',
                       height: '6px',
                       borderRadius: '50%',
-                      background: '#ffffff',
-                      boxShadow: '0 0 8px #ffffff',
+                      background: theme === 'light' ? '#10b981' : '#ffffff',
+                      boxShadow: theme === 'light' ? '0 0 8px #10b981' : '0 0 8px #ffffff',
                     }}
                   />
                   <span>Open to Internships</span>
@@ -274,7 +301,7 @@ export default function App() {
                   idle="wave"
                   idleSpeed={0.8}
                   clickRipple={true}
-                  textColor="#ffffff"
+                  textColor={theme === 'light' ? '#0f172a' : '#ffffff'}
                   minFontSize={22}
                 />
               </div>
@@ -284,7 +311,7 @@ export default function App() {
                 style={{
                   fontSize: 'clamp(14px, 3.6vw, 17.5px)',
                   fontWeight: 400,
-                  color: '#a1a1aa',
+                  color: 'var(--text-2)',
                   lineHeight: 1.65,
                   maxWidth: '520px',
                 }}
@@ -318,13 +345,14 @@ export default function App() {
                     alignItems: 'center',
                     gap: '8px',
                     padding: '11px 22px',
-                    background: '#ffffff',
-                    color: '#000000',
+                    background: theme === 'light' ? '#0f172a' : '#ffffff',
+                    color: theme === 'light' ? '#ffffff' : '#000000',
                     fontWeight: 600,
                     fontSize: '13px',
                     borderRadius: '9999px',
                     transition: 'all 0.2s ease',
                     cursor: 'pointer',
+                    boxShadow: '0 4px 14px rgba(0,0,0,0.12)',
                   }}
                   onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-1px)')}
                   onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
@@ -342,16 +370,17 @@ export default function App() {
                     alignItems: 'center',
                     gap: '7px',
                     padding: '11px 18px',
-                    background: '#141416',
-                    color: '#ffffff',
+                    background: 'var(--btn-secondary-bg)',
+                    color: 'var(--text)',
                     fontSize: '13px',
                     fontWeight: 500,
                     borderRadius: '9999px',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
+                    border: '1px solid var(--border)',
+                    boxShadow: theme === 'light' ? '0 2px 8px rgba(0,0,0,0.04)' : 'none',
                     transition: 'all 0.2s ease',
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)')}
+                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--border2)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
                 >
                   <GithubIcon size={14} />
                   <span>GitHub</span>
@@ -366,16 +395,17 @@ export default function App() {
                     alignItems: 'center',
                     gap: '7px',
                     padding: '11px 18px',
-                    background: '#141416',
-                    color: '#ffffff',
+                    background: 'var(--btn-secondary-bg)',
+                    color: 'var(--text)',
                     fontSize: '13px',
                     fontWeight: 500,
                     borderRadius: '9999px',
-                    border: '1px solid rgba(255, 255, 255, 0.12)',
+                    border: '1px solid var(--border)',
+                    boxShadow: theme === 'light' ? '0 2px 8px rgba(0,0,0,0.04)' : 'none',
                     transition: 'all 0.2s ease',
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)')}
-                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)')}
+                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--border2)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}
                 >
                   <LinkedinIcon size={14} />
                   <span>LinkedIn</span>
@@ -401,7 +431,7 @@ export default function App() {
         {/* ====================================================
             VIEW 1.5: GITHUB & LEETCODE ACTIVITY GRAPHS (SVG)
         ==================================================== */}
-        <ContributionGraphs />
+        <ContributionGraphs theme={theme} />
 
         {/* ====================================================
             VIEW 2: PROJECTS WITH REACT BITS <ChromaGrid />
@@ -426,18 +456,19 @@ export default function App() {
                 maxWidth: '1040px',
                 fontFamily: "'Space Mono', monospace",
                 fontSize: 'clamp(18px, 4vw, 28px)',
-                color: '#ffffff',
+                color: 'var(--text)',
                 letterSpacing: '0.08em',
                 textTransform: 'uppercase',
                 marginBottom: '28px',
                 textAlign: 'left',
                 fontWeight: 700,
+                transition: 'color 0.3s ease',
               }}
             >
               Projects
             </div>
 
-            <ProjectGrid />
+            <ProjectGrid theme={theme} />
 
             <ContactCard
               linkedinUrl="https://www.linkedin.com/in/mathely-mittal-b284143b9/"

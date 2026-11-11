@@ -58,7 +58,7 @@ const PROJECTS = [
   },
 ];
 
-export default function ProjectGrid() {
+export default function ProjectGrid({ theme = 'dark' }) {
   return (
     <div style={{ width: '100%', maxWidth: '1040px', margin: '0 auto' }}>
       <ChromaGrid
@@ -71,12 +71,12 @@ export default function ProjectGrid() {
         damping={0.45}
         fadeOut={0.6}
         grayscale={1}
-        dim={0.15}
+        dim={theme === 'light' ? 0.05 : 0.15}
         glow={0.5}
         borderGlow={1}
         aspectRatio="16 / 10"
         cardRadius={18}
-        theme="dark"
+        theme={theme}
         showInfo={true}
       />
     </div>
