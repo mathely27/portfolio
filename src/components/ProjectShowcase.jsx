@@ -4,64 +4,63 @@ import { ExternalLink } from 'lucide-react';
 
 /**
  * ProjectShowcase - Featuring <OrbitImages /> from React Bits
- * Verified public projects from GitHub @mathely27.
- * All cards now use real screenshots instead of SVG placeholders.
+ * Live deployed projects with real UI screenshots.
  */
 export default function ProjectShowcase() {
   const projectList = [
     {
       id: 0,
-      title: 'AppLocker',
-      category: 'Native macOS Utility',
-      desc: 'Native macOS utility that locks protected applications behind Apple Touch ID biometric authentication or Mac admin password. Runs silently with zero battery overhead.',
-      stack: ['Swift', 'SwiftUI', 'Touch ID', 'LocalAuth'],
-      repo: 'https://github.com/mathely27/macapplock',
-      svgCard: '/assets/applocker-preview-new.png',
+      title: 'DailyForge',
+      category: 'Full-Stack MERN App',
+      desc: 'Open-source fullstack MERN productivity app to design, manage, and visualize weekly routines with drag-and-drop scheduling and overlap protection.',
+      stack: ['MongoDB', 'Express', 'React', 'Node.js'],
+      repo: 'https://dailyforge-frontend-lhjq.onrender.com',
+      svgCard: '/assets/dailyforge-preview.png',
     },
     {
       id: 1,
-      title: 'Berry AI',
-      category: 'Local AI Assistant',
-      desc: 'Offline personal AI assistant running locally on Mac via Ollama (Qwen3). Executes system tasks, inspects workspaces, and runs without sending data to third parties.',
-      stack: ['Python', 'Ollama', 'Qwen3', 'PySide6'],
-      repo: 'https://github.com/mathely27/Berry',
-      svgCard: '/assets/berry-preview.png',
-    },
-    {
-      id: 2,
-      title: 'Autonomous',
-      category: 'Agent Framework',
-      desc: 'Autonomous agent system built with Pydantic-AI and local models. Features multi-step tool calling, file system inspection, and zero-latency local execution.',
-      stack: ['Python', 'Pydantic-AI', 'Qwen3'],
-      repo: 'https://github.com/mathely27/ai-agent-',
-      svgCard: '/assets/autonomous-preview.png',
-    },
-    {
-      id: 3,
       title: 'Clutch',
-      category: 'Full-Stack Web App',
-      desc: 'Fast, responsive web platform designed with React on the frontend and Node.js on the backend. Modular component architecture, calm dark mode, and RESTful API.',
-      stack: ['React', 'Node.js', 'Express', 'MongoDB'],
-      repo: 'https://github.com/mathely27/project-x',
+      category: 'Full-Stack Platform',
+      desc: 'Fast, responsive web platform designed with React on the frontend and Node.js on the backend. Modular component architecture and RESTful API.',
+      stack: ['React', 'Node.js', 'Express', 'Tailwind'],
+      repo: 'https://project-x-navy-eight.vercel.app',
       svgCard: '/assets/clutch-preview.png',
     },
     {
+      id: 2,
+      title: 'Feargon',
+      category: 'Web Application',
+      desc: 'Modern responsive web application deployed live on Vercel with smooth interactivity and sleek interface.',
+      stack: ['React', 'Vite', 'TailwindCSS'],
+      repo: 'https://feargon.vercel.app',
+      svgCard: '/assets/feargon-preview.png',
+    },
+    {
+      id: 3,
+      title: 'Text Encryptor',
+      category: 'Security / Crypto Tool',
+      desc: 'Interactive live client-side text encryption and decryption utility for secure message encoding.',
+      stack: ['JavaScript', 'HTML5', 'CSS3', 'Web Crypto'],
+      repo: 'https://text-encryptor-one.vercel.app',
+      svgCard: '/assets/text-encryptor-preview.png',
+    },
+    {
       id: 4,
-      title: 'GitStatCard',
-      category: 'GitHub Stats Generator',
-      desc: 'Live GitHub stat card generator with contribution graph, streak counter, and language breakdown.',
-      stack: ['CSS', 'JavaScript', 'GitHub API'],
-      repo: 'https://github.com/mathely27/gitstatcard',
-      svgCard: '/assets/gitstatcard-preview.png',
+      title: 'AppLocker',
+      category: 'Native macOS Utility',
+      desc: 'Native macOS utility that locks protected applications behind Apple Touch ID biometric authentication or Mac admin password.',
+      stack: ['Swift', 'SwiftUI', 'Touch ID', 'LocalAuth'],
+      repo: 'https://github.com/mathely27/macapplock',
+      svgCard: '/assets/applocker-preview.jpg',
     },
     {
       id: 5,
-      title: 'Portfolio',
-      category: 'Personal Site',
-      desc: 'This monochrome portfolio site built with React and Vite, featuring 3D orbits, chroma grids, and smooth animations.',
-      stack: ['React', 'Vite', 'Framer Motion'],
-      repo: 'https://github.com/mathely27/portfolio',
-      svgCard: '/assets/portfolio-preview.png',
+      title: 'Neumorphic Timer',
+      category: 'Interactive UI',
+      desc: 'Neumorphic soft-UI interactive stopwatch featuring tactile shadows, precision lap timing, and state control.',
+      stack: ['HTML5', 'CSS3', 'JavaScript'],
+      repo: 'https://mathely27.github.io/neumorphic-stopwatch/',
+      svgCard: '/assets/stopwatch-preview.png',
     },
   ];
 
@@ -86,12 +85,12 @@ export default function ProjectShowcase() {
         userSelect: 'none',
       }}
     >
-      {/* 3D OrbitImages Canvas with responsive sizing */}      <div
-         style={{
-           width: '100%',
-           maxWidth: '920px',
-           position: 'relative',
-
+      {/* 3D OrbitImages Canvas with responsive sizing */}
+      <div
+        style={{
+          width: '100%',
+          maxWidth: '920px',
+          position: 'relative',
           display: 'flex',
           justifyContent: 'center',
         }}
@@ -214,7 +213,7 @@ export default function ProjectShowcase() {
                 onMouseEnter={(e) => (e.currentTarget.style.transform = 'translateY(-1px)')}
                 onMouseLeave={(e) => (e.currentTarget.style.transform = 'translateY(0)')}
               >
-                <span>Inspect Code</span>
+                <span>Live Project</span>
                 <ExternalLink size={12} />
               </a>
             </div>
