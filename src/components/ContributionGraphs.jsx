@@ -71,48 +71,21 @@ function ContributionHeatmap({
       style={{
         width: '100%',
         maxWidth: '1000px',
-        background: isLight ? '#ffffff' : '#11141c',
-        border: isLight ? '1px solid rgba(15, 23, 42, 0.08)' : '1px solid rgba(255, 255, 255, 0.08)',
-        borderRadius: '16px',
-        padding: '24px 28px',
-        boxShadow: isLight ? '0 10px 30px rgba(0, 0, 0, 0.05)' : '0 14px 44px rgba(0, 0, 0, 0.45)',
         display: 'flex',
         flexDirection: 'column',
-        gap: '18px',
-        position: 'relative',
-        userSelect: 'none',
-        transition: 'background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = isLight ? 'rgba(15, 23, 42, 0.16)' : 'rgba(255, 255, 255, 0.16)';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = isLight ? 'rgba(15, 23, 42, 0.08)' : 'rgba(255, 255, 255, 0.08)';
+        gap: '10px',
       }}
     >
-      <style>{`
-        @keyframes subtleTilePulse {
-          0%, 100% { filter: brightness(1); }
-          50% { filter: brightness(1.22); }
-        }
-        .active-contrib-tile:hover {
-          transform: scale(1.48) !important;
-          z-index: 20;
-          box-shadow: 0 0 10px rgba(155, 233, 168, 0.95) !important;
-          transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
-        }
-      `}</style>
-
-      {/* Brand & Platform Header Badge - Entire title & badge is clickable */}
+      {/* Brand & Platform Header Row - OUTSIDE/ABOVE the box */}
       <div
         style={{
+          width: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
-          gap: '12px',
-          paddingBottom: '14px',
-          borderBottom: isLight ? '1px solid rgba(15, 23, 42, 0.06)' : '1px solid rgba(255, 255, 255, 0.06)',
+          gap: '10px',
+          padding: '0 4px',
         }}
       >
         <a
@@ -122,7 +95,7 @@ function ContributionHeatmap({
           style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '10px',
+            gap: '8px',
             textDecoration: 'none',
             cursor: 'pointer',
             transition: 'transform 0.2s ease',
@@ -141,47 +114,44 @@ function ContributionHeatmap({
           {PlatformIcon && (
             <div
               style={{
-                width: '32px',
-                height: '32px',
+                width: '28px',
+                height: '28px',
                 borderRadius: '8px',
                 background: isLight ? 'rgba(15, 23, 42, 0.05)' : 'rgba(255, 255, 255, 0.05)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: accentColor,
-                transition: 'background 0.2s ease',
               }}
             >
-              <PlatformIcon size={18} strokeWidth={2} />
+              <PlatformIcon size={16} strokeWidth={2.2} />
             </div>
           )}
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+          <span
+            className="platform-title-text"
+            style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: '14px',
+              fontWeight: 700,
+              letterSpacing: '0.06em',
+              color: isLight ? '#0f172a' : '#ffffff',
+              textTransform: 'uppercase',
+              transition: 'color 0.2s ease',
+            }}
+          >
+            {platformTitle}
+          </span>
+          {platformUsername && (
             <span
-              className="platform-title-text"
               style={{
                 fontFamily: "'Space Mono', monospace",
-                fontSize: '15px',
-                fontWeight: 700,
-                letterSpacing: '0.04em',
-                color: isLight ? '#0f172a' : '#ffffff',
-                textTransform: 'uppercase',
-                transition: 'color 0.2s ease',
+                fontSize: '12px',
+                color: isLight ? '#64748b' : '#8b949e',
               }}
             >
-              {platformTitle}
+              @{platformUsername}
             </span>
-            {platformUsername && (
-              <span
-                style={{
-                  fontFamily: "'Space Mono', monospace",
-                  fontSize: '12px',
-                  color: isLight ? '#64748b' : '#8b949e',
-                }}
-              >
-                @{platformUsername}
-              </span>
-            )}
-          </div>
+          )}
         </a>
 
         {platformUrl && (
@@ -192,11 +162,11 @@ function ContributionHeatmap({
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '6px',
+              gap: '5px',
               fontFamily: "'Space Mono', monospace",
-              fontSize: '11.5px',
-              color: isLight ? '#475569' : '#a1a1aa',
-              padding: '6px 14px',
+              fontSize: '11px',
+              color: isLight ? '#475569' : '#8b949e',
+              padding: '4px 10px',
               borderRadius: '9999px',
               background: isLight ? 'rgba(15, 23, 42, 0.04)' : 'rgba(255, 255, 255, 0.04)',
               border: isLight ? '1px solid rgba(15, 23, 42, 0.08)' : '1px solid rgba(255, 255, 255, 0.08)',
@@ -207,31 +177,65 @@ function ContributionHeatmap({
             onMouseEnter={(e) => {
               e.currentTarget.style.color = accentColor;
               e.currentTarget.style.borderColor = accentColor;
-              e.currentTarget.style.transform = 'translateY(-1px)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.color = isLight ? '#475569' : '#a1a1aa';
+              e.currentTarget.style.color = isLight ? '#475569' : '#8b949e';
               e.currentTarget.style.borderColor = isLight ? 'rgba(15, 23, 42, 0.08)' : 'rgba(255, 255, 255, 0.08)';
-              e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
             <span>View Profile</span>
-            <ExternalLink size={12} />
+            <ExternalLink size={11} />
           </a>
         )}
       </div>
 
-      {/* Sub Header Row with Real Animated Count & Legend */}
+      {/* The Actual Heatmap Box (Exact original compact proportions) */}
       <div
         style={{
+          width: '100%',
+          background: isLight ? '#ffffff' : '#11141c',
+          border: isLight ? '1px solid rgba(15, 23, 42, 0.08)' : '1px solid rgba(255, 255, 255, 0.08)',
+          borderRadius: '16px',
+          padding: '20px 24px',
+          boxShadow: isLight ? '0 10px 30px rgba(0, 0, 0, 0.05)' : '0 14px 44px rgba(0, 0, 0, 0.45)',
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: '12px',
-          fontFamily: "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
+          flexDirection: 'column',
+          gap: '16px',
+          position: 'relative',
+          userSelect: 'none',
+          transition: 'background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.borderColor = isLight ? 'rgba(15, 23, 42, 0.16)' : 'rgba(255, 255, 255, 0.16)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.borderColor = isLight ? 'rgba(15, 23, 42, 0.08)' : 'rgba(255, 255, 255, 0.08)';
         }}
       >
+        <style>{`
+          @keyframes subtleTilePulse {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.22); }
+          }
+          .active-contrib-tile:hover {
+            transform: scale(1.48) !important;
+            z-index: 20;
+            box-shadow: 0 0 10px rgba(155, 233, 168, 0.95) !important;
+            transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+          }
+        `}</style>
+
+        {/* Top Header inside Box: Real Animated Count + Legend (Just like GitHub README) */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '12px',
+            fontFamily: "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
+          }}
+        >
         <div
           style={{
             fontSize: '13.5px',
@@ -399,45 +403,46 @@ function ContributionHeatmap({
         </div>
       </div>
 
-      {/* Interactive Tooltip */}
-      {hoveredDay && (
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '12px',
-            right: '24px',
-            padding: '5px 12px',
-            background: '#161b22',
-            border: '1px solid rgba(255, 255, 255, 0.16)',
-            borderRadius: '6px',
-            fontFamily: "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
-            fontSize: '11px',
-            color: '#e6edf3',
-            pointerEvents: 'none',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.5)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            zIndex: 30,
-            animation: 'fadeIn 0.15s ease both',
-          }}
-        >
-          <span
+        {/* Interactive Tooltip */}
+        {hoveredDay && (
+          <div
             style={{
-              width: '7px',
-              height: '7px',
-              borderRadius: '50%',
-              background: hoveredDay.count > 0 ? accentColor : '#6e7681',
+              position: 'absolute',
+              bottom: '12px',
+              right: '24px',
+              padding: '5px 12px',
+              background: isLight ? '#f1f5f9' : '#161b22',
+              border: isLight ? '1px solid rgba(15, 23, 42, 0.16)' : '1px solid rgba(255, 255, 255, 0.16)',
+              borderRadius: '6px',
+              fontFamily: "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
+              fontSize: '11px',
+              color: isLight ? '#0f172a' : '#e6edf3',
+              pointerEvents: 'none',
+              boxShadow: isLight ? '0 4px 16px rgba(0,0,0,0.1)' : '0 4px 16px rgba(0,0,0,0.5)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              zIndex: 30,
+              animation: 'fadeIn 0.15s ease both',
             }}
-          />
-          <span style={{ color: '#ffffff', fontWeight: 600 }}>
-            {hoveredDay.count > 0
-              ? `${hoveredDay.count} ${hoveredDay.count === 1 ? 'activity' : 'activities'}`
-              : 'No activity'}
-          </span>
-          <span style={{ color: '#8b949e' }}>on {hoveredDay.date}</span>
-        </div>
-      )}
+          >
+            <span
+              style={{
+                width: '7px',
+                height: '7px',
+                borderRadius: '50%',
+                background: hoveredDay.count > 0 ? accentColor : '#6e7681',
+              }}
+            />
+            <span style={{ color: isLight ? '#0f172a' : '#ffffff', fontWeight: 600 }}>
+              {hoveredDay.count > 0
+                ? `${hoveredDay.count} ${hoveredDay.count === 1 ? 'activity' : 'activities'}`
+                : 'No activity'}
+            </span>
+            <span style={{ color: isLight ? '#64748b' : '#8b949e' }}>on {hoveredDay.date}</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
