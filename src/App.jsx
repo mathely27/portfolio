@@ -55,13 +55,72 @@ export default function App() {
     return 'dark';
   });
 
-  const toggleTheme = () => {
-    setTheme((prev) => {
-      const next = prev === 'dark' ? 'light' : 'dark';
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('portfolio-theme', next);
-      }
-      return next;
+  const [shockwave, setShockwave] = useState(null);
+
+  const toggleTheme = (event) => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+
+    // Get origin coordinates from event button or default to top-right
+    let x = window.innerWidth - 60;
+    let y = 30;
+    if (event?.clientX !== undefined && event?.clientY !== undefined) {
+      x = event.clientX;
+      y = event.clientY;
+    }
+
+    // Modern Chrome/Edge/Safari 18 View Transition API Circular Expand Animation
+    if (typeof document !== 'undefined' && document.startViewTransition) {
+      const endRadius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y)
+      );
+
+      const transition = document.startViewTransition(() => {
+        setTheme(nextTheme);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('portfolio-theme', nextTheme);
+        }
+        document.documentElement.setAttribute('data-theme', nextTheme);
+      });
+
+      transition.ready.then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${endRadius}px at ${x}px ${y}px)`,
+            ],
+          },
+          {
+            duration: 650,
+            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            pseudoElement: '::view-transition-new(root)',
+          }
+        );
+      });
+      return;
+    }
+
+    // Dynamic Shockwave Pulse Fallback
+    const maxDim = Math.max(window.innerWidth, window.innerHeight) * 2.8;
+    setShockwave({
+      x,
+      y,
+      size: maxDim,
+      color: nextTheme === 'light' ? 'rgba(255, 255, 255, 0.95)' : 'rgba(14, 16, 21, 0.95)',
+      active: false,
+    });
+
+    requestAnimationFrame(() => {
+      setShockwave((prev) => (prev ? { ...prev, active: true } : null));
+      setTimeout(() => {
+        setTheme(nextTheme);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('portfolio-theme', nextTheme);
+        }
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        setTimeout(() => setShockwave(null), 400);
+      }, 350);
     });
   };
 
@@ -161,6 +220,20 @@ export default function App() {
           fading={splashFading}
           onEnter={triggerEnter}
           size={glassSize}
+        />
+      )}
+
+      {/* Full-viewport Shockwave Ripple Overlay (Fallback) */}
+      {shockwave && (
+        <div
+          className={`theme-shockwave-overlay ${shockwave.active ? 'active' : ''}`}
+          style={{
+            left: `${shockwave.x}px`,
+            top: `${shockwave.y}px`,
+            width: `${shockwave.size}px`,
+            height: `${shockwave.size}px`,
+            background: shockwave.color,
+          }}
         />
       )}
 
