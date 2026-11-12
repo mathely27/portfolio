@@ -103,7 +103,7 @@ function ContributionHeatmap({
         }
       `}</style>
 
-      {/* Brand & Platform Header Badge */}
+      {/* Brand & Platform Header Badge - Entire title & badge is clickable */}
       <div
         style={{
           display: 'flex',
@@ -115,11 +115,27 @@ function ContributionHeatmap({
           borderBottom: isLight ? '1px solid rgba(15, 23, 42, 0.06)' : '1px solid rgba(255, 255, 255, 0.06)',
         }}
       >
-        <div
+        <a
+          href={platformUrl || '#'}
+          target="_blank"
+          rel="noopener noreferrer"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '10px',
+            textDecoration: 'none',
+            cursor: 'pointer',
+            transition: 'transform 0.2s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateX(2px)';
+            const titleEl = e.currentTarget.querySelector('.platform-title-text');
+            if (titleEl) titleEl.style.color = accentColor;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translateX(0)';
+            const titleEl = e.currentTarget.querySelector('.platform-title-text');
+            if (titleEl) titleEl.style.color = isLight ? '#0f172a' : '#ffffff';
           }}
         >
           {PlatformIcon && (
@@ -133,6 +149,7 @@ function ContributionHeatmap({
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: accentColor,
+                transition: 'background 0.2s ease',
               }}
             >
               <PlatformIcon size={18} strokeWidth={2} />
@@ -140,6 +157,7 @@ function ContributionHeatmap({
           )}
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
             <span
+              className="platform-title-text"
               style={{
                 fontFamily: "'Space Mono', monospace",
                 fontSize: '15px',
@@ -147,6 +165,7 @@ function ContributionHeatmap({
                 letterSpacing: '0.04em',
                 color: isLight ? '#0f172a' : '#ffffff',
                 textTransform: 'uppercase',
+                transition: 'color 0.2s ease',
               }}
             >
               {platformTitle}
@@ -163,7 +182,7 @@ function ContributionHeatmap({
               </span>
             )}
           </div>
-        </div>
+        </a>
 
         {platformUrl && (
           <a
@@ -177,20 +196,23 @@ function ContributionHeatmap({
               fontFamily: "'Space Mono', monospace",
               fontSize: '11.5px',
               color: isLight ? '#475569' : '#a1a1aa',
-              padding: '5px 12px',
+              padding: '6px 14px',
               borderRadius: '9999px',
               background: isLight ? 'rgba(15, 23, 42, 0.04)' : 'rgba(255, 255, 255, 0.04)',
               border: isLight ? '1px solid rgba(15, 23, 42, 0.08)' : '1px solid rgba(255, 255, 255, 0.08)',
               transition: 'all 0.2s ease',
               textDecoration: 'none',
+              cursor: 'pointer',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.color = accentColor;
               e.currentTarget.style.borderColor = accentColor;
+              e.currentTarget.style.transform = 'translateY(-1px)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.color = isLight ? '#475569' : '#a1a1aa';
               e.currentTarget.style.borderColor = isLight ? 'rgba(15, 23, 42, 0.08)' : 'rgba(255, 255, 255, 0.08)';
+              e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
             <span>View Profile</span>
