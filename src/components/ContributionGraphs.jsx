@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GITHUB_MONTHS, LEETCODE_MONTHS, REAL_GITHUB_COUNT, REAL_LEETCODE_COUNT } from './contributionData';
+import { GithubIcon, LeetcodeIcon } from './Icons';
+import { ExternalLink } from 'lucide-react';
 
 const GREEN_SHADES = {
   0: 'transparent',
@@ -50,6 +52,10 @@ function AnimatedCounter({ endVal, isVisible, suffix = '' }) {
 }
 
 function ContributionHeatmap({
+  platformTitle,
+  platformUsername,
+  platformUrl,
+  platformIcon: PlatformIcon,
   countNumber,
   subjectLabel,
   monthsData,
@@ -97,7 +103,103 @@ function ContributionHeatmap({
         }
       `}</style>
 
-      {/* Top Header Row with Real Animated Count */}
+      {/* Brand & Platform Header Badge */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: '12px',
+          paddingBottom: '14px',
+          borderBottom: isLight ? '1px solid rgba(15, 23, 42, 0.06)' : '1px solid rgba(255, 255, 255, 0.06)',
+        }}
+      >
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '10px',
+          }}
+        >
+          {PlatformIcon && (
+            <div
+              style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '8px',
+                background: isLight ? 'rgba(15, 23, 42, 0.05)' : 'rgba(255, 255, 255, 0.05)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: accentColor,
+              }}
+            >
+              <PlatformIcon size={18} strokeWidth={2} />
+            </div>
+          )}
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+            <span
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: '15px',
+                fontWeight: 700,
+                letterSpacing: '0.04em',
+                color: isLight ? '#0f172a' : '#ffffff',
+                textTransform: 'uppercase',
+              }}
+            >
+              {platformTitle}
+            </span>
+            {platformUsername && (
+              <span
+                style={{
+                  fontFamily: "'Space Mono', monospace",
+                  fontSize: '12px',
+                  color: isLight ? '#64748b' : '#8b949e',
+                }}
+              >
+                @{platformUsername}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {platformUrl && (
+          <a
+            href={platformUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontFamily: "'Space Mono', monospace",
+              fontSize: '11.5px',
+              color: isLight ? '#475569' : '#a1a1aa',
+              padding: '5px 12px',
+              borderRadius: '9999px',
+              background: isLight ? 'rgba(15, 23, 42, 0.04)' : 'rgba(255, 255, 255, 0.04)',
+              border: isLight ? '1px solid rgba(15, 23, 42, 0.08)' : '1px solid rgba(255, 255, 255, 0.08)',
+              transition: 'all 0.2s ease',
+              textDecoration: 'none',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = accentColor;
+              e.currentTarget.style.borderColor = accentColor;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = isLight ? '#475569' : '#a1a1aa';
+              e.currentTarget.style.borderColor = isLight ? 'rgba(15, 23, 42, 0.08)' : 'rgba(255, 255, 255, 0.08)';
+            }}
+          >
+            <span>View Profile</span>
+            <ExternalLink size={12} />
+          </a>
+        )}
+      </div>
+
+      {/* Sub Header Row with Real Animated Count & Legend */}
       <div
         style={{
           display: 'flex',
@@ -359,6 +461,10 @@ export default function ContributionGraphs({ theme = 'dark' }) {
     >
       {/* 1. GITHUB HEATMAP - Real Contributions */}
       <ContributionHeatmap
+        platformTitle="GitHub"
+        platformUsername="mathely27"
+        platformUrl="https://github.com/mathely27"
+        platformIcon={GithubIcon}
         countNumber={REAL_GITHUB_COUNT}
         subjectLabel="contributions in the last year"
         monthsData={GITHUB_MONTHS}
@@ -369,6 +475,10 @@ export default function ContributionGraphs({ theme = 'dark' }) {
 
       {/* 2. LEETCODE HEATMAP - Real Problems Solved */}
       <ContributionHeatmap
+        platformTitle="LeetCode"
+        platformUsername="mathely_27"
+        platformUrl="https://leetcode.com/mathely_27"
+        platformIcon={LeetcodeIcon}
         countNumber={REAL_LEETCODE_COUNT}
         subjectLabel="problems solved in the last year"
         monthsData={LEETCODE_MONTHS}
