@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import FluidGlass from './components/FluidGlass';
+import ThemeWipe from './components/ThemeWipe';
 import LineNav from './components/LineNav';
 import TextPressure from './components/TextPressure';
 import BlurText from './components/BlurText';
@@ -55,74 +56,53 @@ export default function App() {
     return 'dark';
   });
 
-  const [shockwave, setShockwave] = useState(null);
+  const [themeWipe, setThemeWipe] = useState(null);
+  const swapTimer = useRef(null);
+  const clearTimer = useRef(null);
 
   const toggleTheme = (event) => {
+    if (event?.preventDefault) event.preventDefault();
+    // One bloom at a time — ignore clicks while a transition is running
+    if (themeWipe) return;
+
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
 
-    // Get origin coordinates from event button or default to top-right
-    let x = window.innerWidth - 60;
-    let y = 30;
+    // Bloom originates at the toggle that was pressed
+    let x = window.innerWidth - 40;
+    let y = 32;
     if (event?.clientX !== undefined && event?.clientY !== undefined) {
       x = event.clientX;
       y = event.clientY;
     }
 
-    // Modern Chrome/Edge/Safari 18 View Transition API Circular Expand Animation
-    if (typeof document !== 'undefined' && document.startViewTransition) {
-      const endRadius = Math.hypot(
-        Math.max(x, window.innerWidth - x),
-        Math.max(y, window.innerHeight - y)
-      );
+    // Radius that reaches the furthest viewport corner
+    const radius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
 
-      const transition = document.startViewTransition(() => {
-        setTheme(nextTheme);
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('portfolio-theme', nextTheme);
-        }
-        document.documentElement.setAttribute('data-theme', nextTheme);
-      });
+    setThemeWipe({ x, y, radius, next: nextTheme });
 
-      transition.ready.then(() => {
-        document.documentElement.animate(
-          {
-            clipPath: [
-              `circle(0px at ${x}px ${y}px)`,
-              `circle(${endRadius}px at ${x}px ${y}px)`,
-            ],
-          },
-          {
-            duration: 650,
-            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-            pseudoElement: '::view-transition-new(root)',
-          }
-        );
-      });
-      return;
-    }
+    // Swap the palette while the bloom already covers the centre of the
+    // screen; the page's own colour transitions ease the uncovered edges.
+    swapTimer.current = window.setTimeout(() => {
+      setTheme(nextTheme);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('portfolio-theme', nextTheme);
+      }
+      document.documentElement.setAttribute('data-theme', nextTheme);
+    }, 420);
 
-    // Dynamic Shockwave Pulse Fallback
-    const maxDim = Math.max(window.innerWidth, window.innerHeight) * 2.8;
-    setShockwave({
-      x,
-      y,
-      size: maxDim,
-      color: nextTheme === 'light' ? 'rgba(255, 255, 255, 0.95)' : 'rgba(14, 16, 21, 0.95)',
-      active: false,
-    });
-
-    requestAnimationFrame(() => {
-      setShockwave((prev) => (prev ? { ...prev, active: true } : null));
-      setTimeout(() => {
-        setTheme(nextTheme);
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('portfolio-theme', nextTheme);
-        }
-        document.documentElement.setAttribute('data-theme', nextTheme);
-        setTimeout(() => setShockwave(null), 400);
-      }, 350);
-    });
+    clearTimer.current = window.setTimeout(() => setThemeWipe(null), 1050);
   };
+
+  useEffect(
+    () => () => {
+      if (swapTimer.current) window.clearTimeout(swapTimer.current);
+      if (clearTimer.current) window.clearTimeout(clearTimer.current);
+    },
+    []
+  );
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
@@ -223,19 +203,8 @@ export default function App() {
         />
       )}
 
-      {/* Full-viewport Shockwave Ripple Overlay (Fallback) */}
-      {shockwave && (
-        <div
-          className={`theme-shockwave-overlay ${shockwave.active ? 'active' : ''}`}
-          style={{
-            left: `${shockwave.x}px`,
-            top: `${shockwave.y}px`,
-            width: `${shockwave.size}px`,
-            height: `${shockwave.size}px`,
-            background: shockwave.color,
-          }}
-        />
-      )}
+      {/* Full-viewport theme bloom: iris, rings, prism orbit & spark burst */}
+      {themeWipe && <ThemeWipe wipe={themeWipe} />}
 
       {!showSplash && (
         <GlowCursor
