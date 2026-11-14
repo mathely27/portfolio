@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import FluidGlass from './components/FluidGlass';
+import WavingHandPoster from './components/ui/WavingHandPoster';
 import LineNav from './components/LineNav';
 import TextPressure from './components/TextPressure';
 import BlurText from './components/BlurText';
@@ -12,112 +12,11 @@ import { GithubIcon, LinkedinIcon, EmailIcon, LeetcodeIcon } from './components/
 import { ArrowRight } from 'lucide-react';
 
 /* ============================================================
-   LANDING SCREEN WITH FLUID GLASS & LIQUID BUTTON
+   LANDING SCREEN — WAVING HAND ID CARD POSTER
    ============================================================ */
-function SplashScreen({ onEnter, fading, size }) {
+function SplashScreen({ onEnter, theme }) {
   return (
-    <div
-      onClick={onEnter}
-      title="Click anywhere to enter"
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 200,
-        background: '#05070b',
-        overflow: 'hidden',
-        cursor: 'pointer',
-        animation: fading ? 'portalSlideUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards' : 'none',
-      }}
-    >
-      {/* Ambient background aura & atmospheric lighting */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'radial-gradient(circle 650px at 50% 50%, rgba(56, 189, 248, 0.08), rgba(99, 102, 241, 0.04) 50%, transparent 80%)',
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* Cyber Grid Pattern Floor */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage:
-            'linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)',
-          backgroundSize: '48px 48px',
-          backgroundPosition: 'center center',
-          maskImage: 'radial-gradient(ellipse 65% 65% at 50% 50%, #000 30%, transparent 80%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 65% 65% at 50% 50%, #000 30%, transparent 80%)',
-          pointerEvents: 'none',
-        }}
-      />
-
-      {/* 3D Fluid Glass Circle Lens with Living Dynamic Refraction */}
-      <FluidGlass
-        text="MATHELY MITTAL"
-        shape="lens"
-        size={size}
-        refraction={1.35}
-        dispersion={0.65}
-        reflection={1.25}
-        wobble={0.8}
-        smoothness={0.4}
-        spin={0.5}
-        idle={true}
-        interaction="follow"
-      />
-
-      {/* Bottom Floating Interactive Pill Pill */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: 'clamp(36px, 8vh, 60px)',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '10px',
-          pointerEvents: 'none',
-          userSelect: 'none',
-        }}
-      >
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '8px 18px',
-            borderRadius: '9999px',
-            background: 'rgba(255, 255, 255, 0.05)',
-            border: '1px solid rgba(255, 255, 255, 0.12)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.15)',
-            color: '#e2e8f0',
-            fontFamily: "'Space Mono', monospace",
-            fontSize: '11px',
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            animation: 'fadeUp 1.2s ease both',
-          }}
-        >
-          <span
-            style={{
-              width: '6px',
-              height: '6px',
-              borderRadius: '50%',
-              background: '#38bdf8',
-              boxShadow: '0 0 10px #38bdf8',
-              animation: 'pulse 2s infinite',
-            }}
-          />
-          <span>Click Anywhere or Scroll to Enter</span>
-        </div>
-      </div>
-    </div>
+    <WavingHandPoster theme={theme} onEnter={onEnter} />
   );
 }
 
@@ -238,7 +137,9 @@ export default function App() {
   const triggerEnter = () => {
     if (splashFading || !showSplash) return;
     setSplashFading(true);
-    setTimeout(() => setShowSplash(false), 800);
+    // WavingHandPoster handles its own exit animation (600ms),
+    // then calls this — give a little extra buffer before unmounting
+    setTimeout(() => setShowSplash(false), 200);
   };
 
   // Determine FluidGlass size based on viewport width
@@ -289,9 +190,8 @@ export default function App() {
       {/* 1. Cinematic Landing Screen */}
       {showSplash && (
         <SplashScreen
-          fading={splashFading}
           onEnter={triggerEnter}
-          size={glassSize}
+          theme={theme}
         />
       )}
 
