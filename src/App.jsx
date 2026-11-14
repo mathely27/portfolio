@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import WavingHandPoster from './components/ui/WavingHandPoster';
+import ConturLand from './components/ui/demo';
 import LineNav from './components/LineNav';
 import TextPressure from './components/TextPressure';
 import BlurText from './components/BlurText';
@@ -12,11 +12,20 @@ import { GithubIcon, LinkedinIcon, EmailIcon, LeetcodeIcon } from './components/
 import { ArrowRight } from 'lucide-react';
 
 /* ============================================================
-   LANDING SCREEN — WAVING HAND ID CARD POSTER
+   LANDING SCREEN — CONTURLAND TOPOGRAPHIC MAP
    ============================================================ */
-function SplashScreen({ onEnter, theme }) {
+function SplashScreen({ onEnter, fading }) {
   return (
-    <WavingHandPoster theme={theme} onEnter={onEnter} />
+    <div
+      onClick={onEnter}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 200,
+        background: '#05070b', overflow: 'hidden', cursor: 'pointer',
+        animation: fading ? 'portalSlideUp 0.85s cubic-bezier(0.16,1,0.3,1) forwards' : 'none',
+      }}
+    >
+      <ConturLand onEnter={onEnter} />
+    </div>
   );
 }
 
@@ -137,9 +146,7 @@ export default function App() {
   const triggerEnter = () => {
     if (splashFading || !showSplash) return;
     setSplashFading(true);
-    // WavingHandPoster handles its own exit animation (600ms),
-    // then calls this — give a little extra buffer before unmounting
-    setTimeout(() => setShowSplash(false), 200);
+    setTimeout(() => setShowSplash(false), 800);
   };
 
   // Determine FluidGlass size based on viewport width
@@ -191,7 +198,7 @@ export default function App() {
       {showSplash && (
         <SplashScreen
           onEnter={triggerEnter}
-          theme={theme}
+          fading={splashFading}
         />
       )}
 

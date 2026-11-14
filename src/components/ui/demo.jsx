@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { ArrowRight, Compass } from "lucide-react";
 
 const css = `
 @import url("https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Space+Mono:wght@700&display=swap");
@@ -327,11 +326,8 @@ export default function ConturLand({ onEnter }) {
         <div className="pin" ref={pinRef} aria-hidden="true" />
 
         <nav aria-label="Primary">
-          <div className="logo">
-            <Compass size={22} className="text-sky-400" />
-            <span>M / PORTFOLIO</span>
-          </div>
-          <span className="where">Developer &amp; CS Student</span>
+          <div className="logo" />
+          <span className="where" />
         </nav>
 
         <div className="content">
@@ -339,30 +335,6 @@ export default function ConturLand({ onEnter }) {
             <span className="name-line">MATHELY</span>
             <span className="name-line accent">MITTAL</span>
           </h1>
-          <p className="lead">
-            Student by day, builder by night. Writing software that does real work — native macOS utilities, autonomous AI agents, and full-stack platforms.
-          </p>
-          <div className="cta">
-            <button
-              className="btn main"
-              onClick={(e) => {
-                e.stopPropagation();
-                onEnter?.();
-              }}
-            >
-              <span>Explore Portfolio</span>
-              <ArrowRight size={16} />
-            </button>
-            <button
-              className="btn"
-              onClick={(e) => {
-                e.stopPropagation();
-                onEnter?.();
-              }}
-            >
-              <span>View Projects</span>
-            </button>
-          </div>
         </div>
 
         <div className="readout" aria-hidden="true">
