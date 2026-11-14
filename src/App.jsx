@@ -60,7 +60,46 @@ export default function App() {
 
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
 
-    // Aesthetic soft transition: Update theme state directly
+    // Smooth Circular View Transition API if supported
+    if (typeof document !== 'undefined' && document.startViewTransition) {
+      let x = window.innerWidth - 45;
+      let y = 31;
+      if (event?.clientX !== undefined && event?.clientY !== undefined) {
+        x = event.clientX;
+        y = event.clientY;
+      }
+      const endRadius = Math.hypot(
+        Math.max(x, window.innerWidth - x),
+        Math.max(y, window.innerHeight - y)
+      );
+
+      const transition = document.startViewTransition(() => {
+        setTheme(nextTheme);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('portfolio-theme', nextTheme);
+        }
+        document.documentElement.setAttribute('data-theme', nextTheme);
+      });
+
+      transition.ready.then(() => {
+        document.documentElement.animate(
+          {
+            clipPath: [
+              `circle(0px at ${x}px ${y}px)`,
+              `circle(${endRadius}px at ${x}px ${y}px)`,
+            ],
+          },
+          {
+            duration: 500,
+            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            pseudoElement: '::view-transition-new(root)',
+          }
+        );
+      });
+      return;
+    }
+
+    // Direct transition fallback
     setTheme(nextTheme);
     if (typeof window !== 'undefined') {
       localStorage.setItem('portfolio-theme', nextTheme);

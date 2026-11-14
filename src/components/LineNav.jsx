@@ -1,5 +1,5 @@
 import React from 'react';
-import AestheticThemeToggle from './AestheticThemeToggle';
+import { Sun, Moon } from 'lucide-react';
 
 /**
  * LineNav - one horizontal line, links spread far apart with theme switch.
@@ -117,13 +117,42 @@ export default function LineNav({ items = [], activeHref, onNavigate, theme = 'd
             })}
           </div>
 
-        {/* Aesthetic Capsule Theme Toggle */}
-        {onToggleTheme && (
-          <AestheticThemeToggle
-            theme={theme}
-            onToggle={onToggleTheme}
-          />
-        )}
+          {/* Theme Toggle Button (Original Sleek Circular Button) */}
+          {onToggleTheme && (
+            <button
+              onClick={onToggleTheme}
+              aria-label={`Switch to ${isLight ? 'Dark' : 'Light'} theme`}
+              title={`Switch to ${isLight ? 'Dark' : 'Light'} theme`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '34px',
+                height: '34px',
+                borderRadius: '50%',
+                background: 'var(--badge-bg)',
+                border: '1px solid var(--border)',
+                color: 'var(--text)',
+                cursor: 'pointer',
+                transition: 'all 0.25s ease',
+                flexShrink: 0,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'rotate(15deg) scale(1.08)';
+                e.currentTarget.style.borderColor = 'var(--border2)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'rotate(0deg) scale(1)';
+                e.currentTarget.style.borderColor = 'var(--border)';
+              }}
+            >
+              {isLight ? (
+                <Moon size={15} strokeWidth={2.2} />
+              ) : (
+                <Sun size={15} strokeWidth={2.2} />
+              )}
+            </button>
+          )}
         </div>
       </div>
     </nav>

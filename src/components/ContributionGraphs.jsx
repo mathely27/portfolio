@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GITHUB_MONTHS, LEETCODE_MONTHS, REAL_GITHUB_COUNT, REAL_LEETCODE_COUNT } from './contributionData';
+import { fetchLiveGitHub, fetchLiveLeetCode } from './liveActivityService';
 import { GithubIcon, LeetcodeIcon } from './Icons';
 import { ExternalLink } from 'lucide-react';
 
@@ -451,6 +452,48 @@ export default function ContributionGraphs({ theme = 'dark' }) {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
 
+  // Live dynamic states initialized with baked data so layout is instant
+  const [githubState, setGithubState] = useState({
+    count: REAL_GITHUB_COUNT,
+    months: GITHUB_MONTHS,
+    live: false,
+  });
+
+  const [leetcodeState, setLeetcodeState] = useState({
+    count: REAL_LEETCODE_COUNT,
+    months: LEETCODE_MONTHS,
+    live: false,
+  });
+
+  // Fetch live stats in real-time on mount
+  useEffect(() => {
+    let mounted = true;
+
+    fetchLiveGitHub('mathely27').then((res) => {
+      if (mounted && res) {
+        setGithubState({
+          count: res.count,
+          months: res.months,
+          live: res.live,
+        });
+      }
+    });
+
+    fetchLiveLeetCode('mathely_27').then((res) => {
+      if (mounted && res) {
+        setLeetcodeState({
+          count: res.count,
+          months: res.months,
+          live: res.live,
+        });
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -486,29 +529,29 @@ export default function ContributionGraphs({ theme = 'dark' }) {
         gap: 'clamp(24px, 3.5vw, 36px)',
       }}
     >
-      {/* 1. GITHUB HEATMAP - Real Contributions */}
+      {/* 1. GITHUB HEATMAP - Real-time Live Contributions */}
       <ContributionHeatmap
         platformTitle="GitHub"
         platformUsername="mathely27"
         platformUrl="https://github.com/mathely27"
         platformIcon={GithubIcon}
-        countNumber={REAL_GITHUB_COUNT}
+        countNumber={githubState.count}
         subjectLabel="contributions in the last year"
-        monthsData={GITHUB_MONTHS}
+        monthsData={githubState.months}
         isVisible={isVisible}
         accentColor="#39d353"
         theme={theme}
       />
 
-      {/* 2. LEETCODE HEATMAP - Real Problems Solved */}
+      {/* 2. LEETCODE HEATMAP - Real-time Live Problems Solved */}
       <ContributionHeatmap
         platformTitle="LeetCode"
         platformUsername="mathely_27"
         platformUrl="https://leetcode.com/mathely_27"
         platformIcon={LeetcodeIcon}
-        countNumber={REAL_LEETCODE_COUNT}
+        countNumber={leetcodeState.count}
         subjectLabel="problems solved in the last year"
-        monthsData={LEETCODE_MONTHS}
+        monthsData={leetcodeState.months}
         isVisible={isVisible}
         accentColor="#ffa116"
         theme={theme}
