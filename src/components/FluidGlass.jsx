@@ -532,8 +532,8 @@ const slerp = (a, b, t) => {
 };
 
 const driftAt = (clock, size) => [
-  Math.sin(clock * 0.37) * size * 0.35 + Math.sin(clock * 0.71 + 1.3) * size * 0.12,
-  Math.sin(clock * 0.29 + 0.8) * size * 0.2 + Math.cos(clock * 0.53) * size * 0.08
+  Math.sin(clock * 0.72) * size * 0.55 + Math.sin(clock * 1.35 + 1.2) * size * 0.25,
+  Math.cos(clock * 0.88 + 0.6) * size * 0.38 + Math.sin(clock * 1.15) * size * 0.18
 ];
 
 const toMatrix = ([x, y, z, w]) => [
