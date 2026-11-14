@@ -1,485 +1,560 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const css = `
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Plus+Jakarta+Sans:wght@700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
 
-/* ── ID-card drop from top ─────────────────────────── */
-@keyframes lanyardDrop {
-  0%   { transform: translateY(-120vh) rotate(-8deg); opacity: 0; }
-  55%  { transform: translateY(8px)    rotate(2deg);  opacity: 1; }
-  70%  { transform: translateY(-18px)  rotate(-3deg); }
-  82%  { transform: translateY(10px)   rotate(1.5deg); }
-  91%  { transform: translateY(-6px)   rotate(-0.8deg); }
-  97%  { transform: translateY(3px)    rotate(0.3deg); }
-  100% { transform: translateY(0px)    rotate(0deg); opacity: 1; }
+/* ─── keyframes ─────────────────────────────────────────── */
+@keyframes idDrop {
+  0%   { transform:translateY(-110vh) rotate(-6deg); opacity:0; }
+  52%  { transform:translateY(10px)   rotate(2.5deg); opacity:1; }
+  68%  { transform:translateY(-14px)  rotate(-2deg); }
+  80%  { transform:translateY(7px)    rotate(1deg); }
+  90%  { transform:translateY(-4px)   rotate(-0.4deg); }
+  97%  { transform:translateY(2px)    rotate(0.15deg); }
+  100% { transform:translateY(0)      rotate(0deg); opacity:1; }
 }
-
-@keyframes lanyardDrop-out {
-  0%   { transform: translateY(0)   rotate(0deg); opacity: 1; }
-  100% { transform: translateY(-130vh) rotate(-6deg); opacity: 0; }
+@keyframes idExit {
+  0%   { transform:translateY(0) rotate(0deg); opacity:1; }
+  100% { transform:translateY(-120vh) rotate(-7deg); opacity:0; }
 }
-
-@keyframes stringDrop {
-  0%   { transform: scaleY(0); opacity: 0; }
-  40%  { opacity: 1; }
-  100% { transform: scaleY(1); opacity: 1; }
+@keyframes cordUnfurl {
+  0%   { transform:scaleY(0); opacity:0; transform-origin:top center; }
+  60%  { opacity:1; }
+  100% { transform:scaleY(1); opacity:1; transform-origin:top center; }
 }
-
-@keyframes hintFade {
-  0%   { opacity: 0; transform: translateY(6px); }
-  100% { opacity: 1; transform: translateY(0px); }
+@keyframes clipDrop {
+  0%   { transform:translateY(-110vh) rotate(-6deg); opacity:0; }
+  52%  { transform:translateY(10px)   rotate(2.5deg); opacity:1; }
+  68%  { transform:translateY(-14px)  rotate(-2deg); }
+  80%  { transform:translateY(7px)    rotate(1deg); }
+  90%  { transform:translateY(-4px)   rotate(-0.4deg); }
+  97%  { transform:translateY(2px)    rotate(0.15deg); }
+  100% { transform:translateY(0)      rotate(0deg); opacity:1; }
 }
-
-/* ── Ribbon sweep ─────────────────────────── */
+@keyframes glowPulse {
+  0%,100% { opacity:0.7; }
+  50%      { opacity:1; }
+}
 @keyframes ribbonSweep {
-  0%   { stroke-dashoffset: 1000; }
-  100% { stroke-dashoffset: 0; }
+  0%   { stroke-dashoffset:1200; }
+  100% { stroke-dashoffset:0; }
 }
-
-/* ── Hand bloom + wave ─────────────────────────── */
 @keyframes handBloom {
-  0%   { opacity:0; transform: scale(0.25) rotate(-18deg); }
-  35%  { opacity:1; }
-  72%  { opacity:1; transform: scale(1.06) rotate(9deg); }
-  88%  { transform: scale(0.98) rotate(-4deg); }
-  100% { opacity:1; transform: scale(1) rotate(0deg); }
+  0%   { opacity:0; transform:scale(0.2) rotate(-20deg); }
+  40%  { opacity:1; }
+  75%  { transform:scale(1.05) rotate(8deg); }
+  90%  { transform:scale(0.97) rotate(-3deg); }
+  100% { opacity:1; transform:scale(1) rotate(0deg); }
 }
-
 @keyframes naturalWave {
-  0%,100% { transform: rotate(0deg); }
-  22%     { transform: rotate(10deg); }
-  48%     { transform: rotate(-7deg); }
-  74%     { transform: rotate(8deg); }
-  90%     { transform: rotate(-2deg); }
+  0%,100% { transform:rotate(0deg); }
+  22%     { transform:rotate(12deg); }
+  48%     { transform:rotate(-8deg); }
+  74%     { transform:rotate(10deg); }
+  90%     { transform:rotate(-2deg); }
 }
-
-@keyframes unifiedFloat {
-  0%,100% { transform: translate3d(0px, 0px, 0px); }
-  50%      { transform: translate3d(-3px, 5px, 0px); }
-}
-
-/* ── Letter spring in ─────────────────────────── */
-@keyframes letterSpring {
-  0%   { opacity:0; transform:translate3d(0,15px,0) rotate(-8deg) scale(0.65); filter:blur(3px); }
-  68%  { opacity:1; transform:translate3d(0,-3px,0) rotate(2.5deg) scale(1.04); filter:blur(0px); }
-  100% { opacity:1; transform:translate3d(0,0px,0) rotate(var(--rot,0deg)) scale(1); filter:blur(0px); }
-}
-
 @keyframes floatIdle {
-  0%,100% { transform:translate3d(0,0px,0) rotate(var(--rot,0deg)); }
-  50%      { transform:translate3d(0,-3px,0) rotate(calc(var(--rot,0deg) + 1.8deg)); }
+  0%,100% { transform:translate3d(0,0,0); }
+  50%      { transform:translate3d(-2px,5px,0); }
+}
+@keyframes letterIn {
+  0%   { opacity:0; transform:translate3d(0,14px,0) rotate(-7deg) scale(0.6); filter:blur(3px); }
+  65%  { opacity:1; transform:translate3d(0,-3px,0) rotate(2deg) scale(1.03); filter:blur(0); }
+  100% { opacity:1; transform:translate3d(0,0,0) rotate(var(--rot,0deg)) scale(1); filter:blur(0); }
+}
+@keyframes floatChar {
+  0%,100% { transform:translate3d(0,0,0) rotate(var(--rot,0deg)); }
+  50%      { transform:translate3d(0,-3px,0) rotate(calc(var(--rot,0deg) + 1.5deg)); }
+}
+@keyframes hintIn {
+  0%   { opacity:0; transform:translateY(8px); }
+  100% { opacity:1; transform:translateY(0); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
 }
 
-/* ── Shared classes ─────────────────────────── */
-.wh-arm-assembly { will-change:transform; animation: unifiedFloat 5s ease-in-out 1.6s infinite; }
-
-.wh-ribbon-stroke {
-  stroke-dasharray:1000;
-  stroke-dashoffset:1000;
-  will-change:stroke-dashoffset;
-  animation: ribbonSweep 0.82s cubic-bezier(0.22,1,0.36,1) 1.1s forwards;
+/* ─── shared animation classes ──────────────────────────── */
+.wh-ribbon {
+  stroke-dasharray:1200;
+  stroke-dashoffset:1200;
+  animation: ribbonSweep 0.9s cubic-bezier(0.22,1,0.36,1) 1.2s forwards;
 }
-
-.wh-hand-pivot {
+.wh-hand {
   opacity:0;
   transform-origin:415px 225px;
-  will-change:transform,opacity;
   animation:
-    handBloom  0.52s cubic-bezier(0.22,1,0.36,1) 1.65s forwards,
-    naturalWave 1.85s ease-in-out 2.17s infinite;
+    handBloom  0.5s cubic-bezier(0.22,1,0.36,1) 1.75s forwards,
+    naturalWave 2s ease-in-out 2.25s infinite;
 }
-
-.wh-spring-char {
+.wh-arm {
+  animation: floatIdle 5s ease-in-out 1.8s infinite;
+}
+.wh-char {
   display:inline-block;
   opacity:0;
-  will-change:transform,opacity;
   animation:
-    letterSpring 0.55s cubic-bezier(0.22,1,0.36,1) forwards,
-    floatIdle 3.2s ease-in-out infinite;
+    letterIn  0.55s cubic-bezier(0.22,1,0.36,1) var(--din,0s) forwards,
+    floatChar 3.5s ease-in-out var(--fdin,0.7s) infinite;
 }
 
-/* ── Splash wrapper ─────────────────────────── */
+/* ─── splash wrapper ─────────────────────────────────────── */
 .wh-splash {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  cursor: pointer;
-  -webkit-user-select: none;
-  user-select: none;
+  position:fixed; inset:0; z-index:200;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  overflow:hidden; cursor:pointer; user-select:none; -webkit-user-select:none;
+}
+.wh-splash.exiting .wh-id-wrap {
+  animation: idExit 0.6s cubic-bezier(0.4,0,1,1) forwards !important;
 }
 
-.wh-splash.dark  { background: #05070b; }
-.wh-splash.light { background: #ECECEC; }
-
-.wh-splash.exiting {
-  animation: lanyardDrop-out 0.65s cubic-bezier(0.4,0,1,1) forwards;
+/* ─── background ─────────────────────────────────────────── */
+.wh-bg {
+  position:absolute; inset:0; z-index:0;
+  background: radial-gradient(ellipse 70% 60% at 50% 55%,
+    rgba(0,81,255,0.09) 0%,
+    rgba(0,40,120,0.04) 40%,
+    #05070b 70%
+  );
+}
+.wh-bg-noise {
+  position:absolute; inset:0; z-index:1; opacity:0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
 }
 
-/* ── Lanyard string ─────────────────────────── */
-.wh-string-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform-origin: top center;
+/* ─── id card wrap (clip + cord + card) ──────────────────── */
+.wh-id-wrap {
+  position:relative; z-index:2;
+  display:flex; flex-direction:column; align-items:center;
+  animation: idDrop 1.15s cubic-bezier(0.22,1,0.36,1) 0.05s both;
 }
 
-.wh-string {
-  width: 3px;
-  height: clamp(60px, 10vh, 100px);
-  transform-origin: top center;
-  transform: scaleY(0);
-  opacity: 0;
-  animation: stringDrop 0.4s ease-out 0.3s forwards;
-  border-radius: 2px;
+/* ─── lanyard clip SVG ───────────────────────────────────── */
+.wh-clip-svg {
+  display:block;
+  width:48px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
 }
-.wh-splash.dark  .wh-string { background: rgba(255,255,255,0.25); }
-.wh-splash.light .wh-string { background: rgba(0,0,0,0.2); }
 
-/* ── Card shell ─────────────────────────── */
+/* ─── lanyard cord ───────────────────────────────────────── */
+.wh-cord {
+  width:10px;
+  height:clamp(50px, 8vh, 80px);
+  transform-origin:top center;
+  transform:scaleY(0);
+  animation: cordUnfurl 0.5s ease-out 0.25s forwards;
+  border-radius:5px;
+  background: linear-gradient(to right, #2a2a3a 0%, #3a3a4e 40%, #4a4a60 50%, #3a3a4e 60%, #2a2a3a 100%);
+  box-shadow: inset 0 0 4px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* ─── card itself ────────────────────────────────────────── */
 .wh-card {
-  position: relative;
-  width: clamp(230px, 60vw, 300px);
-  aspect-ratio: 4/5;
-  border-radius: 1rem;
-  overflow: hidden;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.55), 0 4px 16px rgba(0,0,0,0.3);
-  animation: lanyardDrop 1.1s cubic-bezier(0.22,1,0.36,1) 0.08s both;
+  position:relative;
+  width:clamp(240px, 55vw, 310px);
+  aspect-ratio:3/4.2;
+  border-radius:18px;
+  overflow:hidden;
+  cursor:pointer;
+
+  /* glowing border */
+  border:1px solid rgba(0,81,255,0.28);
+  box-shadow:
+    0 0 0 1px rgba(0,81,255,0.1),
+    0 0 20px rgba(0,81,255,0.18),
+    0 0 50px rgba(0,81,255,0.09),
+    0 24px 60px rgba(0,0,0,0.65),
+    0 4px 12px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  animation: glowPulse 3s ease-in-out 2s infinite;
+
+  background: linear-gradient(160deg, #0d1225 0%, #080c1a 60%, #060810 100%);
 }
 
-.wh-card.dark  { background: #0B1120; border: 1px solid rgba(255,255,255,0.08); }
-.wh-card.light { background: #F1F3F6; border: 1px solid rgba(0,0,0,0.05); }
-
-/* ── Lanyard hole ─────────────────────────── */
-.wh-hole {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  z-index: 15;
+/* glow ring on card edge */
+.wh-card::before {
+  content:'';
+  position:absolute; inset:0;
+  border-radius:inherit;
+  background: linear-gradient(135deg,
+    rgba(0,81,255,0.08) 0%,
+    transparent 40%,
+    rgba(0,81,255,0.04) 100%
+  );
+  pointer-events:none; z-index:5;
 }
-.wh-splash.dark  .wh-hole { background: #05070b; border: 2px solid rgba(255,255,255,0.15); }
-.wh-splash.light .wh-hole { background: #ECECEC; border: 2px solid rgba(0,0,0,0.1); }
 
-/* ── Grain overlay ─────────────────────────── */
-.wh-grain {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  mix-blend-mode: overlay;
-  background-image:
-    radial-gradient(#0051FF 0.75px, transparent 0.75px),
-    radial-gradient(#090D16 0.5px, #F1F3F6 0.5px);
-  background-size: 20px 20px;
-  background-position: 0 0, 10px 10px;
+/* ─── card top accent bar ────────────────────────────────── */
+.wh-top-bar {
+  position:absolute; top:0; left:0; right:0; height:38%;
+  background: linear-gradient(145deg, #0032cc 0%, #0051ff 50%, #1a6bff 100%);
+  border-radius:18px 18px 0 0;
+  overflow:hidden;
 }
-.wh-card.dark  .wh-grain { opacity: 0.06; }
-.wh-card.light .wh-grain { opacity: 0.09; }
+.wh-top-bar::after {
+  content:'';
+  position:absolute; bottom:-40px; right:-30px;
+  width:120px; height:120px;
+  background:rgba(255,255,255,0.05);
+  border-radius:50%;
+}
 
-/* ── Replay badge ─────────────────────────── */
+/* ─── avatar circle ──────────────────────────────────────── */
+.wh-avatar {
+  position:absolute; top:28%; left:50%;
+  transform:translateX(-50%);
+  width:clamp(56px,16%,72px);
+  aspect-ratio:1;
+  border-radius:50%;
+  background:linear-gradient(135deg, #1a2a6e, #0d1740);
+  border:3px solid rgba(255,255,255,0.15);
+  box-shadow:0 4px 20px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,81,255,0.3);
+  display:flex; align-items:center; justify-content:center;
+  z-index:3;
+  font-family:'Space Mono',monospace;
+  font-size:clamp(14px,4%,20px);
+  font-weight:700;
+  color:rgba(255,255,255,0.75);
+  letter-spacing:1px;
+}
+
+/* ─── card logo area ─────────────────────────────────────── */
+.wh-card-logo {
+  position:absolute; top:10px; left:14px;
+  display:flex; align-items:center; gap:5px;
+  z-index:4;
+}
+.wh-card-logo-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:rgba(255,255,255,0.9);
+}
+.wh-card-logo-text {
+  font-family:'Space Mono',monospace;
+  font-size:7px; font-weight:700;
+  letter-spacing:0.18em;
+  color:rgba(255,255,255,0.7);
+  text-transform:uppercase;
+}
+
+/* ─── card body (bottom 60%) ─────────────────────────────── */
+.wh-card-body {
+  position:absolute; bottom:0; left:0; right:0;
+  top:38%;
+  display:flex; flex-direction:column; align-items:center;
+  padding-top:36%; padding-bottom:12px; padding-left:12px; padding-right:12px;
+  z-index:2;
+}
+
+/* ─── SVG waving hand (bg accent, smaller) ───────────────── */
+.wh-svg-accent {
+  position:absolute; inset:0; width:100%; height:100%;
+  pointer-events:none; z-index:1; opacity:0.65;
+}
+
+/* ─── name ───────────────────────────────────────────────── */
+.wh-name {
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:800;
+  font-size:clamp(1.1rem,4.5vw,1.4rem);
+  letter-spacing:-0.02em;
+  color:#fff;
+  text-align:center;
+  line-height:1.15;
+  position:relative; z-index:4;
+  margin-bottom:3px;
+  text-shadow:0 2px 12px rgba(0,81,255,0.3);
+}
+.wh-name .cav {
+  font-family:'Caveat',cursive;
+  font-size:clamp(1.5rem,6vw,2rem);
+  color:#60a5fa;
+  display:block;
+  line-height:1;
+}
+
+/* ─── role tag ───────────────────────────────────────────── */
+.wh-role {
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:clamp(0.6rem,2vw,0.72rem);
+  font-weight:600;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.4);
+  text-align:center;
+  position:relative; z-index:4;
+  margin-bottom:10px;
+}
+
+/* ─── divider ─────────────────────────────────────────────── */
+.wh-divider {
+  width:60%; height:1px;
+  background:linear-gradient(to right,transparent,rgba(0,81,255,0.3),transparent);
+  position:relative; z-index:4;
+  margin-bottom:8px;
+}
+
+/* ─── card bottom info ────────────────────────────────────── */
+.wh-card-info {
+  display:flex; justify-content:space-between; align-items:flex-end;
+  width:100%; position:relative; z-index:4; padding:0 4px;
+  margin-top:auto;
+}
+.wh-info-col label {
+  font-family:'Space Mono',monospace;
+  font-size:5.5px; color:rgba(255,255,255,0.3);
+  letter-spacing:0.12em; text-transform:uppercase; display:block; margin-bottom:2px;
+}
+.wh-info-col span {
+  font-family:'Space Mono',monospace;
+  font-size:7px; color:rgba(255,255,255,0.55);
+  letter-spacing:0.08em;
+}
+/* barcode strip */
+.wh-barcode {
+  display:flex; gap:1.5px; align-items:flex-end;
+}
+.wh-barcode div {
+  background:rgba(255,255,255,0.35);
+  border-radius:1px;
+}
+
+/* ─── replay badge ────────────────────────────────────────── */
 .wh-replay {
-  position: absolute;
-  bottom: 10px;
-  right: 12px;
-  z-index: 20;
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: 600;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  padding: 3px 10px;
-  border-radius: 999px;
-  transition: transform 0.2s;
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  position:absolute; bottom:10px; right:11px; z-index:10;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:7.5px; font-weight:600;
+  letter-spacing:0.12em; text-transform:uppercase;
+  color:rgba(96,165,250,0.6);
+  background:rgba(8,12,26,0.75);
+  border:1px solid rgba(0,81,255,0.15);
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  padding:3px 9px; border-radius:999px;
+  transition:transform 0.2s, opacity 0.2s;
 }
-.wh-replay:hover { transform: scale(1.06); }
-.wh-card.dark  .wh-replay { color: rgba(147,197,253,0.7); background: rgba(11,17,32,0.8); border: 1px solid rgba(0,81,255,0.1); }
-.wh-card.light .wh-replay { color: rgba(0,81,255,0.7);   background: rgba(241,243,246,0.8); border: 1px solid rgba(0,81,255,0.1); }
+.wh-replay:hover { transform:scale(1.06); opacity:0.9; }
 
-/* ── Click hint ─────────────────────────── */
+/* ─── hint ────────────────────────────────────────────────── */
 .wh-hint {
-  margin-top: 24px;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  animation: hintFade 0.6s ease-out 2.4s both;
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  position:relative; z-index:2;
+  margin-top:28px;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:10px; font-weight:500;
+  letter-spacing:0.22em; text-transform:uppercase;
+  color:rgba(255,255,255,0.18);
+  animation: hintIn 0.7s ease-out 2.8s both;
 }
-.wh-splash.dark  .wh-hint { color: rgba(255,255,255,0.3); }
-.wh-splash.light .wh-hint { color: rgba(0,0,0,0.3); }
+
+/* ─── light theme ─────────────────────────────────────────── */
+.wh-splash.light .wh-bg {
+  background: radial-gradient(ellipse 70% 60% at 50% 55%,
+    rgba(0,81,255,0.07) 0%, rgba(0,40,180,0.03) 40%, #e8ecf4 70%);
+}
+.wh-splash.light .wh-hint { color:rgba(0,0,0,0.25); }
 `;
 
-function SpringChars({ text, baseDelay = 0, stepDelay = 0.05, idleDelay = 0.6, rotations, style = {} }) {
-  const defaultRots = ["-2deg","1.5deg","-1deg","3deg","2deg","-1.5deg","1deg"];
-  const rots = rotations || defaultRots;
-  return text.split("").map((char, idx) => (
-    <span
-      key={idx}
-      className="wh-spring-char"
-      style={{
-        "--rot": rots[idx % rots.length],
-        animationDelay: `${baseDelay + idx * stepDelay}s, ${baseDelay + idleDelay + idx * 0.09}s`,
-        ...style,
-      }}
-    >
-      {char === " " ? "\u00A0" : char}
-    </span>
-  ));
+/* ─── Barcode strips ─────────────────────────────────────── */
+const BARS = [3,1,2,1,3,1,1,2,1,2,3,1,1,2,1,3,1,2,1,1,2,1,3];
+
+function Barcode() {
+  return (
+    <div className="wh-barcode">
+      {BARS.map((h,i) => (
+        <div key={i} style={{ width: i%3===0?2:1, height: 12+h*2 }} />
+      ))}
+    </div>
+  );
 }
 
+/* ─── Spring chars helper ────────────────────────────────── */
+function Chars({ text, baseDelay=0, step=0.045, idleBase=0.6, rots }) {
+  const def = ["-2deg","1.5deg","-1deg","2deg","-1.5deg","1deg"];
+  const r = rots || def;
+  return (
+    <>
+      {text.split("").map((ch, i) => (
+        <span key={i} className="wh-char" style={{
+          "--rot": r[i % r.length],
+          "--din":  `${baseDelay + i*step}s`,
+          "--fdin": `${baseDelay + idleBase + i*0.09}s`,
+        }}>
+          {ch === " " ? "\u00A0" : ch}
+        </span>
+      ))}
+    </>
+  );
+}
+
+/* ─── Lanyard clip SVG ───────────────────────────────────── */
+function LanyardClip() {
+  return (
+    <svg className="wh-clip-svg" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* outer housing */}
+      <rect x="6" y="0" width="36" height="22" rx="5" fill="url(#clipGrad)" />
+      {/* slot opening */}
+      <rect x="14" y="4" width="20" height="14" rx="3" fill="#1a1c26" />
+      {/* inner notch detail */}
+      <rect x="20" y="7" width="8" height="8" rx="2" fill="#23253a" />
+      {/* bottom tongue */}
+      <path d="M20 22 L24 36 L28 22 Z" fill="url(#clipGrad)" />
+      {/* shine */}
+      <rect x="8" y="1.5" width="16" height="3" rx="1.5" fill="rgba(255,255,255,0.18)" />
+      <defs>
+        <linearGradient id="clipGrad" x1="6" y1="0" x2="42" y2="36" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#4a4d6a"/>
+          <stop offset="40%" stopColor="#3a3d58"/>
+          <stop offset="100%" stopColor="#2a2d42"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
+/* ─── Main component ─────────────────────────────────────── */
 export default function WavingHandPoster({ theme = "dark", onEnter }) {
-  const [animKey, setAnimKey] = useState(0);
-  const [pointer, setPointer] = useState({ x: 0, y: 0 });
-  const [exiting, setExiting] = useState(false);
+  const [animKey, setAnimKey]   = useState(0);
+  const [exiting, setExiting]   = useState(false);
+  const [pointer, setPointer]   = useState({ x:0, y:0 });
 
-  const replayAnimation = () => {
-    setAnimKey(prev => prev + 1);
-  };
+  const replay = () => setAnimKey(k => k+1);
 
-  const handleClick = (e) => {
-    e.stopPropagation();
-    replayAnimation();
-  };
+  const handleCardClick = (e) => { e.stopPropagation(); replay(); };
 
   const handlePointerMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const normX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-    const normY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-    setPointer({ x: normX, y: normY });
+    const r = e.currentTarget.getBoundingClientRect();
+    setPointer({
+      x: ((e.clientX-r.left)/r.width  - 0.5) * 2,
+      y: ((e.clientY-r.top) /r.height - 0.5) * 2,
+    });
   };
 
-  const handlePointerLeave = () => setPointer({ x: 0, y: 0 });
-
-  // Enter portfolio on splash bg click (not on card itself)
   const handleSplashClick = () => {
-    if (onEnter) {
-      setExiting(true);
-      setTimeout(onEnter, 600);
-    }
+    if (!onEnter || exiting) return;
+    setExiting(true);
+    setTimeout(onEnter, 580);
   };
 
-  const t = theme; // "dark" | "light"
-  const fg       = t === "dark" ? "#F8FAFC"             : "#090D16";
-  const fgSoft   = t === "dark" ? "rgba(248,250,252,0.68)" : "rgba(9,13,22,0.68)";
-  const blue     = t === "dark" ? "#3B82F6"             : "#0051FF";
-  const nameCl   = t === "dark" ? "#60A5FA"             : "#0051FF";
-  const strokeBg = t === "dark" ? "#0B1120"             : "#F1F3F6";
+  const blue = "#3B82F6";
 
   return (
     <>
       <style>{css}</style>
 
-      {/* Full-screen splash — click bg to enter portfolio */}
       <div
-        className={`wh-splash ${t} ${exiting ? "exiting" : ""}`}
+        className={`wh-splash ${theme} ${exiting ? "exiting" : ""}`}
         onClick={handleSplashClick}
       >
-        {/* Lanyard string + card */}
-        <div className="wh-string-wrap" onClick={e => e.stopPropagation()}>
-          <div className={`wh-string ${t}`} />
+        {/* subtle bg */}
+        <div className="wh-bg" />
+        <div className="wh-bg-noise" />
 
-          {/* Card */}
+        {/* ── lanyard clip + cord + card ── */}
+        <div
+          className="wh-id-wrap"
+          onClick={e => e.stopPropagation()}
+        >
+          {/* clip */}
+          <LanyardClip />
+
+          {/* cord */}
+          <div className="wh-cord" />
+
+          {/* card */}
           <div
             key={`card-${animKey}`}
-            className={`wh-card ${t}`}
-            onClick={handleClick}
+            className="wh-card"
+            onClick={handleCardClick}
             onPointerMove={handlePointerMove}
-            onPointerLeave={handlePointerLeave}
+            onPointerLeave={() => setPointer({x:0,y:0})}
             role="button"
             tabIndex={0}
-            aria-label="Hey! I'm Mathely Mittal. Click to replay animation."
-            onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); replayAnimation(); } }}
+            aria-label="Mathely Mittal ID card — click to replay"
+            onKeyDown={e => { if (e.key==="Enter"||e.key===" ") { e.preventDefault(); replay(); } }}
+            style={{
+              transform: `perspective(600px) rotateY(${pointer.x*4}deg) rotateX(${-pointer.y*3}deg)`,
+              transition: "transform 0.3s ease-out",
+            }}
           >
-            {/* Lanyard hole cutout */}
-            <div className={`wh-hole ${t}`} />
+            {/* top blue bar */}
+            <div className="wh-top-bar" />
 
-            {/* SVG: ribbon + hand */}
+            {/* logo */}
+            <div className="wh-card-logo">
+              <div className="wh-card-logo-dot" />
+              <span className="wh-card-logo-text">Portfolio</span>
+            </div>
+
+            {/* waving hand SVG accent (background) */}
             <svg
               key={`svg-${animKey}`}
               viewBox="0 0 600 800"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: "100%",
-                height: "100%",
-                pointerEvents: "none",
-                transition: "transform 0.3s ease-out",
-                transform: `translate3d(${pointer.x * 6}px, ${pointer.y * 6}px, 0)`,
-              }}
+              className="wh-svg-accent"
               preserveAspectRatio="xMidYMid slice"
+              style={{
+                transform: `translate3d(${pointer.x*5}px,${pointer.y*5}px,0)`,
+                transition:"transform 0.3s ease-out",
+              }}
             >
-              <defs>
-                <filter id="wh-grain-filter" x="-5%" y="-5%" width="110%" height="110%">
-                  <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="7" result="noise"/>
-                  <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.1" xChannelSelector="R" yChannelSelector="G"/>
-                </filter>
-              </defs>
-
-              <g filter="url(#wh-grain-filter)" className="wh-arm-assembly">
-                {/* Ribbon path */}
+              <g className="wh-arm">
                 <path
-                  pathLength="1000"
+                  pathLength="1200"
                   d="M -70 468 L 430 318 C 530 288, 645 288, 655 395 C 665 510, 610 615, 515 572 C 435 536, 415 430, 415 315 L 415 225"
-                  strokeWidth="88"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="wh-ribbon-stroke"
-                  stroke={blue}
+                  stroke={blue} strokeWidth="90" strokeLinecap="round" strokeLinejoin="round"
+                  className="wh-ribbon"
                 />
-
-                {/* Hand */}
-                <g className="wh-hand-pivot">
+                <g className="wh-hand">
                   <path
                     d="M 371 225 L 371 96 A 8.5 8.5 0 0 1 388 96 L 388 136 A 3 3 0 0 0 394 136 L 394 74 A 9 9 0 0 1 412 74 L 412 134 A 3 3 0 0 0 418 134 L 418 62 A 9 9 0 0 1 436 62 L 436 136 A 3 3 0 0 0 442 136 L 442 76 A 8.5 8.5 0 0 1 459 76 L 459 148 C 459 152, 463 153, 466 149 C 473 139, 482 126, 490 120 C 499 113, 510 121, 504 134 C 495 156, 479 182, 466 205 C 461 213, 459 220, 459 228 A 44 44 0 0 1 371 225 Z"
                     fill={blue}
                   />
-                  <path
-                    d="M 441 163 C 448 148, 458 143, 467 146"
-                    strokeWidth="6"
-                    strokeLinecap="round"
-                    stroke={strokeBg}
-                    style={{ transition: "stroke 0.5s" }}
-                  />
+                  <path d="M 441 163 C 448 148, 458 143, 467 146" stroke="#080c1a" strokeWidth="6" strokeLinecap="round"/>
                 </g>
               </g>
             </svg>
 
-            {/* Grain overlay */}
-            <div className={`wh-grain ${t}`} />
+            {/* avatar */}
+            <div className="wh-avatar" style={{ position:"absolute", top:"30%", left:"50%", transform:"translateX(-50%)", zIndex:3 }}>
+              MM
+            </div>
 
-            {/* Text layer */}
-            <div
-              key={`text-${animKey}`}
-              style={{
-                position: "relative",
-                zIndex: 10,
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                padding: "clamp(16px,4vw,24px)",
-                pointerEvents: "none",
-                transform: `translate3d(${pointer.x * -3}px, ${pointer.y * -3}px, 0)`,
-                transition: "transform 0.3s ease-out",
-              }}
-            >
-              {/* "Hey!" greeting */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  fontSize: "clamp(2.4rem,9vw,3.1rem)",
-                  fontWeight: 800,
-                  letterSpacing: "-0.03em",
-                  lineHeight: 1,
-                  color: fg,
-                  marginTop: "24px",
-                  fontFamily: "'Plus Jakarta Sans', sans-serif",
-                }}
-              >
-                <SpringChars text="Hey!" baseDelay={1.1} stepDelay={0.05} idleDelay={0.6}
-                  rotations={["-2deg","1.5deg","-1deg","3deg"]} />
+            {/* body text */}
+            <div className="wh-card-body">
+              <div className="wh-name" key={`name-${animKey}`}>
+                <span className="cav">
+                  <Chars text="Mathely Mittal" baseDelay={1.0} step={0.04} idleBase={0.55} />
+                </span>
               </div>
 
-              {/* Bio block: I'm + Mathely Mittal */}
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", marginBottom: "4px" }}>
-                {/* "I'm" */}
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  fontSize: "clamp(1rem,3vw,1.3rem)",
-                  fontWeight: 800,
-                  letterSpacing: "-0.02em",
-                  color: fg,
-                  lineHeight: 1.2,
-                  fontFamily: "'Plus Jakarta Sans', sans-serif",
-                }}>
-                  <SpringChars text="I'm" baseDelay={1.35} stepDelay={0.045} idleDelay={0.6}
-                    rotations={["0deg","0deg","0deg"]} />
-                </div>
+              <div className="wh-role">
+                <Chars text="CS Student  •  Developer" baseDelay={1.55} step={0.018} idleBase={0.5} rots={["0deg"]} />
+              </div>
 
-                {/* Name in Caveat */}
-                <div style={{ marginTop: "-2px" }}>
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                    fontSize: "clamp(2.6rem,9vw,3.4rem)",
-                    fontWeight: 700,
-                    color: nameCl,
-                    lineHeight: 1,
-                    paddingTop: "2px",
-                    paddingBottom: "4px",
-                    fontFamily: "'Caveat', cursive",
-                  }}>
-                    <SpringChars
-                      text="Mathely"
-                      baseDelay={1.5}
-                      stepDelay={0.045}
-                      idleDelay={0.65}
-                      rotations={["-2deg","1.5deg","-1deg","2deg","-1.5deg","1deg","-2deg"]}
-                    />
-                  </div>
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    flexWrap: "wrap",
-                    fontSize: "clamp(2.6rem,9vw,3.4rem)",
-                    fontWeight: 700,
-                    color: nameCl,
-                    lineHeight: 1,
-                    fontFamily: "'Caveat', cursive",
-                  }}>
-                    <SpringChars
-                      text="Mittal"
-                      baseDelay={1.85}
-                      stepDelay={0.045}
-                      idleDelay={0.65}
-                      rotations={["1.5deg","-1deg","2deg","-1.5deg","1deg","-2deg"]}
-                    />
-                  </div>
-                </div>
+              <div className="wh-divider" />
 
-                {/* Subtitle */}
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  fontSize: "clamp(0.7rem,2vw,0.82rem)",
-                  fontWeight: 700,
-                  letterSpacing: "-0.01em",
-                  color: fgSoft,
-                  marginTop: "4px",
-                  fontFamily: "'Plus Jakarta Sans', sans-serif",
-                }}>
-                  <SpringChars
-                    text="CS Student • Developer"
-                    baseDelay={2.1}
-                    stepDelay={0.018}
-                    idleDelay={0.6}
-                    rotations={["0deg"]}
-                  />
+              {/* bottom row */}
+              <div className="wh-card-info">
+                <div className="wh-info-col">
+                  <label>ID</label>
+                  <span>MM-2025</span>
+                </div>
+                <Barcode />
+                <div className="wh-info-col" style={{textAlign:"right"}}>
+                  <label>Batch</label>
+                  <span>2027</span>
                 </div>
               </div>
             </div>
 
-            {/* Replay badge */}
-            <span className={`wh-replay ${t}`}>Click to replay ↻</span>
+            {/* replay badge */}
+            <span className="wh-replay">Replay ↻</span>
           </div>
         </div>
 
-        {/* Click hint */}
-        <div className={`wh-hint ${t}`}>click anywhere to enter</div>
+        {/* hint */}
+        <div className="wh-hint">click anywhere to enter</div>
       </div>
     </>
   );
