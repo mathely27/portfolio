@@ -137,8 +137,8 @@ const css = `
   animation: stringDrop 0.4s ease-out 0.3s forwards;
   border-radius: 2px;
 }
-.dark  .wh-string { background: rgba(255,255,255,0.25); }
-.light .wh-string { background: rgba(0,0,0,0.2); }
+.wh-splash.dark  .wh-string { background: rgba(255,255,255,0.25); }
+.wh-splash.light .wh-string { background: rgba(0,0,0,0.2); }
 
 /* ── Card shell ─────────────────────────── */
 .wh-card {
@@ -165,8 +165,8 @@ const css = `
   border-radius: 50%;
   z-index: 15;
 }
-.wh-hole.dark  { background: #05070b; border: 2px solid rgba(255,255,255,0.15); }
-.wh-hole.light { background: #ECECEC; border: 2px solid rgba(0,0,0,0.1); }
+.wh-splash.dark  .wh-hole { background: #05070b; border: 2px solid rgba(255,255,255,0.15); }
+.wh-splash.light .wh-hole { background: #ECECEC; border: 2px solid rgba(0,0,0,0.1); }
 
 /* ── Grain overlay ─────────────────────────── */
 .wh-grain {
@@ -180,8 +180,8 @@ const css = `
   background-size: 20px 20px;
   background-position: 0 0, 10px 10px;
 }
-.wh-grain.dark  { opacity: 0.06; }
-.wh-grain.light { opacity: 0.09; }
+.wh-card.dark  .wh-grain { opacity: 0.06; }
+.wh-card.light .wh-grain { opacity: 0.09; }
 
 /* ── Replay badge ─────────────────────────── */
 .wh-replay {
@@ -201,8 +201,8 @@ const css = `
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 .wh-replay:hover { transform: scale(1.06); }
-.wh-replay.dark  { color: rgba(147,197,253,0.7); background: rgba(11,17,32,0.8); border: 1px solid rgba(0,81,255,0.1); }
-.wh-replay.light { color: rgba(0,81,255,0.7);   background: rgba(241,243,246,0.8); border: 1px solid rgba(0,81,255,0.1); }
+.wh-card.dark  .wh-replay { color: rgba(147,197,253,0.7); background: rgba(11,17,32,0.8); border: 1px solid rgba(0,81,255,0.1); }
+.wh-card.light .wh-replay { color: rgba(0,81,255,0.7);   background: rgba(241,243,246,0.8); border: 1px solid rgba(0,81,255,0.1); }
 
 /* ── Click hint ─────────────────────────── */
 .wh-hint {
@@ -213,8 +213,8 @@ const css = `
   animation: hintFade 0.6s ease-out 2.4s both;
   font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
-.wh-hint.dark  { color: rgba(255,255,255,0.3); }
-.wh-hint.light { color: rgba(0,0,0,0.3); }
+.wh-splash.dark  .wh-hint { color: rgba(255,255,255,0.3); }
+.wh-splash.light .wh-hint { color: rgba(0,0,0,0.3); }
 `;
 
 function SpringChars({ text, baseDelay = 0, stepDelay = 0.05, idleDelay = 0.6, rotations, style = {} }) {
