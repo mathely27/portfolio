@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import FluidGlass from './components/FluidGlass';
-import ThemeWipe from './components/ThemeWipe';
 import LineNav from './components/LineNav';
 import TextPressure from './components/TextPressure';
 import BlurText from './components/BlurText';
@@ -56,53 +55,20 @@ export default function App() {
     return 'dark';
   });
 
-  const [themeWipe, setThemeWipe] = useState(null);
-  const swapTimer = useRef(null);
-  const clearTimer = useRef(null);
-
   const toggleTheme = (event) => {
     if (event?.preventDefault) event.preventDefault();
-    // One bloom at a time — ignore clicks while a transition is running
-    if (themeWipe) return;
 
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
 
-    // Bloom originates at the toggle that was pressed
-    let x = window.innerWidth - 40;
-    let y = 32;
-    if (event?.clientX !== undefined && event?.clientY !== undefined) {
-      x = event.clientX;
-      y = event.clientY;
+    // Aesthetic soft transition: Update theme state directly
+    setTheme(nextTheme);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('portfolio-theme', nextTheme);
     }
-
-    // Radius that reaches the furthest viewport corner
-    const radius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y)
-    );
-
-    setThemeWipe({ x, y, radius, next: nextTheme });
-
-    // Swap the palette while the bloom already covers the centre of the
-    // screen; the page's own colour transitions ease the uncovered edges.
-    swapTimer.current = window.setTimeout(() => {
-      setTheme(nextTheme);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('portfolio-theme', nextTheme);
-      }
+    if (typeof document !== 'undefined') {
       document.documentElement.setAttribute('data-theme', nextTheme);
-    }, 420);
-
-    clearTimer.current = window.setTimeout(() => setThemeWipe(null), 1050);
+    }
   };
-
-  useEffect(
-    () => () => {
-      if (swapTimer.current) window.clearTimeout(swapTimer.current);
-      if (clearTimer.current) window.clearTimeout(clearTimer.current);
-    },
-    []
-  );
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
@@ -202,9 +168,6 @@ export default function App() {
           size={glassSize}
         />
       )}
-
-      {/* Full-viewport theme bloom: iris, rings, prism orbit & spark burst */}
-      {themeWipe && <ThemeWipe wipe={themeWipe} />}
 
       {!showSplash && (
         <GlowCursor

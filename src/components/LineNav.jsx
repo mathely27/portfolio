@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sun, Moon } from 'lucide-react';
+import AestheticThemeToggle from './AestheticThemeToggle';
 
 /**
  * LineNav - one horizontal line, links spread far apart with theme switch.
@@ -117,102 +117,13 @@ export default function LineNav({ items = [], activeHref, onNavigate, theme = 'd
             })}
           </div>
 
-          {/* Theme Toggle Button - Interactive Celestial Morph Animation */}
-          {onToggleTheme && (
-            <button
-              onClick={onToggleTheme}
-              aria-label={`Switch to ${isLight ? 'Dark' : 'Light'} theme`}
-              title={`Switch to ${isLight ? 'Dark' : 'Light'} theme`}
-              className="theme-toggle-btn"
-              style={{
-                position: 'relative',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '38px',
-                height: '38px',
-                borderRadius: '50%',
-                background: isLight
-                  ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 243, 250, 0.9))'
-                  : 'linear-gradient(135deg, #181c26, #10131a)',
-                border: isLight
-                  ? '1.5px solid rgba(220, 160, 50, 0.35)'
-                  : '1.5px solid rgba(130, 160, 240, 0.25)',
-                color: isLight ? '#f59e0b' : '#e2e8f0',
-                cursor: 'pointer',
-                flexShrink: 0,
-                outline: 'none',
-                overflow: 'hidden',
-                boxShadow: isLight
-                  ? '0 0 16px rgba(245, 158, 11, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.8)'
-                  : '0 0 16px rgba(120, 160, 255, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.08)',
-                transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.12)';
-                e.currentTarget.style.boxShadow = isLight
-                  ? '0 0 22px rgba(245, 158, 11, 0.45), inset 0 1px 2px rgba(255, 255, 255, 1)'
-                  : '0 0 22px rgba(120, 160, 255, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.boxShadow = isLight
-                  ? '0 0 16px rgba(245, 158, 11, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.8)'
-                  : '0 0 16px rgba(120, 160, 255, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.08)';
-              }}
-            >
-              {/* Sun Icon with Rays & Orbital Spring Entrance */}
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transform: isLight
-                    ? 'rotate(0deg) scale(1)'
-                    : 'rotate(-90deg) scale(0.2)',
-                  opacity: isLight ? 1 : 0,
-                  transition: 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease',
-                  pointerEvents: 'none',
-                }}
-              >
-                <Sun size={17} strokeWidth={2.4} />
-              </div>
-
-              {/* Moon Icon with Celestial Tilt & Stars Aura */}
-              <div
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transform: !isLight
-                    ? 'rotate(0deg) scale(1)'
-                    : 'rotate(90deg) scale(0.2)',
-                  opacity: !isLight ? 1 : 0,
-                  transition: 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease',
-                  pointerEvents: 'none',
-                }}
-              >
-                <Moon size={16} strokeWidth={2.2} />
-              </div>
-
-              {/* Subtle Ambient Ring Flash Ripple */}
-              <span
-                key={theme}
-                style={{
-                  position: 'absolute',
-                  inset: '-4px',
-                  borderRadius: '50%',
-                  border: isLight ? '2px solid rgba(245, 158, 11, 0.6)' : '2px solid rgba(130, 160, 240, 0.6)',
-                  animation: 'themeRipple 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                  pointerEvents: 'none',
-                }}
-              />
-            </button>
-          )}
+        {/* Aesthetic Capsule Theme Toggle */}
+        {onToggleTheme && (
+          <AestheticThemeToggle
+            theme={theme}
+            onToggle={onToggleTheme}
+          />
+        )}
         </div>
       </div>
     </nav>
