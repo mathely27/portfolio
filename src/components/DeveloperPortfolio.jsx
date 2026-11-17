@@ -4,6 +4,7 @@ import { GithubIcon, LeetcodeIcon, LinkedinIcon } from './Icons';
 import ContributionGraphs from './ContributionGraphs';
 import { projects } from '../data/projects';
 import ReadmeTechStack from './ReadmeTechStack';
+import HalftoneReveal from './halftone/HalftoneReveal';
 import '../developer.css';
 
 function Starburst({ className = '' }) {
@@ -18,7 +19,7 @@ function HeroPortrait() {
   return <div className="hero-art portrait-art personal-photo-art" aria-label="Mathely Mittal portrait">
     <div className="hero-window portrait-window">
       <div className="window-controls" aria-hidden="true"><span className="window-dots"><i/><i/><i/></span><span className="window-buttons"><i>−</i><i>□</i><i>×</i></span></div>
-      <div className="portrait-stage personal-portrait-stage" tabIndex={0} aria-label="Mathely Mittal. Hover or focus to see the photo in colour."><svg className="portrait-photo" viewBox="150 330 800 850" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Mathely Mittal"><image href="/assets/mathely-portrait-enhanced.png" width="1196" height="1315"/></svg></div>
+      <div className="portrait-stage personal-portrait-stage" tabIndex={0} aria-label="Mathely Mittal. Hover or focus to see the photo in colour."><svg className="portrait-photo" viewBox="150 330 800 850" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Mathely Mittal"><image href="/assets/mathely-portrait-enhanced.png" width="1196" height="1315"/></svg><HalftoneReveal src="/assets/mathely-portrait-enhanced.png" crop={[150, 330, 800, 850]} preserveBackground fit="contain" mode="mono" cellSize={4} inkColor="#202523" paperColor="#e6e4df" contrast={1.05} revealRadius={110} softness={0.8} linger={0.7} intro={false} className="portrait-halftone"/></div>
     </div>
     <span className="hero-label label-swift">SW/</span><span className="hero-label label-ai">/AI</span><Starburst className="hero-star"/>
   </div>;
