@@ -1,0 +1,51 @@
+// Curated from mathely27's public repositories. Forks are identified explicitly.
+export const projects = [
+  {
+    id: 'applocker', title: 'AppLocker', category: 'Native', label: 'A little more privacy. A lot more peace of mind.',
+    description: 'A native macOS utility that puts Touch ID between your apps and everyone else.',
+    detail: 'Protect selected Mac applications with Touch ID or your administrator password. AppLocker monitors app launches in the background and asks you to authenticate before using a protected app.',
+    tags: ['Swift', 'SwiftUI', 'LocalAuthentication'], image: '/assets/applocker-preview.jpg',
+    source: 'https://github.com/mathely27/macapplock', color: '#8cd8d9',
+    features: ['Native Touch ID and password authentication', 'Background app launch monitoring', 'Launch at login', 'MVVM architecture'],
+  },
+  {
+    id: 'berry', title: 'Berry', category: 'AI', label: 'Your AI. Your machine. Your business.',
+    description: 'A private desktop AI assistant, powered by Python and local models through Ollama.',
+    detail: 'An exploration of personal AI that runs on your own computer. Berry brings Python and Ollama together in a desktop assistant, with local inference at the heart of the experience.',
+    tags: ['Python', 'Ollama', 'Local AI'], image: '/assets/berry-ui-preview.png',
+    source: 'https://github.com/mathely27/Berry', color: '#c3b3ed',
+    features: ['Local model inference with Ollama', 'Python desktop application', 'An alternative to cloud-based assistants'],
+  },
+  {
+    id: 'clutch', title: 'Clutch', category: 'Web', label: 'A playground for your competitive side.',
+    description: 'A web platform for typing, reaction-time and coordination challenges, wrapped in a bold dashboard.',
+    detail: 'Clutch brings browser-based challenges into one dashboard. Explore memory typing, reaction time and coordination activities in a playful interface.',
+    tags: ['React', 'JavaScript', 'Web app'], image: '/assets/clutch-dashboard-preview.png',
+    source: 'https://github.com/mathely27/project-x', demo: 'https://project-x-navy-eight.vercel.app', color: '#f4b19d',
+    features: ['A unified challenge dashboard', 'Typing and reaction-time activities', 'Distinctive visual interface'],
+  },
+  {
+    id: 'gitstatcard', title: 'GitStatCard', category: 'Web', label: 'Make your README a little more you.',
+    description: 'Dynamic SVG statistics cards for GitHub profiles and project READMEs.',
+    detail: 'A developer tool for bringing GitHub statistics into profiles and READMEs as dynamic SVG cards. A small project at the intersection of code, data and visual presentation.',
+    tags: ['SVG', 'CSS', 'Developer tools'], image: '/assets/gitstatcard-live-preview.png',
+    source: 'https://github.com/mathely27/gitstatcard', color: '#bacd8e',
+    features: ['Dynamic SVG output', 'GitHub profile statistics', 'Cards made for README embeds'],
+  },
+  {
+    id: 'text-encryptor', title: 'Text Encryptor', category: 'Web', label: 'Small tool. Cyberpunk energy.',
+    description: 'A browser-based Base64 encoder and decoder with a neon interface and one-click copying.',
+    detail: 'A frontend experiment in DOM interactions, clipboard access and error handling. Despite the project name, the tool uses Base64 encoding, which is reversible encoding rather than secure encryption.',
+    tags: ['JavaScript', 'CSS', 'Base64'], image: '/assets/text-encryptor-preview.png',
+    source: 'https://github.com/mathely27/Text_Encryptor', demo: 'https://text-encryptor-one.vercel.app', color: '#a7c5eb',
+    features: ['Base64 encode and decode', 'Copy output to the clipboard', 'Invalid-input handling', 'Responsive cyber-inspired interface'],
+  },
+  {
+    id: 'autonomous', title: 'Autonomous', category: 'AI', label: 'Exploring a feed that thinks for itself.',
+    description: 'An AI security-news persona exploring topic discovery, editorial judgment and persistent memory.',
+    detail: 'A fork-based exploration of an autonomous AI publishing system. The project combines news discovery, model-driven story selection and database-backed memory. This repository is a fork; the source includes the original project history.',
+    tags: ['Next.js', 'Groq', 'Supabase'], image: '/assets/autonomous-live-preview.png',
+    source: 'https://github.com/mathely27/autonomous-ai-persona', demo: 'https://autonomous-ai-persona-alpha.vercel.app', color: '#e9a6c1', fork: true,
+    features: ['News and research discovery', 'Editorial reasoning and topic deduplication', 'Persistent memory with Supabase', 'Fork-based exploration'],
+  },
+];

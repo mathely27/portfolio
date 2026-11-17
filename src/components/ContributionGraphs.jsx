@@ -547,7 +547,7 @@ export default function ContributionGraphs({ theme = 'dark' }) {
       <ContributionHeatmap
         platformTitle="LeetCode"
         platformUsername="mathely_27"
-        platformUrl="https://leetcode.com/mathely_27"
+        platformUrl="https://leetcode.com/u/mathely_27/"
         platformIcon={LeetcodeIcon}
         countNumber={leetcodeState.count}
         subjectLabel="problems solved in the last year"
