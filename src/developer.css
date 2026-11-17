@@ -33,3 +33,24 @@
 @media(max-width:760px){.portrait-window{border-radius:28px;padding:0 8px 8px;}.portrait-stage{height:290px;border-radius:20px;}.portrait-art .label-ai{bottom:65px;}}
 @media(max-width:700px){.portrait-window{border-radius:34px;padding:0 11px 11px;}.portrait-stage{height:345px;border-radius:25px;}.portrait-art .label-ai{bottom:75px;}}
 @media(prefers-reduced-motion:reduce){.developer-portrait{animation:none;}}
+
+/* Numbered symbol tiles from the GitHub README. */
+.readme-stack{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;width:100%;}
+.readme-stack-tile{position:relative;aspect-ratio:1;border:1.5px solid #4a525b;border-radius:16px;background:#ffffff0a;transition:transform .2s,border-color .2s;}
+.readme-stack-tile:hover{transform:translateY(-3px);border-color:var(--tile-brand);}
+.readme-tile-number{position:absolute;top:9px;left:11px;font:11px/1 'Geist Mono',monospace;color:#8b949e;}
+.readme-tile-face{position:absolute;inset:19px 0 25px;display:grid;place-items:center;}
+.readme-tile-symbol,.readme-tile-icon{grid-area:1/1;}
+.readme-tile-symbol{font:700 clamp(26px,2.8vw,40px)/1 'Geist Mono',monospace;color:#fff;animation-name:readme-symbol;}
+.readme-tile-icon{width:37px;height:37px;color:var(--tile-brand);opacity:0;animation-name:readme-icon;}
+.readme-tile-name{position:absolute;bottom:10px;left:3px;right:3px;font:12px/1.1 'Albert Sans',sans-serif;color:#8b949e;text-align:center;white-space:nowrap;}
+.readme-tile-glow{position:absolute;inset:-1px;border-radius:16px;border:1.5px solid var(--tile-brand);background:color-mix(in srgb,var(--tile-brand) 14%,transparent);opacity:0;animation-name:readme-icon;pointer-events:none;}
+.readme-tile-symbol,.readme-tile-icon,.readme-tile-glow{animation-duration:var(--tile-duration);animation-delay:var(--tile-delay);animation-iteration-count:infinite;animation-timing-function:ease-in-out;}
+.readme-stack-tile:hover .readme-tile-symbol{opacity:0!important;}.readme-stack-tile:hover .readme-tile-icon,.readme-stack-tile:hover .readme-tile-glow{opacity:1!important;}
+@keyframes readme-symbol{0%,82%{opacity:1;}85%,96%{opacity:0;}99%,100%{opacity:1;}}
+@keyframes readme-icon{0%,82%{opacity:0;}85%,96%{opacity:1;}99%,100%{opacity:0;}}
+@media(max-width:1050px){.readme-stack{gap:10px;}.readme-stack-tile,.readme-tile-glow{border-radius:14px;}.readme-tile-symbol{font-size:30px;}.readme-tile-icon{width:30px;height:30px;}.readme-tile-name{font-size:10px;bottom:8px;}.readme-tile-number{font-size:9px;top:8px;left:9px;}.readme-tile-face{inset:16px 0 22px;}}
+@media(max-width:760px){.readme-stack{gap:7px;}.readme-stack-tile,.readme-tile-glow{border-radius:11px;}.readme-tile-symbol{font-size:25px;}.readme-tile-icon{width:25px;height:25px;}.readme-tile-name{font-size:8px;bottom:7px;}.readme-tile-number{font-size:7px;top:7px;left:7px;}.readme-tile-face{inset:14px 0 19px;}}
+@media(max-width:700px){.readme-stack{gap:9px;}.readme-stack-tile,.readme-tile-glow{border-radius:12px;}.readme-tile-symbol{font-size:28px;}.readme-tile-icon{width:28px;height:28px;}.readme-tile-name{font-size:9px;bottom:7px;}}
+@media(max-width:420px){.readme-stack{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}.readme-tile-symbol{font-size:34px;}.readme-tile-icon{width:34px;height:34px;}.readme-tile-name{font-size:11px;bottom:10px;}.readme-tile-number{font-size:10px;top:9px;left:10px;}.readme-tile-face{inset:18px 0 24px;}}
+@media(prefers-reduced-motion:reduce){.readme-tile-symbol,.readme-tile-icon,.readme-tile-glow{animation:none!important;}.readme-tile-symbol{opacity:1;}.readme-tile-icon,.readme-tile-glow{opacity:0;}}

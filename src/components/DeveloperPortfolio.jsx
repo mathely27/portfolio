@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Braces, Check, Code2, Copy, Cpu, ExternalLink, Fingerprint, Mail, MapPin, Monitor, X } from 'lucide-react';
+import { ArrowUpRight, Braces, Check, Code2, Copy, Cpu, ExternalLink, Fingerprint, Mail, Monitor, X } from 'lucide-react';
 import { GithubIcon, LeetcodeIcon, LinkedinIcon } from './Icons';
 import ContributionGraphs from './ContributionGraphs';
 import { projects } from '../data/projects';
-import { TECH_STACK } from './techStack';
+import ReadmeTechStack from './ReadmeTechStack';
 import '../developer.css';
 
 function Starburst({ className = '' }) {
@@ -41,7 +41,6 @@ export default function DeveloperPortfolio() {
   const [selected,setSelected]=useState(null);
   const [copied,setCopied]=useState(false);
   const [copyError,setCopyError]=useState(false);
-  const [selectedTool,setSelectedTool]=useState('Python');
   const dialogRef=useRef(null);
   const scrollRef=useRef(null);
   const copyTimer=useRef(null);
@@ -66,14 +65,11 @@ export default function DeveloperPortfolio() {
     try{await navigator.clipboard.writeText('mathely27@gmail.com');setCopied(true);setCopyError(false);clearTimeout(copyTimer.current);copyTimer.current=setTimeout(()=>setCopied(false),2400);}
     catch{setCopyError(true);}
   };
-  const tools=[...TECH_STACK,{key:'Sw',name:'Swift'}];
-  const toolDescriptions={Swift:'For native Mac applications and AppLocker’s SwiftUI interface.',Python:'Behind Berry and my local AI experiments.',React:'For interactive web interfaces and full-stack projects.',Ollama:'Local language models, running on my own machine.',JavaScript:'From web platforms to small browser utilities.',Git:'Version control for the things I build.',Supabase:'Exploring databases and persistent application state.'};
-
   return <div className="developer-site" ref={scrollRef}>
     <a className="dev-skip" href="#about" onClick={event=>navigate('about',event)}>Skip to content</a>
     <header className="dev-header"><a href="#home" className="dev-logo" onClick={event=>navigate('home',event)}>Mathely<span>©</span></a><a href="#contact" className="lime-button" onClick={event=>navigate('contact',event)}>Get in touch<ArrowUpRight size={15}/></a></header>
     <main>
-      <section className="dev-hero page-width" id="home" aria-labelledby="hero-heading"><div className="hero-copy"><p className="location-line"><MapPin size={16} fill="currentColor"/>Based in India</p><h1 id="hero-heading">Hi, I'm Mathely :),<br/><span className="role-line">Software <span>Developer</span></span></h1><p className="hero-description">I build useful software for the Mac, the web,<br className="desktop-break"/> and the little AI that lives on my machine.</p><div className="social-circles"><a href="https://github.com/mathely27" target="_blank" rel="noreferrer" aria-label="GitHub — mathely27"><GithubIcon size={19}/></a><a href="https://leetcode.com/u/mathely_27/" target="_blank" rel="noreferrer" aria-label="LeetCode — mathely_27"><LeetcodeIcon size={19}/></a><a href="https://www.linkedin.com/in/mathely-mittal-b284143b9/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><LinkedinIcon size={18}/></a><a href="mailto:mathely27@gmail.com" aria-label="Email Mathely"><Mail size={18}/></a></div></div><HeroPortrait/></section>
+      <section className="dev-hero page-width" id="home" aria-labelledby="hero-heading"><div className="hero-copy"><h1 id="hero-heading">Hi, I'm Mathely :),<br/><span className="role-line">Software <span>Developer</span></span></h1><div className="social-circles"><a href="https://github.com/mathely27" target="_blank" rel="noreferrer" aria-label="GitHub — mathely27"><GithubIcon size={19}/></a><a href="https://leetcode.com/u/mathely_27/" target="_blank" rel="noreferrer" aria-label="LeetCode — mathely_27"><LeetcodeIcon size={19}/></a><a href="https://www.linkedin.com/in/mathely-mittal-b284143b9/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><LinkedinIcon size={18}/></a><a href="mailto:mathely27@gmail.com" aria-label="Email Mathely"><Mail size={18}/></a></div></div><HeroPortrait/></section>
 
       <section className="dev-about page-width section-space" id="about" aria-labelledby="about-heading"><div className="section-eyebrow"><span className="eyebrow-symbol">◎</span>About me</div><div className="about-content"><h2 id="about-heading">I'm a software developer <span className="coral-text"><Spiral/></span> who learns by building. From <span className="yellow-text">↝</span> native Mac utilities to private AI and web apps, I like making things that <span className="lime-text">actually work ✧.</span></h2><div className="about-facts"><div><strong><span>+</span>{String(projects.length).padStart(2,'0')}</strong><p>Selected projects</p></div><div><strong>03<span className="lime-text">/</span></strong><p>Areas to explore</p></div><div><strong><span className="coral-text">⌘</span>CS</strong><p>Chitkara University</p></div></div><a href="https://www.linkedin.com/in/mathely-mittal-b284143b9/" target="_blank" rel="noreferrer" className="lime-button">More about me<ArrowUpRight size={15}/></a></div></section>
 
@@ -83,7 +79,7 @@ export default function DeveloperPortfolio() {
 
       <section className="dev-services page-width section-space" aria-labelledby="services-heading"><h2 className="large-heading" id="services-heading">What I <span>build</span></h2><div className="service-cards">{[{title:'Native apps',description:'Mac utilities that feel at home on the Mac. SwiftUI interfaces, native authentication, and the small details that matter.',tags:'Swift / SwiftUI',icon:Fingerprint,color:'lime',target:'applocker'},{title:'Web apps',description:'Interactive platforms and useful browser tools. From the first component to a working app you can actually open.',tags:'React / JavaScript',icon:Monitor,color:'coral',target:'clutch'},{title:'Local AI',description:'Personal AI, a little closer to home. Exploring desktop assistants and language models that run on my own machine.',tags:'Python / Ollama',icon:Cpu,color:'yellow',target:'berry'},{title:'Dev tools',description:'Small tools for other builders. Making developer profiles, project READMEs, and everyday workflows a little better.',tags:'SVG / CSS / Git',icon:Braces,color:'purple',target:'gitstatcard'}].map(({title,description,tags,icon:Icon,color,target})=><button className={`service-card service-${color}`} key={title} onClick={()=>openProject(projects.find(p=>p.id===target))} aria-label={`Explore ${title}`}><div><Icon size={40} strokeWidth={1.35}/><h3>{title}</h3><p>{description}</p><span>{tags}<ArrowUpRight size={17}/></span></div></button>)}</div></section>
 
-      <section className="dev-toolkit page-width section-space" id="toolkit" aria-labelledby="toolkit-heading"><div className="toolkit-heading"><p className="section-eyebrow"><Code2 size={20}/>The toolkit</p><h2 id="toolkit-heading">Different ideas.<br/><span>Different tools.</span></h2><p aria-live="polite">{toolDescriptions[selectedTool]||`${selectedTool} is part of my everyday toolkit for exploring and building software.`}</p></div><div className="dev-tech-grid">{tools.map(tech=><button key={tech.key} onClick={()=>setSelectedTool(tech.name)} aria-pressed={selectedTool===tech.name}>{tech.path?<svg viewBox="0 0 24 24" width="29" height="29" aria-hidden="true"><path fill="currentColor" d={tech.path}/></svg>:<span className="swift-tool" aria-hidden="true">Sw</span>}<span>{tech.name}</span></button>)}</div></section>
+      <section className="dev-toolkit page-width section-space" id="toolkit" aria-labelledby="toolkit-heading"><div className="toolkit-heading"><p className="section-eyebrow"><Code2 size={20}/>The toolkit</p><h2 id="toolkit-heading">Different ideas.<br/><span>Different tools.</span></h2></div><ReadmeTechStack/></section>
 
       <section className="dev-contact page-width" id="contact" aria-labelledby="contact-heading"><p className="contact-eyebrow"><span>◎</span>Have an idea or an opportunity?</p><h2 id="contact-heading">Let's <span>Build</span><br/>Together<span className="contact-period">.</span></h2><div className="contact-code-badge" aria-hidden="true">&lt;/&gt;</div><a className="lime-button" href="mailto:mathely27@gmail.com">Get in touch<ArrowUpRight size={16}/></a><div className="contact-email-row"><a href="mailto:mathely27@gmail.com">mathely27@gmail.com</a><button className="circle-button" onClick={copyEmail} aria-label="Copy email address">{copied?<Check size={17}/>:<Copy size={17}/>}</button><span role="status">{copied?'Copied!':copyError?'Please copy the address manually.':''}</span></div></section>
     </main>
